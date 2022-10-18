@@ -246,13 +246,29 @@
                                     <th>د تلفون شمیره</th>
                                     <th>ایمیل</th>
                                     <th>عکس</th>
+                                    <th>معلومات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                  <td>{{ $company->agentName }}</td>
+                                @foreach ($cagent as $item)
+
+                                <tr>
+                                    <td>{{ $item->agentName }}</td>
+                                    <td>{{ $item->fName }}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td></td>
+                                    <td><a href="{{ route('agent.cdetails',$item->id) }}" class="btn btn-primary">تاریخچه</a></td>
+
+                                </tr>
+
+                                @endforeach
+                                  {{-- <td>{{ $company->agentName }}</td>
                                   <td>{{ $company->fName }}</td>
                                   <td>{{ $company->phone }}</td>
                                   <td>{{ $company->email }}</td>
+                                  <td></td>
+                                  <td><a href="{{ route('agent.details',$company->id) }}" class="btn btn-primary">تاریخچه</a></td> --}}
                             </tbody>
                         </table>
 

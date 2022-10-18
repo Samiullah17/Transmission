@@ -27,8 +27,8 @@
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                د موسساتو او شرکتونو د ثبت برخه
-                {{-- <i class="right fas fa-angle-left"></i> --}}
+                د موسساتو او شرکتونو ثبت
+                 {{-- <i class="right fas fa-angle-left"></i> --}}
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -47,6 +47,45 @@
               </li>
             </ul>
           </li>
+
+
+
+
+
+
+
+
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                د مخابرو برخه
+                 {{-- <i class="right fas fa-angle-left"></i> --}}
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('add.transmittion') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>د نوو مخابرو ثبت </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('list.transmission') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>د موجوده مخابرو لیست</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
+
+
+
+
 
 
 
