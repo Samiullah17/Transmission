@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\order;
 use App\Models\provence;
 use App\Models\transmissionModel;
@@ -21,9 +22,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(transmissionType::class)->constrained();
             $table->foreignIdFor(transmissionModel::class)->constrained();
-            $table->foreignIdFor(provence::class)->constrained();
             $table->string('serialNo');
-            $table->foreignIdFor(order::class)->constrained();
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

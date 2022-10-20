@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveCompanyRequest;
 use App\Models\citizenship;
 use App\Models\Company;
 use App\Models\companyActiveType;
@@ -50,8 +51,7 @@ class companyController extends Controller
     }
 
 
-    public function saveCompnay(Request $request){
-
+    public function saveCompnay(SaveCompanyRequest $request){
 
         $company=new Company();
         $company->companyName=$request->companyName;
@@ -86,7 +86,7 @@ class companyController extends Controller
         $order->company_id=$company->id;
         $order->company_agent_id =$agent->id;
         $order->frqNo=$request->frqNo[$x];
-        $order->frelQuantity=$request->freQuantity;
+        $order->freQuantity=$request->freQuantity;
         $order->save();
 
         }

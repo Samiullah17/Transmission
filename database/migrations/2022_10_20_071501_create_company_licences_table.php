@@ -1,13 +1,12 @@
 <?php
 
 use App\Models\Company;
-use App\Models\companyAgent;
-use App\Models\provence;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use PharIo\Manifest\License;
 
-return new class extends Migration
+class CreateCompanyLicencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,15 +15,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('company_licences', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Company::class)->constrained();
-            $table->foreignIdFor(companyAgent::class)->constrained();
-            $table->foreignIdFor(provence::class)->constrained();
-            $table->string('autraLicenceNo');
+            $table->foreignIdFor(licenceType::class)->constrained();
+            $table->string('licenceNumber');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('company_licences');
     }
-};
+}

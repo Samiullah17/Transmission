@@ -107,7 +107,7 @@ return [
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+    'required' => ':attribute ضروری  ده',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
@@ -158,6 +158,25 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'companyName' => 'د شرکت/بنسټ نوم',
+        'compnayID' => 'د شرکت/بنسټ آی دی',
+        'licenseNumber' =>'د شرکت/بنسټ د جواز نمبر',
+        'company_type_id' => 'د شرکت/بنسټ ډول',
+        'company_active_type_id' => 'د شرکت/بنسټ د فعالیت ډول',
+        'companyManagerName' => 'د شرکت/بنسټ د ریس نوم',
+        'citizenship_id' => 'د شرکت/بسنټ تابعیت',
+        'freQuantity' => 'د فریکونسی تعداد',
+        'agentName' => 'د نماینده نوم',
+        'fName' => 'د نماینده د پلار نوم',
+        'gFName' => 'د نماینده د نیکه نوم',
+        'NIC'=>'د نماینده د تذکره شمیره',
+        'phone'=>'د نماینده د تلفون شمیره ضروری ده',
+        'odistrict_id'=>'اصلی استوګنځی ضروری ده',
+        'cdistrict_id'=>'اوسنی استوګنځی ضروری ده',
+        'ovillage'=>'اصلی کلی ضروی ده',
+        'cvillage'=>'اوسنی کلی ضروری ده',
+        ''
+    ],
 
 ];

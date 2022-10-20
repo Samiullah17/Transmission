@@ -70,7 +70,7 @@
                                                     <input type="text" class="form-control" name="compnayID"
                                                         id="compnayID" placeholder="د موسسی یا شرکت ای دی نمبر">
                                                     <span class="text text-danger" role="alert">
-                                                        @error('companyID')
+                                                        @error('compnayID')
                                                             {{ $message }}
                                                         @enderror
                                                     </span>
@@ -117,7 +117,7 @@
                                                     </select>
 
                                                     <span class="text text-danger" role="alert">
-                                                        @error('activeType')
+                                                        @error('company_active_type_id')
                                                             {{ $message }}
                                                         @enderror
                                                     </span>
@@ -191,6 +191,11 @@
                                                     <label>د فریکونسی تعداد</label>
                                                     <input type="text" id="freQuantity" name="freQuantity"
                                                         placeholder="د فریکونسی تعداد ولیکی" class="form-control">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('freQuantity')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -210,13 +215,19 @@
 
                                         </div> --}}
 
-                                        <h5>د بنست/کمپنی د رسمی نماینده معلومات</h5>
+
+                                        <h6>د بنست/کمپنی د رسمی نماینده معلومات</h6>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>د نماینده نوم</label>
                                                     <input type="text" name="agentName" class="form-control"
                                                         placeholder="د نماینده نوم ولیکی">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('agentName')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -225,6 +236,11 @@
                                                     <label for="">د پلار نوم</label>
                                                     <input type="text" name="fName" class="form-control"
                                                         placeholder="د نماینده د پلار نوم ">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('fName')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -233,6 +249,11 @@
                                                     <label for="">د نیکه نوم</label>
                                                     <input type="text" name="gFName" class="form-control"
                                                         placeholder="د نماینده د نکیه نوم">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('gFName')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -248,6 +269,11 @@
                                                     <label for="">د تذکره شمیره</label>
                                                     <input type="text" name="NIC" class="form-control"
                                                         placeholder="د تذکری شمیره">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('NIC')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -260,6 +286,11 @@
                                                     <label for="">د تلفون شمیره</label>
                                                     <input type="text" name="phone" class="form-control"
                                                         placeholder="د نماینده داړیکی شمیره">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('phone')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -268,6 +299,11 @@
                                                     <label for="">ایمیل آدرس</label>
                                                     <input type="text" name="email" class="form-control"
                                                         placeholder="د نماینده ایمیل آدرس">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('email')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -278,6 +314,7 @@
                                                     <label>هیواد</label>
                                                     <input type="text" disabled value="افغانستان"
                                                         class="form-control">
+
                                                 </div>
                                             </div>
 
@@ -291,6 +328,11 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    <span class="text text-danger" role="alert">
+                                                        @error('provence')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
                                                 </div>
                                             </div>
 
@@ -306,6 +348,11 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    <span class="text text-danger" role="alert">
+                                                        @error('odistrict_id')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
                                                 </div>
                                             </div>
 
@@ -314,6 +361,11 @@
                                                     <label for="">کلی</label>
                                                     <input type="text" name="ovillage" class="form-control"
                                                         placeholder="د اصلی کلی نوم ولیکی">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('ovillage')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -345,13 +397,18 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="">ولسوالی</label>
-                                                    <select name="cdistrict_id" id="odistrict_id" class="form-control">
+                                                    <select name="cdistrict_id" id="cdistrict_id" class="form-control">
                                                         <option disabled selected>ولسوالی انتخاب کړی</option>
                                                         @foreach ($district as $item)
                                                             <option value="{{ $item->id }}">{{ $item->districtName }}
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    <span class="text text-danger" role="alert">
+                                                        @error('cdistrict_id')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
                                                 </div>
                                             </div>
 
@@ -360,6 +417,11 @@
                                                     <label for="">کلی</label>
                                                     <input type="text" name="cvillage" class="form-control"
                                                         placeholder="د فعلی کلی نوم ولیکی">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('cvillage')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
                                                 </div>
                                             </div>
 
@@ -455,7 +517,10 @@
     @endsection
     @section('script')
         <script>
+
             $(document).ready(function() {
+
+
 
                 // $('#tfalse').change(function() {
 
@@ -478,22 +543,22 @@
                 });
 
 
-                $('#regForm').on('submit', function(e) {
+                // $('#regForm').on('submit', function(e) {
 
-                    e.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('save.company') }}",
-                        data: $(this).serialize(),
-                        dataType: "json",
-                        success: function(response) {
-                            console.log(response);
+                //     e.preventDefault();
+                //     $.ajax({
+                //         type: "POST",
+                //         url: "{{ route('save.company') }}",
+                //         data: $(this).serialize(),
+                //         dataType: "json",
+                //         success: function(response) {
+                //             console.log(response);
 
-                            alert('successfuly added company ');
+                //             alert('successfuly added company ');
 
-                        }
-                    });
-                })
+                //         }
+                //     });
+                // })
 
 
 
@@ -690,6 +755,17 @@
 
                     <label>د فریکونسی نمبر</lable>
                     <input type="text" name="frqNo[]" placeholder="د فرکونسی نمبر" class="form-control">
+                    <select name="provenceid" id="provenceid" class="form-control">
+
+                        <option disabled selected>ولایت انتخاب کړی</option>
+                        @foreach($provence as $item)
+
+                        <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
+
+
+                        @endforeach
+
+                    </select>
                     </div>
                     </div>
                     `;
@@ -727,7 +803,6 @@
 
 
             })
-
 
 
 
