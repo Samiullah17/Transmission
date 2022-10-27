@@ -3,6 +3,7 @@
 use App\Models\frequencey;
 use App\Models\order;
 use App\Models\transmission;
+use App\Models\transmissionType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,11 +20,8 @@ class CreateOrderDetailsTable extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(order::class)->constrained();
-            $table->foreignIdFor(order::class)->constrained();
-            $table->foreignIdFor(frequencey::class)->constrained();
-            $table->foreignIdFor(transmission::class)->constrained();
+            $table->foreignIdFor(transmissionType::class)->constrained();
             $table->integer('transmissionQuantity');
-            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

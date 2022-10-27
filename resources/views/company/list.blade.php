@@ -13,14 +13,14 @@
                             </div>
                             <div class="card-title">
                                 <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
-                                    data-toggle="modal" data-target="#exampleModal">د نوی کمپنی اضافه کول</button>
+                                    data-toggle="modal" data-target="#modal-xl">د نوی کمپنی اضافه کول</button>
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
                             </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
-                            <table class="table table-head-fixed">
+                            <table class="table table-head-fixed table-hover table-striped">
                                 <thead>
                                     <tr>
                                         <th>د کمپنی نوم</th>
@@ -29,46 +29,38 @@
                                         <th>د ریس نوم</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbody">
+
+
                                     @foreach ($companies as $company)
-                                        <tr>
-                                            <td>{{ $company->name }}</td>
-                                            <td>{{ $company->aname }}</td>
-                                            <td>{{ $company->tname }}</td>
-                                            <td>{{ $company->mname }}</td>
-                                            <td>
 
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <button type="button" class="btn btn-primary dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                            معلومات
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li class="dropdown-item"><a href="{{ route('details.company',$company->comp_id) }}"><i
-                                                                        class="bi bi-archive"></i>جزیات</a></li>
-                                                            <li class="dropdown-item"><a href="">تغیر د معلوماتو</a>
-                                                            </li>
-                                                            <li class="dropdown-item"><button
-                                                                    onclick="khan({{ $company->comp_id }})"
-                                                                    class="text-primary" data-toggle="modal"data-target="#modal-xl">د بنست نمایند
+                                    <tr>
+                                        <td>{{ $company->companyName }}</td>
+                                        <td>{{ $company->aname }}</td>
+                                        <td>{{ $company->tname }}</td>
+                                        <td>{{ $company->companyManagerName }}</td>
+                                        <td> <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <button type="button" class="btn btn-primary dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                    معلومات
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-item"><a href="#"><i
+                                                                class="bi bi-archive"></i>ویرایش</a></li>
+                                                    <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
+                                                    <li class="dropdown-item"><a href="#"
+                                                            class="text text-danger">حذف</a></li>
+                                                    <li class="dropdown-divider"></li>
+                                                </ul>
+                                            </div>
+                                            <!-- /btn-group -->
+                                        </div></td>
 
-                                                                    ثبت/تغیر</button>
-                                                            </li>
+                                    </tr>
 
-                                                            <li class="dropdown-item"><a href="#"
-                                                                    class="text text-danger">پاکول/حذف</a></li>
-                                                            <li class="dropdown-divider"></li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- /btn-group -->
-                                                </div>
-                                                <!-- /input-group -->
-
-
-                                            </td>
-                                        </tr>
                                     @endforeach
+
 
 
                                 </tbody>
@@ -87,7 +79,7 @@
 
         {{-- Start of Agent Register  --}}
 
-        <div class="modal fade" id="modal-xl">
+        {{-- <div class="modal fade" id="modal-xl">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -227,7 +219,7 @@
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
-        </div>
+        </div> --}}
 
 
 
@@ -236,107 +228,44 @@
         {{-- End of Agent Register --}}
 
         {{-- Start Of Company Registration Model --}}
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <form role="form" method="POST" action="{{ route('save.company') }}" id="regForm"
-                    enctype="multipart/form-data">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">د نوی مووسی/بنست اضافه کول</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
 
-
-
+        <div class="modal fade" id="modal-xl">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">د بنسټ د رسمی نماینده د ثبت برخه</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mr-5">
+                        <form action="{{ route('save.company') }}" method="POST" id="agentSave" enctype="multipart/form-data">
                             @csrf
-                            <div class="card-body">
-                                <div class="row">
+                            <div class="row">
 
-
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">د موسسی/ بنسټ نوم</label>
                                         <input type="text" class="form-control" name="companyName"
-                                            placeholder="د موسسی نوم داخل کړی">
+                                            placeholder="د موسسی یا شرکت نوم داخل کړی">
                                         <span class="text text-danger" role="alert">
                                             @error('companyName')
                                                 {{ $message }}
                                             @enderror
                                         </span>
                                         {{-- @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                       @enderror --}}
-                                    </div>
-
-
-
-
-
-                                    <div class="form-group">
-                                        <label for="">آی ډی نمبر</label>
-                                        <input type="text" class="form-control" name="compnayID" id="compnayID"
-                                            placeholder="د موسسی یا شرکت ای دی نمبر">
-                                        <span class="text text-danger" role="alert">
-                                            @error('companyID')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror --}}
                                     </div>
                                 </div>
 
-                                <div class="row">
-
-
-
-
-
-
-                                    <div class="form-group">
-                                        <label for="">د فعالیت ډول</label>
-                                        <select name="company_active_type_id" id="company_active_type_id"
-                                            class="form-control">
-                                            <option disabled selected>د فعالیت دول انتخاب کړی</option>
-                                            @foreach ($companyActiveType as $item)
-                                                <option value="{{ $item->id }}">{{ $item->companyName }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-
-                                        <span class="text text-danger" role="alert">
-                                            @error('activeType')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="">د جواز نمبر</label>
-                                        <input type="text" class="form-control" name="licenseNumber"
-                                            id="licenseNumber" placeholder="د جواز نمبر داخل کړی">
-                                        <span class="text text-danger" role="alert">
-                                            @error('licenseNumber')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
-
-                                </div>
-
-
-
-
-                                <div class="row">
-
-
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="text">د بنست ډول</label>
-                                        <select name="company_type_id" id="company_type_id" class="form-control">
+                                        <select name="company_type_id" id="company_type_id"
+                                            class="form-control">
                                             <option disabled selected>د بنست ډول انتخاب کړی</option>
 
                                             @foreach ($companyType as $item)
@@ -350,9 +279,66 @@
                                             @enderror
                                         </span>
                                     </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">د فعالیت ډول</label>
+                                        <select name="company_active_type_id" id="company_active_type_id"
+                                            class="form-control">
+                                            <option disabled selected>د فعالیت دول انتخاب کړی</option>
+                                            @foreach ($companyActiveType as $item)
+                                                <option value="{{ $item->id }}">{{ $item->companyName }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        <span class="text text-danger" role="alert">
+                                            @error('company_active_type_id')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                </div>
 
 
 
+
+                            </div>
+                            <h6>د موسسی/بنسټ د ادرس برخه</h6>
+
+                            <div class="row">
+
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>د بنسټ/کمپنی آدرس</label>
+                                        <input type="text" placeholder="د کمپنی آدرس ولیکی" name="companyAddress" class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>لیتیتود</label>
+                                        <input type="text" placeholder="لیتیتود داخل کړی" name="letitude" class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>لونګ تیتود</label>
+                                        <input type="text" placeholder="لونګ تیتود داخل کړی" name="longtutude" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <h6>د بنسټ د ریس معلومات</h6>
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="text">د بنست د ریس نوم</label>
                                         <input type="text" class="form-control" name="companyManagerName"
@@ -363,11 +349,9 @@
                                             @enderror
                                         </span>
                                     </div>
+                                </div>
 
-
-
-
-
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="text">د بنست د ریس تابعیت</label>
                                         <select name="citizenship_id" id="citizenship_id" class="form-control">
@@ -386,24 +370,68 @@
                                         </span>
 
                                     </div>
+                                </div>
 
-
-
+                                <div class="col-md-3 country">
 
                                 </div>
 
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">بندول</button>
-                            <button type="submit" class="btn btn-primary">ذخیره کول</button>
 
-                        </div>
-                        <input type="reset" value="" hidden>
-                </form>
+
+                            </div>
+
+                            <h6>د موسسی/بنسټ د جواز او د جواز مراجعو برخه</h6>
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+
+                                        <label>د جواز مرجع</label>
+                                        <select name="license_type_id" id="license_type_id"  class="form-control">
+                                            <option selected disabled>د جواز مرجع انتخاب کړی</option>
+                                            @foreach ($licenseType as $item)
+
+                                            <option value="{{ $item->id }}">{{ $item->licenseTypeName }}</option>
+
+                                            @endforeach
+
+
+                                        </select>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row license">
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default"
+                            data-dismiss="modal">بندول</button>
+                        <button type="submit" class="btn btn-primary">ذخیره کول</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
             </div>
+            <!-- /.modal-dialog -->
         </div>
+
         {{-- End of Company Registration Model --}}
 
 
@@ -421,54 +449,153 @@
 @endsection
 @section('script')
     <script>
-        function khan(id) {
 
-            $('#company_id').val(id);
-
-
-
-        }
         $(document).ready(function() {
 
 
-            $('#regForm').on('submit', function(e) {
-                e.preventDefault();
+            function loadData(){
+
                 $.ajax({
-                    type: "POST",
-                    url: "{{ route('save.company') }}",
-                    data: $(this).serialize(),
+                    type: "GET",
+                    url: "{{ route('list.company') }}",
                     dataType: "json",
                     success: function(response) {
+                        console.log(response);
                         // $("#exampleModal").modal("hide");
                         // alert('samiullah it was successfuly added ');
                         // $('#exampleModal').modal('hide');
-                        $('#exampleModal').css('display', 'none');
-                        $('[data-dismiss="modal"]').click();
-                        $('#regForm')[0].reset();
+                        // $('#exampleModal').css('display', 'none');
+                        // $('[data-dismiss="modal"]').click();
+                        // $('#regForm')[0].reset();
                     }
                 });
-            })
+
+            }
+
+
+            // $('#regForm').on('submit', function(e) {
+            //     e.preventDefault();
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "{{ route('save.company') }}",
+            //         data: $(this).serialize(),
+            //         dataType: "json",
+            //         success: function(response) {
+            //             // $("#exampleModal").modal("hide");
+            //             // alert('samiullah it was successfuly added ');
+            //             // $('#exampleModal').modal('hide');
+            //             $('#exampleModal').css('display', 'none');
+            //             $('[data-dismiss="modal"]').click();
+            //             $('#regForm')[0].reset();
+            //         }
+            //     });
+            // })
 
 
 
 
-            $('#agentSave').on('submit', function(e) {
-                e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('save.agent') }}",
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    success: function(response) {
-                        // $("#exampleModal").modal("hide");
-                        // alert('samiullah it was successfuly added ');
-                        // $('#exampleModal').modal('hide');
-                        $('#exampleModal').css('display', 'none');
-                        $('[data-dismiss="modal"]').click();
-                        $('#regForm')[0].reset();
-                    }
-                });
-            })
+            // $('#agentSave').on('submit', function(e) {
+            //     e.preventDefault();
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "{{ route('save.agent') }}",
+            //         data: $(this).serialize(),
+            //         dataType: "json",
+            //         success: function(response) {
+            //             // $("#exampleModal").modal("hide");
+            //             // alert('samiullah it was successfuly added ');
+            //             // $('#exampleModal').modal('hide');
+            //             $('#exampleModal').css('display', 'none');
+            //             $('[data-dismiss="modal"]').click();
+            //             $('#regForm')[0].reset();
+            //         }
+            //     });
+            // })
+
+
+
+
+
+            $(document).on('change','#citizenship_id',function(){
+                let ctId=$('#citizenship_id').val();
+                if(ctId==2){
+                    let country=`
+                        <div class="form-group">
+                            <label>هیواد انتخاب کړی</label>
+                            <select name="country" class="form-control">
+                                <option selected disabled>د بنسټ د ریس هیواد انتخاب کړی</option>
+                                @foreach($countires as $country)
+                                <option value="{{ $country->id }}">{{ $country->contryName }}</option>
+                                @endforeach
+                                </select>
+                        </div>`;
+
+
+
+                        $('.country').append(country);
+
+
+                }
+
+                else{
+                     $('.country').html('');
+                }
+            });
+
+
+            $(document).on('change','#license_type_id',function(){
+
+                var id = $(this).val();
+                 var economical=`<div class="form-group col-md-3" id="div`+id+`">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="$('#div`+id+`').remove()">Colse</button>
+                    <label>د اقتصاد وزارت جواز نمبر  </label>
+                    <input type="hidden" name="licenseTypeId[]" id="economical" value="`+id+`" class="form-control">
+                    <input type="date" name="issueDate[]" id="issueDate" class="form-control">
+                    <input type="text"  placeholder="د اقتصاد وزارت جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
+                    <input type="file" name="licenseFile[]" id="economicalId" class="form-control">
+                     </div>
+                    `;
+
+                    $('.license').append(economical);
+                    // $('#license_type_id').attr('disabled',true);
+                    // var mani=`<div class="form-group col-md-3">
+                    // <label>د شاروالی جواز نمبر  </label>
+                    // <input type="text" name="mani[]" id="mani" class="form-control">
+                    // <input type="text" placeholder="د شاروالی جواز نمبر ولیکی"  name="mani[]" class="form-control">
+                    // <input type="file" name="mani[]" id="maniId" class="form-control">
+                    //  </div>
+                    // `;
+
+
+                    // var bank=`<div class="form-group col-md-3">
+                    // <label>د بانک جواز نمبر  </label>
+                    // <input type="text" name="bank[]" id="bank" class="form-control">
+                    // <input type="text" placeholder="د افغانتسان بانک جواز نمبر ولیکی"  name="bank[]" class="form-control">
+                    // <input type="file" name="bank[]" id="bankId" class="form-control">
+                    //  </div>
+                    // `;
+                    // if($('#license_type_id').val()==1){
+
+                    //     $('.license').append(economical);
+                    //     $('#economical').val($('#license_type_id').val());
+
+                    // }
+
+                    // if($('#license_type_id').val()==2){
+
+                    //     $('.license').append(mani);
+                    //     $('#mani').val($('#license_type_id').val());
+                    // }
+                    // if($('#license_type_id').val()==3){
+                    //     $('.license').append(bank);
+                    //     $('#bank').val($('#license_type_id').val());
+                    // }
+
+
+
+
+
+            });
 
 
 

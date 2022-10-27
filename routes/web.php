@@ -30,6 +30,7 @@ Route::post('save/agent',[agentController::class,'saveAgent'])->name('save.agent
 Route::get('agent/cdetails/{id}',[agentController::class,'cdetails'])->name('agent.cdetails');
 
 Route::get('add/transmittion',[companyController::class,'addTransmittion'])->name('add.transmittion');
+Route::get('ad/trasmission/{id}',[companyController::class,'addTransmission0'])->name('add.transmittion0');
 
 Route::post('save/transmittion',[companyController::class,'addTransmission'])->name('transmission.save');
 
@@ -37,9 +38,12 @@ Route::get('list/transmission',[companyController::class,'listTransmission'])->n
 Route::get('company/transmission/{id?}',[companyController::class,'companyTransmission'])->name('company.transmission');
 
 Route::get('company/agent/{id?}',[companyController::class,'companyAgent'])->name('company.agent');
-Route::get('agent/details/{id?}',[agentController::class,'cagent'])->name('agent.details');
+// Route::get('agent/details/{id?}',[agentController::class,'cagent'])->name('agent.details');
 
 Route::get('list/company',[companyController::class,'index'])->name('list.company');
 Route::get('details/company/{id}',[companyController::class,'details'])->name('details.company');
 Route::get('edit/company{id}',[companyController::class,'edit'])->name('edit.company');
 
+Route::post('company/{id}')->name('order.create');
+
+Route::get('transmission/detials',[agentController::class,'traDetails'])->name('transmission.details');

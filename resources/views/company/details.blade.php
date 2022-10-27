@@ -12,14 +12,14 @@
                                 اضافی معلومات
                             </div>
                             <div class="card-title">
-                                @if ($company->agentName==Null)
+
 
 
 
                                 <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
                                 data-toggle="modal"data-target="#modal-xl">د رسمی نماینده اضافه کول</button>
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
-                                @endif
+
 
 
                             </div>
@@ -31,26 +31,96 @@
                                 <thead>
                                     <tr>
                                         <th>د کمپنی نوم</th>
-                                        <th>د کمپنی/بنست آی</th>
-                                        <th>د فعالیت ډول</th>
-                                        <th>د موسسه/بسنت جواز نمبر</th>
+                                         <th>د فعالیت ډول</th>
                                         <th>د موسسی/بنست ډول</th>
                                         <th>د ریس نوم</th>
-                                        <th>د موسسه/بسنت د ریس تابعیت</th>
+                                        <th>د ریس تابعیت</th>
+                                        <th>د کمپنی ادرس</th>
+                                        <th>لیتیتود</th>
+                                        <th>لونک تیتود</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                      <td>{{ $company->companyName }}</td>
-                                     <td>{{ $company->companyId }}</td>
                                      <td>{{ $company->aname }}</td>
-                                     <td>{{ $company->licenceNo }}</td>
                                      <td>{{ $company->tname }}</td>
                                      <td>{{ $company->companyManagerName }}</td>
-                                     <td>{{ $company->cname }}</td>
+                                     <td>
+
+                                        @if($company->country_id==1 || $company->country_id==3)
+                                            داخلی
+                                        @endif
+
+                                         @if($company->country_id>4 || $company->country_id==2)
+                                            خارجی
+                                         @endif
+
+                                     </td>
+
+                                    {{-- <td>{{ $company->country_id }}</td> --}}
+                                    <td>{{ $company->companyAddress }}</td>
+                                    <td>{{ $company->latitude }}</td>
+                                    <td>{{ $company->longtitude }}</td>
+                                    <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه</button></td>
+
 
                                 </tbody>
                             </table>
+
+
+                            <h6 id="jawaz1" class="d-none">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
+
+
+                            <table id="jawaz" class="table table-striped table-bordered table-hover d-none">
+
+                                <thead>
+                                    <th>د جواز نمبر</th>
+                                    <th>د جواز مرجع</th>
+                                    <th>د جواز د صدرو تاریخ</th>
+                                    <th>عکس</th>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($companylicense as $item)
+
+                                    <tr>
+                                        <td>{{ $item->licenseNumber }}</td>
+                                        <td>{{ $item->ltname }}</td>
+                                        <td>{{ $item->issueDate }}</td>
+                                        <td>{{ $item->files }}</td>
+
+                                    </tr>
+
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+
+
+                             <table class="table table-striped table-hover table-border">
+                                <thead>
+                                    <th>د نماینده نوم</th>
+                                    <th>د پلار نوم</th>
+                                    <th>د تلفون شمیره</th>
+                                    <th>ایمیل</th>
+                                    <th>عکس</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($cagent as $item)
+                                    <tr>
+                                        <td>{{ $item->agentName }}</td>
+                                        <td>{{ $item->fName }}</td>
+                                        <td>{{ $item->phone }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td></td>
+                                        <td><a href="{{ route('agent.cdetails',$item->id) }}" class="btn btn-primary">معلومات</a></td>
+                                    </tr>
+
+                                    @endforeach
+                                </tbody>
+                             </table>
 
 
 
@@ -183,6 +253,19 @@
 
                                                 </div>
 
+                                                <div class="row">
+                                                    <label>د کوم ولایت مخابری</label>
+                                                    <select name="provence_id" id="provence_id"  class="form-control select2">
+                                                        <option selected  disabled>ولایت/ولایتونه انتخاب کړی</option>
+                                                        @foreach ($provence as $item)
+
+                                                        <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
+
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
+
 
                                         </div>
                                         <div class="modal-footer justify-content-between">
@@ -195,13 +278,6 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
-
-
-
-
-
-
-
 
                         </div>
                         <!-- /.card-body -->
@@ -218,59 +294,6 @@
 
 
 
-          @if ($company->agentName!=Null)
-
-
-
-          <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-tools">
-                             <h6>د بنسټ د رسمی نماینده/نماینده ګانو لیست</h6>
-                        </div>
-                        <div class="card-title">
-
-
-
-                        </div>
-                    </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-head-fixed">
-                            <thead>
-                                <tr>
-                                    <th>د نماینده نوم</th>
-                                    <th>د پلار نوم</th>
-                                    <th>د تلفون شمیره</th>
-                                    <th>ایمیل</th>
-                                    <th>عکس</th>
-                                    <th>معلومات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($cagent as $item)
-
-                                <tr>
-                                    <td>{{ $item->agentName }}</td>
-                                    <td>{{ $item->fName }}</td>
-                                    <td>{{ $item->phone }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td></td>
-                                    <td><a href="{{ route('agent.cdetails',$item->id) }}" class="btn btn-primary">تاریخچه</a></td>
-
-                                </tr>
-
-                                @endforeach
-                                  {{-- <td>{{ $company->agentName }}</td>
-                                  <td>{{ $company->fName }}</td>
-                                  <td>{{ $company->phone }}</td>
-                                  <td>{{ $company->email }}</td>
-                                  <td></td>
-                                  <td><a href="{{ route('agent.details',$company->id) }}" class="btn btn-primary">تاریخچه</a></td> --}}
-                            </tbody>
-                        </table>
 
 
 
@@ -279,23 +302,6 @@
 
 
 
-
-
-
-
-
-
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </div>
-        </div>
-
-
-
-
-          @endif
 
 
 
@@ -329,7 +335,7 @@
 
         $('#agentSave').on('submit', function(e) {
                 e.preventDefault();
-                alert('form is submiting')
+
                 $.ajax({
                     type: "POST",
                     url: "{{ route('save.agent') }}",
@@ -345,6 +351,13 @@
                     }
                 });
             })
+
+            $(document).on('click','.jawaz',function(){
+                  $('#jawaz').toggleClass('d-none');
+                  $('#jawaz1').toggleClass('d-none');
+            })
+
+
 
     });
 </script>

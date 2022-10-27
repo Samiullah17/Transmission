@@ -150,6 +150,49 @@
 
 
 
+
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>د فریکونسی تعداد</label>
+                                                    <input type="text" id="freQuantity" name="freQuantity"
+                                                        placeholder="د فریکونسی تعداد ولیکی" class="form-control">
+                                                        <span class="text text-danger" role="alert">
+                                                            @error('freQuantity')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>د بنسټ/کمپنی آدرس</label>
+                                                    <input type="text" placeholder="د کمپنی آدرس ولیکی" name="companyAddress" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>لیتیتود</label>
+                                                    <input type="text" placeholder="لیتیتود داخل کړی" name="letitude" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>لونګ تیتود</label>
+                                                    <input type="text" placeholder="لونګ تیتود داخل کړی" name="longtutude" class="form-control">
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <div class="row" id="row3">
+
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="text">د بنست د ریس نوم</label>
@@ -186,25 +229,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label>د فریکونسی تعداد</label>
-                                                    <input type="text" id="freQuantity" name="freQuantity"
-                                                        placeholder="د فریکونسی تعداد ولیکی" class="form-control">
-                                                        <span class="text text-danger" role="alert">
-                                                            @error('freQuantity')
-                                                                {{ $message }}
-                                                            @enderror
-                                                        </span>
-                                                </div>
-                                            </div>
+                                            <div class="col-md-3 country">
 
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>د بنسټ/کمپنی آدرس</label>
-                                                    <input type="text" placeholder="د کمپنی آدرس ولیکی" name="companyAddress" class="form-control">
-                                                </div>
                                             </div>
 
 
@@ -803,6 +829,33 @@
 
 
             })
+
+
+            $(document).on('change','#citizenship_id',function(){
+                let ctId=$('#citizenship_id').val();
+                if(ctId==2){
+                    let country=`
+                        <div class="form-group">
+                            <label>هیواد انتخاب کړی</label>
+                            <select name="country" class="form-control">
+                                <option selected disabled>د بنسټ د ریس هیواد انتخاب کړی</option>
+                                @foreach($countires as $country)
+                                <option value="{{ $country->id }}">{{ $country->contryName }}</option>
+                                @endforeach
+                                </select>
+                        </div>`;
+
+
+
+                        $('.country').append(country);
+
+
+                }
+
+                else{
+                     $('.country').html('');
+                }
+            });
 
 
 

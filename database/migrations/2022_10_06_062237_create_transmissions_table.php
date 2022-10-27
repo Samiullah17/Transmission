@@ -24,6 +24,8 @@ return new class extends Migration
             $table->foreignIdFor(transmissionModel::class)->constrained();
             $table->string('serialNo');
             $table->tinyInteger('status');
+            $table->foreignIdFor(provence::class)->constrained();
+            $table->foreignIdFor(order::class)->constrained();
             $table->timestamps();
         });
     }

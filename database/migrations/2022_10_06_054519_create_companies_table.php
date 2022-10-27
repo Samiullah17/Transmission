@@ -22,13 +22,13 @@ return new class extends Migration
             $table->id();
             $table->string('companyName');
             $table->uuid('companyId');
-            $table->string('licenceNo');
             $table->foreignIdFor(companyType::class)->constrained();
             $table->foreignIdFor(companyActiveType::class)->constrained();
             $table->string('companyManagerName');
-            $table->foreignIdFor(citizenship::class)->constrained();
             $table->foreignIdFor(country::class)->constrained();
-            $table->string('liscenceDateOfIssus');
+            $table->string('companyAddress');
+            $table->float('latitude')->nullable();
+            $table->float('longtitude')->nullable();
             $table->timestamps();
         });
     }

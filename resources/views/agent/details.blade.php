@@ -9,18 +9,19 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                               د {{ $cagent->agentName }} د مخابرو لیست چی د {{ $cagent->cname }} کمپنی/بیسټ لپاره یی راوړی
-                            </div>
+                                د {{ $agent->agentName }} د مخابرو لیست چی د {{ $agent->companyName }} کمپنی لپاره یی راوړی
+                                <input type="hidden" value="{{ $agent->id }}" id="agentId">
+                              </div>
                             <div class="card-title">
 
 
 
-
-                                {{-- <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
+{{--
+                                <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
                                     data-toggle="modal"data-target="#modal-xl">د مخابرو اضافه کول</button> --}}
+                                    <a href="{{ route('add.transmittion0',$agent->id) }}" data-mdb-ripple-color="dark" class="btn btn-primary">د نوو مخابرو اضافه کول</a>
+
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
-
-
 
                             </div>
                         </div>
@@ -31,20 +32,25 @@
                             <thead>
                                 <tr>
                                     <th>د مخابری ټایت</th>
-                                    <th>د مخابری ماډل</th>
-                                    <th>ولایت</th>
-                                    <th>سریال نمبر</th>
+                                     <th>تعداد</th>
+                                     <th>کتل</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                @foreach ($agents as $agent)
+                                @foreach ($transmissions as $item)
                                     <tr>
-                                        <td>{{ $agent->ttname }}</td>
-                                        <td>{{ $agent->tmname }}</td>
-                                        <td>{{ $agent->tpname }}</td>
-                                        <td>{{ $agent->sno }}</td>
+                                        <td>{{ $item->transmissionTypeName }}</td>
+                                        <td>{{ $item->tquantity }}</td>
+                                        <td><button id="btn" value="{{ $item->id }}" class="btn btn-primary">+</button>
+
+                                        </td>
                                     </tr>
+                                    <tr class="btn{{ $item->id }}">
+
+                                    </tr>
+
+
                                 @endforeach
 
 
@@ -72,6 +78,24 @@
                 </div>
                 <!-- /.card -->
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
 
 
@@ -104,6 +128,42 @@
 
 
 
+
+
+
+@endsection
+
+@section('script')
+
+<script>
+    $(document).ready(function(){
+        $(document).on('click','#btn',function(){
+
+
+            let data = {
+                'agetnId':$('#agentId').val(),
+                'ttypeId':ttypeId=$(this).val(),
+            }
+
+            $.ajax({
+                    type: "GET",
+                    url: "{{ route('transmission.details') }}",
+                    data:data,
+                    dataType: "json",
+                    success: function(response) {
+
+                        console.log(response);
+                        // $('#modal-xl').css('display', 'none');
+                        // $('[data-dismiss="modal"]').click();
+                        // $('#agentSave')[0].reset();
+                    }
+                });
+
+
+
+        });
+    });
+</script>
 
 
 

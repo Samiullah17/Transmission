@@ -20,8 +20,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Company::class)->constrained();
             $table->foreignIdFor(companyAgent::class)->constrained();
-            $table->foreignIdFor(provence::class)->constrained();
-            $table->string('autraLicenceNo');
+
             $table->timestamps();
         });
     }

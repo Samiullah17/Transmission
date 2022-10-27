@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLicenceTypesTable extends Migration
+class CreateLicenseTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateLicenceTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('licence_types', function (Blueprint $table) {
+        Schema::create('license_types', function (Blueprint $table) {
             $table->id();
+            $table->string('licenseTypeName');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateLicenceTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('licence_types');
+        Schema::dropIfExists('license_types');
     }
 }
