@@ -20,7 +20,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Company::class)->constrained();
             $table->foreignIdFor(companyAgent::class)->constrained();
-
+            $table->string('suggestion_file');
             $table->timestamps();
         });
     }

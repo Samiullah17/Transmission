@@ -27,11 +27,35 @@
                     <div class="card-body table-responsive p-0">
 
 
+                         <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>کمپنی/بنسټ انتخاب کړی</label>
+                                <select name="company_id" id="company_id" class="form-control">
+                                    <option selected disabled>د بنسټ نوم انتخاب کړی</option>
+                                    @foreach ($companies as $company)
+                                    <option value="{{ $company->id }}">{{ $company->companyName }}</option>
 
-                        <div class="row">
+                                    @endforeach
+
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>د بنسټ نماینده انتخاب کړی</label>
+                                <select name="agent_id" id="agent_id" class="form-control">
+                                    <option selected disabled>نماینده انتخاب کړی</option>
+
+                                </select>
+                            </div>
+                         </div>
+
+
+
+
+                        <div class="row d-none fre">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>د فریکونسی999 تعداد</label>
+                                    <label>د فریکونسی تعداد</label>
                                     <input type="text" id="traQuantity" name="traQuantity" placeholder="د فریکونسی تعداد وارد کړی" class="form-control">
 
                                 </div>
@@ -41,10 +65,10 @@
 
 
 
-                            <form action="{{ route('transmission.save') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('transmission.save1') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="row">
+                            <div class="row d-none tra">
 
 
                                 <div class="form-group col-md-3">
@@ -82,7 +106,8 @@
 
                             </div>
 
-                             <input type="hidden" name="order_id" value="{{ $order->id }}" class="form-control">
+                            <input type="hidden" name="agent_id" id="agentId"  class="form-control">
+                            <input type="hidden" name="company_id" id="companyId" class="form-control">
 
 
 
@@ -96,27 +121,7 @@
                             </div>
 
                             </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
                         {{--  --}}
-
-
-
-
-
-
-
 
 
                     </div>
@@ -154,38 +159,39 @@
     <script>
         $(document).ready(function() {
 
-          // Start of Agent Submitting
-            $('#agentSave').on('submit', function(e) {
-                e.preventDefault();
 
+
+            $(document).on('change','#company_id',function(e){
+                e.preventDefault();
+                $('#companyId').val($(this).val());
                 $.ajax({
-                    type: "POST",
-                    url: "{{ route('save.agent') }}",
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    success: function(response) {
-                        // $("#exampleModal").modal("hide");
-                        // alert('samiullah it was successfuly added ');
-                        // $('#exampleModal').modal('hide');
-                        console.log(response);
-                        $('#modal-xl').css('display', 'none');
-                        $('[data-dismiss="modal"]').click();
-                        $('#agentSave')[0].reset();
-                    }
-                });
+                        type: "get",
+                        url: "{{ route('company.agent') }}/"+$(this).val(),
+                        dataType: "json",
+                        success: function(response) {
+
+                            $('.fre').addClass('d-none');
+                            $('.tra').addClass('d-none');
+
+                            $('#agent_id option').remove();
+                            $('#agent_id').append('<option selected disabled>نماینده انتخاب کړی</option>')
+
+                            $.each(response.agent, function(index, value) {
+                             $('#agent_id').append('<option value="'+value.id+'">'+value.agentName+'</option>');
+                           });
+
+                        }
+                  });
+
             })
 
+            $(document).on('change','#agent_id',function(e){
+                e.preventDefault();
+                $('#agentId').val($(this).val());
+                $('.fre').removeClass('d-none');
+                $('.tra').removeClass('d-none');
 
-            // End of Agent Submiting
-
-              $('#company_id').select2();
-
-
-            // End of Company on Change
-
-
-
-            // End of Agent on Change
+            })
 
 
             $(document).on('click','#addTransmittion',function(e){
@@ -214,11 +220,8 @@
                 var wakiTaki=` <div class="form-group col-md-3">
                                 <label for="">د دستګاه ډول</label>
                                 <select name="transmission_type_id[]" id="" class="form-control">
-
                                     @foreach ($transmissionType as $item)
-                                    @if($item->id==1)
                                     <option  value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
-                                    @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -257,10 +260,9 @@
                 var base=` <div class="form-group col-md-3">
                                 <label for="">د دستګاه ډول</label>
                                 <select name="transmission_type_id[]" id="" class="form-control">
-
                                     @foreach ($transmissionType as $item)
-                                    @if($item->id==2)
-                                    <option value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
+                                    @if($item->id == 2)
+                                    <option value="{{ $item->id }}" >{{ $item->transmissionTypeName }}</option>
                                     @endif
                                     @endforeach
                                 </select>
@@ -301,9 +303,8 @@
                                 <label for="">د دستګاه ډول</label>
                                 <select name="transmission_type_id[]" id="" class="form-control">
                                     @foreach ($transmissionType as $item)
-                                    @if($item->id==3)
                                      <option value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
-                                    @endif
+
                                     @endforeach
                                 </select>
                             </div>
@@ -344,9 +345,12 @@
                                 <select name="transmission_type_id[]" id="" class="form-control">
 
                                     @foreach ($transmissionType as $item)
-                                    @if($item->id==4)
+
+
                                     <option value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
-                                    @endif
+
+
+
                                     @endforeach
                                 </select>
                             </div>

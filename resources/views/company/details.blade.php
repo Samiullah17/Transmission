@@ -42,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <td>{{ $company->companyName }}</td>
+                                      <td>{{ $company->companyName }}</td>
                                      <td>{{ $company->aname }}</td>
                                      <td>{{ $company->tname }}</td>
                                      <td>{{ $company->companyManagerName }}</td>
@@ -69,7 +69,7 @@
                             </table>
 
 
-                            <h6 id="jawaz1" class="d-none">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
+                            <h6 style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white" id="jawaz1" class="d-none">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
 
 
                             <table id="jawaz" class="table table-striped table-bordered table-hover d-none">
@@ -96,6 +96,8 @@
                                 </tbody>
                             </table>
 
+                            <h6 style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white">د بنسټ رسمی نماینده معلومات</h6>
+
 
 
                              <table class="table table-striped table-hover table-border">
@@ -115,7 +117,8 @@
                                         <td>{{ $item->phone }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td></td>
-                                        <td><a href="{{ route('agent.cdetails',$item->id) }}" class="btn btn-primary">معلومات</a></td>
+                                        <td><a href="{{ route('agent.cdetails',['id'=>$item->id,'cid'=>$company->id]) }}" class="btn btn-primary">معلومات</a></td>
+                                        <td><a href="#" class="btn btn-primary">معلومات</a></td>
                                     </tr>
 
                                     @endforeach
@@ -295,20 +298,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
             {{-- End of Second Dev --}}

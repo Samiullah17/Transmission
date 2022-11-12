@@ -19,7 +19,7 @@
 {{--
                                 <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
                                     data-toggle="modal"data-target="#modal-xl">د مخابرو اضافه کول</button> --}}
-                                    <a href="{{ route('add.transmittion0',$agent->id) }}" data-mdb-ripple-color="dark" class="btn btn-primary">د نوو مخابرو اضافه کول</a>
+                                    <a href="{{ route('add.transmittion0',['id'=>$agent->id,'cid'=>$company->id]) }}" data-mdb-ripple-color="dark" class="btn btn-primary">د نوو مخابرو اضافه کول</a>
 
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
@@ -42,7 +42,7 @@
                                     <tr>
                                         <td>{{ $item->transmissionTypeName }}</td>
                                         <td>{{ $item->tquantity }}</td>
-                                        <td><button id="btn" value="{{ $item->id }}" class="btn btn-primary">+</button>
+                                        <td><button id="btn{{ $item->id }}" value="{{ $item->id }}" class="btn btn-primary btntr">+</button>
 
                                         </td>
                                     </tr>
@@ -52,11 +52,6 @@
 
 
                                 @endforeach
-
-
-
-
-
 
                             </tbody>
                         </table>
@@ -137,13 +132,18 @@
 
 <script>
     $(document).ready(function(){
-        $(document).on('click','#btn',function(){
+        $(document).on('click','.btntr',function(){
 
 
             let data = {
                 'agetnId':$('#agentId').val(),
                 'ttypeId':ttypeId=$(this).val(),
             }
+            let id=$(this).attr('id');
+            $(this).addClass('rem');
+            $(this).removeClass('btntr');
+            $(this).html('-');
+
 
             $.ajax({
                     type: "GET",
@@ -152,16 +152,27 @@
                     dataType: "json",
                     success: function(response) {
 
-                        console.log(response);
-                        // $('#modal-xl').css('display', 'none');
-                        // $('[data-dismiss="modal"]').click();
-                        // $('#agentSave')[0].reset();
+                         console.log(response);
+                         $('.'+id).append('<tr><td>د مخابری ماډل</td><td>سریال نمبر</td><td>ولایت</td></tr>');
+                         $.each(response.data, function(index, value) {
+                             $('.'+id).append('<tr><td>'+value.mname+'</td><td>'+value.serialNo+'</td><td>'+value.pname+'</td></tr>');
+                           });
+
+
                     }
                 });
 
 
 
         });
+
+        $(document).on('click','.rem',function(){
+            let id=$(this).attr('id');
+            $('.'+id).html('');
+            $(this).html('+')
+            $(this).addClass('btntr').removeClass('rem');
+
+        })
     });
 </script>
 

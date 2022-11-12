@@ -43,7 +43,7 @@
                                 <th>د مخابری ماډل</th>
                                 <th>ولایت</th>
                                 <th>سریال نمبر</th>
-                            </tr>
+                             </tr>
                            </thead>
 
                            <tbody id="tbody">
@@ -63,13 +63,11 @@
 @section('script')
 
     <script>
-        $(document).ready(function(){
-            $('#company_id').select2();
-        });
+
         $(document).on('change', '#company_id', function() {
 
-            var cid = $('#company_id').val();
-            // $('#companyId').val(cid);
+            var cid = $(this).val();
+
 
 
 
@@ -80,6 +78,7 @@
                 url: "{{ route('company.transmission') }}/" + cid,
                 dataType: "json",
                 success: function(response) {
+                    console.log(response.order);
                     // $('#agent_id option').remove();
                     // $('#tbody td').remove();
                     // $('#thead th').remove();
@@ -92,9 +91,9 @@
 
                     $('#table').removeClass('d-none');
                      $('#tbody td').remove();
-                    console.log(response.order);
+
                     $.each(response.order, function(index, value) {
-                             $('#tbody').append('<tr><td>'+value.tname+'</td><td>'+value.mname+'</td><td>'+value.pname+'</td><td>'+value.sname+'</td></tr>');
+                             $('#tbody').append('<tr><td>'+value.tname+'</td><td>'+value.mname+'</td><td>'+value.pname+'</td><td>'+value.serialNo+'</td></tr>');
                     });
 
 

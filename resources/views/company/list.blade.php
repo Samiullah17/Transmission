@@ -46,9 +46,10 @@
                                                     معلومات
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li class="dropdown-item"><a href="#"><i
-                                                                class="bi bi-archive"></i>ویرایش</a></li>
+                                                    <li class="dropdown-item"><a href="{{ route('edit.company',$company->id) }}"><i
+                                                                class="bi bi-archive"></i>تغیرات راوستل</a></li>
                                                     <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
+                                                    <li class="dropdown-item"><button id="companyId" value="{{ $company->id }}" data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl1" class="text-primary">د مخابرو ثبت</button></li>
                                                     <li class="dropdown-item"><a href="#"
                                                             class="text text-danger">حذف</a></li>
                                                     <li class="dropdown-divider"></li>
@@ -67,9 +68,6 @@
                             </table>
                         </div>
 
-
-
-
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
@@ -79,7 +77,7 @@
 
         {{-- Start of Agent Register  --}}
 
-        {{-- <div class="modal fade" id="modal-xl">
+         <div class="modal fade" id="modal-xl1">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -89,8 +87,44 @@
                         </button>
                     </div>
                     <div class="modal-body mr-5">
-                        <form action="#" id="agentSave" enctype="multipart/form-data">
-                            <div class="row">
+                        {{-- نوی نماینده:<input type="radio" class="input-sm"> --}}
+                        {{-- پخوانی نماینده:<input type="radio" class="input-sm"> --}}
+                        <div class="row">
+                            <div class="col-md-4 cagents" >
+                                <select name="agent_id" id="agent_id" class="form-control">
+                                    <option selected disabled>د کمپنی/بنسټ نماینده انتخاب کړی</option>
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-10"></div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>نوی نماینده ثبتول</label>
+                                    <input type="checkbox" name="nagent" id="nagent" class="input-sm">
+                                </div>
+                             </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-striped table-hover table-bordered table-agent d-none">
+                                <thead>
+                                    <th>د نماینده نوم</th>
+                                    <th>د پلار نوم</th>
+                                    <th>د تذکری شمیره</th>
+                                    <th>عکس</th>
+                                </thead>
+                                <tbody id="adetails">
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <form action="{{ route('save.agentd') }}" id="agentSave" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row fr d-none">
 
                                 <div class="form-group col-md-4">
                                     <label for="">د نماینده نوم</label>
@@ -109,13 +143,9 @@
                                     <input type="text" name="gFName" class="form-control"
                                         placeholder="د نماینده د نکیه نوم">
                                 </div>
-
-
-
-
                             </div>
 
-                            <div class="row">
+                            <div class="row fr d-none">
 
 
                                 <div class="form-group col-md-4">
@@ -139,9 +169,9 @@
 
 
                             </div>
-                            <p>اصلی استوګنځی:</p>
+                            <p class="fr d-none">اصلی استوګنځی:</p>
 
-                            <div class="row">
+                            <div class="row fr d-none">
                                 <div class="form-group col-md-4">
                                     <label for="">ولایت</label>
                                     <select name="provence" id="provence" class="form-control">
@@ -155,7 +185,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="">ولسوالی</label>
-                                    <select name="odistrict_id " id="odistrict_id " class="form-control">
+                                    <select name="odistrict_id" id="odistrict_id" class="form-control">
                                         <option disabled selected>ولسوالی انتخاب کړی</option>
                                         @foreach ($district as $item)
                                             <option value="{{ $item->id }}">{{ $item->districtName }}</option>
@@ -170,9 +200,9 @@
                                 </div>
 
                             </div>
-                            <p>فعلی استوګنځی:</p>
+                            <p class="fr d-none">فعلی استوګنځی:</p>
 
-                            <div class="row">
+                            <div class="row fr d-none">
                                 <div class="form-group col-md-4">
                                     <label for="">ولایت</label>
                                     <select name="provence" id="provence" class="form-control">
@@ -186,7 +216,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="">ولسوالی</label>
-                                    <select name="cdistrict_id " id="odistrict_id " class="form-control">
+                                    <select name="cdistrict_id" id="cdistrict_id" class="form-control">
                                         <option disabled selected>ولسوالی انتخاب کړی</option>
                                         @foreach ($district as $item)
                                             <option value="{{ $item->id }}">{{ $item->districtName }}</option>
@@ -208,18 +238,30 @@
 
                             </div>
 
+                            <div class="row fr d-none">
+                                <div class="form-group col-md-4">
+                                    <label>د نماینده عکس</label>
+                                    <input type="file" name="photo" class="form-control">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>پشنهادی فایل</label>
+                                    <input type="file" name="suggestion_file" class="form-control">
+                                </div>
+                            </div>
+
 
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
-                        <button type="submit" class="btn btn-primary">ذخیره کول</button>
+                        <button type="submit" class="btn btn-primary fr d-none">ذخیره کول</button>
                     </form>
                     </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
-        </div> --}}
+        </div>
 
 
 
@@ -233,7 +275,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">د بنسټ د رسمی نماینده د ثبت برخه</h4>
+                        <h4 class="modal-title">د بنسټ د ثبت برخه</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -306,7 +348,7 @@
 
 
                             </div>
-                            <h6>د موسسی/بنسټ د ادرس برخه</h6>
+                            <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د موسسی/بنسټ د ادرس برخه</p>
 
                             <div class="row">
 
@@ -336,7 +378,7 @@
                                 </div>
 
                             </div>
-                            <h6>د بنسټ د ریس معلومات</h6>
+                            <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د بنسټ د ریس معلومات</p>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -380,7 +422,7 @@
 
                             </div>
 
-                            <h6>د موسسی/بنسټ د جواز او د جواز مراجعو برخه</h6>
+                            <p style="background-color:#6b6865; width: 35%;border-radius: 4px 4px;padding: 0.2rem; color:white">د موسسی/بنسټ د جواز او د جواز مراجعو برخه</p>
 
 
                             <div class="row">
@@ -407,17 +449,6 @@
                             <div class="row license">
 
                             </div>
-
-
-
-
-
-
-
-
-
-
-
 
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -596,6 +627,70 @@
 
 
             });
+
+
+
+            $(document).on('click','#companyId',function(e){
+                $('#company_id').val($(this).val());
+                var id=$(this).val();
+                $('#adetails').html('');
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('company.agent') }}/"+id,
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                        $('#agent_id').html('');
+                        $('#agent_id').append('<option selected disabled>د بنسټ نماینده انتخاب کړی</option>');
+
+                        $.each(response.agent, function(index, value) {
+                             $('#agent_id').append('<option value="'+value.id+'">'+value.agentName+'</option>');
+                           });
+                        // $("#exampleModal").modal("hide");
+                        // alert('samiullah it was successfuly added ');
+                        // $('#exampleModal').modal('hide');
+                        // $('#exampleModal').css('display', 'none');
+                        // $('[data-dismiss="modal"]').click();
+                        // $('#regForm')[0].reset();
+                    }
+                });
+
+            })
+
+
+            $(document).on('change','#nagent',function(){
+
+                $('.cagents').toggleClass('d-none');
+                $('.fr').toggleClass('d-none');
+                $('.table-agent').addClass('d-none');
+                $('#adetails').html('');
+
+            });
+
+            $(document).on('change','#agent_id',function(){
+                var id=$(this).val();
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('agent.details') }}/"+id,
+                    dataType: "json",
+                    success: function(response) {
+                        $('.table-agent').removeClass('d-none');
+                             $('#adetails').html('');
+                        // $.each(response.agent, function(index, value) {
+                             $('#adetails').html('<tr><td>'+response.agent.agentName+'</td><td>'+response.agent.fName+'</td><td>'+response.agent.NIC+'</td><td>'+response.agent.NIC+'</td><td><form method="POST" action="'+response.route+'">@csrf<input type="hidden" name="agent_id" value="'+response.agent_id+'"><input type="hidden" name="company_id" value="'+response.company_id+'"><div class="form-inline"><lable>پشنهادی فایل</lable><input type="file" name="suggestion_file" class="form-control"><input type="submit" value="نوی ثبت" class="btn btn-primary"></div></form></tr>');
+                        //    });
+                        // $("#exampleModal").modal("hide");
+                        // alert('samiullah it was successfuly added ');
+                        // $('#exampleModal').modal('hide');
+                        // $('#exampleModal').css('display', 'none');
+                        // $('[data-dismiss="modal"]').click();
+                        // $('#regForm')[0].reset();
+                    }
+                });
+
+            })
 
 
 
