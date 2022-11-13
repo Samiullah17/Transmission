@@ -42,7 +42,10 @@ class transmissionController extends Controller
     public function changeRate(Request $request){
 
         $transmission=transmissionType::where('id',$request->tra)->first();
-        
+        $transmission->rate=$request->rate;
+        $transmission->save();
+        return response()->json(['rate'=>$request->rate]);
+
 
         return response()->json(['rate'=>$request->rate,'tra'=>$request->tra]);
     }
@@ -63,7 +66,9 @@ class transmissionController extends Controller
 
             $data = transmission::where('id', $request->id)->first();
             $data->status = 0;
+            $data->rate=0;
             $data->save();
+            return response()->json(['rate'=>0]);
 
         }
 

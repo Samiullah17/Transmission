@@ -40,6 +40,7 @@
                                 <div class="form-group col-md-3 d-none pro form-inline">
                                     <label>د مخابری د پروګرام کولو قیمت وارد کړی</label>
                                     <input type="text" id="nrate" name="rate" class="form-control" placeholder="د پروګرام قیمت اعلان کړه">
+                                    <input type="hidden" name="hrate" id="hrate" class="form-control">
 
                                 </div>
 
@@ -235,7 +236,7 @@
                         $('#tbody').append('<tr id="tr"><td>' + value.company + '</td><td>' +
                             value.created_at + '</td><td>' + value.total_transmissions +
                             '</td><td><button type="button" value="' + value.order +
-                            '" class="btn btn-primary btnprogram">پروګرام کول</button></td></tr>'
+                            '" class="btn btn-primary btnprogram" onclick="program('+value.order+')">پروګرام کول</button></td></tr>'
                             );
 
                     });
@@ -244,7 +245,48 @@
 
         });
 
-        $(document).on('click', '.btnprogram', function(e) {
+        function program(oid){
+            var id=oid;
+            $('#hrate').val(id);
+            $.ajax({
+                type: "get",
+                url: "{{ route('transmission.program') }}/" + id,
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                    $('#tbody').html('');
+                    $('#thead').html('');
+                    $('#transmission_type_id').removeClass('d-none');
+                    $('#transmission_type_id1').removeClass('d-none');
+                    $('#company_id').addClass('d-none');
+                    $('#thead').append(
+                        '<tr><th>د مخابری ډول</th><th>د مخابری ماډل</th><th>سریال نمبر</th><th>ولایت</th><th>قیمت</th></tr>'
+                        )
+                    $.each(response.orders, function(index, value) {
+                        $('#tbody').append('<tr id="tr"><td>' + value.tname + '</td><td>' +
+                            value.mname + '</td><td>' + value.sNo + '</td><td>' + value
+                            .pname + '</td><td id="td'+value.id+'">' + value.rate +
+                            '</td><td><button type="button" id="btn' + value.id +
+                            '" value="' + value.id +
+                            '" class="btnpdone">پروګرام</button></td></tr>'
+                            )
+
+                    });
+
+                    $('#transmission_type_id').html('');
+
+                    $('#transmission_type_id').append('<option selected disabled>د مخابری ډول انتخاب کړی</option>')
+
+                    $.each(response.type, function(index,value) {
+                       $('#transmission_type_id').append('<option value="'+value.id+'">'+value.transmissionTypeName+'</option>');
+
+                    });
+                }
+            });
+
+        }
+
+        $(document).on('click', '.btnprogram1', function(e) {
             e.preventDefault();
             var id = $(this).val();
 
@@ -303,6 +345,8 @@
                 data: data,
                 dataType: "json",
                 success: function(response) {
+                    console.log(response);
+                    $('#td'+value).html(response.rate);
                     // $('#rate' + id1).html(response.rate);
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
@@ -327,6 +371,7 @@
                 dataType: "json",
                 success: function(response) {
                     // $('#rate' + id1).html(response.rate);
+                    $('#td'+value).html(response.rate);
 
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
@@ -358,6 +403,8 @@
                 success: function(response) {
                     // $('#rate' + id1).html(response.rate);
                     console.log(response);
+
+                    program($('#hrate').val());
 
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
