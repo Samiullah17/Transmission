@@ -68,6 +68,7 @@ class transmissionController extends Controller
             $data->status = 0;
             $data->rate=0;
             $data->save();
+            
             return response()->json(['rate'=>0]);
 
         }

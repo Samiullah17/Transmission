@@ -346,8 +346,8 @@ class companyController extends Controller
 
         $order1=order::join('companies','orders.company_id','companies.id')
         ->select('orders.*','companies.companyName as companyName')
-        ->where('companies.id',$id)->get();
-        $i = 0;
+        ->where('companies.id',$id)->where('orders.status',0)->get();
+
         // foreach($order1 as $row){
         //     $order3[$i++]=orderDetails::join('orders','orders.id','order_details.order_id')
         // ->where('order_details.order_id',$row->id)
@@ -357,9 +357,10 @@ class companyController extends Controller
 
         $orders = order::join('companies','companies.id','orders.company_id')
             ->join('order_details','order_details.order_id','orders.id')
-            ->selectRaw('companies.companyName company,orders.id `order`, orders.created_at created_at, SUM(order_details.transmissionQuantity) total_transmissions')
-            ->where('orders.company_id',$id)
-            ->groupByRaw('1,2,3')
+            ->join('company_agents','orders.company_agent_id','company_agents.id')
+            ->selectRaw('company_agents.agentName aname, companies.companyName company,orders.id `order`, orders.created_at created_at, SUM(order_details.transmissionQuantity) total_transmissions')
+            ->where('orders.company_id',$id)->where('orders.status',0)
+            ->groupByRaw('1,2,3,4')
             ->get();
         // $order2=orderDetails::where('order_id',$order1->id)->select(DB::raw('sum(order_details.transmissionQuantity) as totalT'))->get();
         $order3=orderDetails::join('orders','orders.id','order_details.order_id')
@@ -378,6 +379,14 @@ class companyController extends Controller
        'provences.provenceName as pname','transmissions.*')->where('companies.id',$id)->get();
 
         return response()->json(['order'=> $order,'orders'=>$orders]);
+    }
+
+
+    public function orderStatus($id){
+        $order=order::find($id);
+        $order->status=1;
+        $order->Save();
+        return response()->json(['order'=>$order,'message'=>'order status changed successfuly ']);
     }
 
 

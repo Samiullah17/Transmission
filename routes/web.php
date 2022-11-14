@@ -60,3 +60,4 @@ Route::get('transmission/rate',[transmissionController::class,'changeRate'])->na
 
 Route::get('company/agents/{id}',[agentController::class,'companyAgent'])->name('list.cagent');
 Route::post('save/agents',[agentController::class,'saveAgent'])->name('save.agentd');
+Route::get('order/status/{id?}',[companyController::class,'orderStatus'])->name('order.status');

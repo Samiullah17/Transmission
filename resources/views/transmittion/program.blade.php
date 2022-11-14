@@ -44,7 +44,9 @@
 
                                 </div>
 
-                                <input type="button" id="srate" value="ثبت کول" style="height: 2rem" class="btn btn-primary col-md-1 pro d-none btn-sm">
+                                <input type="button" id="srate" value="ثبت کول" style="height: 2rem" class="btn btn-primary col-md-1 pro d-none btn-sm mt-4">
+                                <div class="col-md-3"></div>
+                                <button id="btnprint" class="btn btn-primary col-md-1 mr-0 d-none btn-sm">چاپ کول</button>
 
                             </div>
 
@@ -63,13 +65,11 @@
 
 
 
-
-
-
                             <table id="table" class="table table-striped table-hover table-border">
                                 <thead id="thead">
                                     <tr>
                                         <th>د کمپنی نوم</th>
+                                        <th>د نماینده نوم</th>
                                         <th>د غوښتنی تاریخ</th>
                                         <th>په موجوده غوښتنه کی د ټولو مخابرو شمیر</th>
                                         <th></th>
@@ -79,6 +79,8 @@
                                 <tbody id="tbody">
 
                                 </tbody>
+
+
 
                             </table>
                         </div>
@@ -227,13 +229,13 @@
                     $('#tbody').html('');
                     $('#thead').html('');
                     $('#thead').append(
-                        '<tr><th>د کمپنی نوم</th><th>د غوښتنی د مراجعی نیته</th><th>په غوښتنه کی د ټولو مخابرو شمیر</th></tr>'
+                        '<tr><th>د کمپنی نوم</th><th>د نماینده نوم</th><th>د غوښتنی د مراجعی نیته</th><th>په غوښتنه کی د ټولو مخابرو شمیر</th></tr>'
                         );
                     console.log(response.orders);
 
 
                     $.each(response.orders, function(index, value) {
-                        $('#tbody').append('<tr id="tr"><td>' + value.company + '</td><td>' +
+                        $('#tbody').append('<tr id="tr"><td>' + value.company + '</td><td>'+value.aname+'</td><td>' +
                             value.created_at + '</td><td>' + value.total_transmissions +
                             '</td><td><button type="button" value="' + value.order +
                             '" class="btn btn-primary btnprogram" onclick="program('+value.order+')">پروګرام کول</button></td></tr>'
@@ -247,6 +249,7 @@
 
         function program(oid){
             var id=oid;
+            $('#btnprint').val(id);
             $('#hrate').val(id);
             $.ajax({
                 type: "get",
@@ -259,6 +262,7 @@
                     $('#transmission_type_id').removeClass('d-none');
                     $('#transmission_type_id1').removeClass('d-none');
                     $('#company_id').addClass('d-none');
+                    $('#btnprint').removeClass('d-none');
                     $('#thead').append(
                         '<tr><th>د مخابری ډول</th><th>د مخابری ماډل</th><th>سریال نمبر</th><th>ولایت</th><th>قیمت</th></tr>'
                         )
@@ -281,7 +285,9 @@
                        $('#transmission_type_id').append('<option value="'+value.id+'">'+value.transmissionTypeName+'</option>');
 
                     });
-                }
+
+
+                 }
             });
 
         }
@@ -405,6 +411,7 @@
                     console.log(response);
 
                     program($('#hrate').val());
+                    $('#nrate').val('');
 
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
@@ -412,9 +419,24 @@
             });
 
 
+         })
 
+         $(document).on('click','#btnprint',function(){
+            var id=$(this).val();
+            alert(id);
 
+            $.ajax({
+                type: "get",
+                url: "{{ route('order.status') }}/"+id,
+                dataType: "json",
+                success: function(response) {
+                    // $('#rate' + id1).html(response.rate);
+                    console.log(response);
 
+                    // $('#status' + sid).html('پروګرام شوه');
+                    // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
+                }
+            });
 
 
          })

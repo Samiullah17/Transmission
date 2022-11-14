@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(Company::class)->constrained();
             $table->foreignIdFor(companyAgent::class)->constrained();
             $table->string('suggestion_file');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
