@@ -30,7 +30,7 @@ class transmissionController extends Controller
             ->join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
             ->join('provences','transmissions.provence_id','provences.id')
             ->select('transmissions.serialNo as sNo','transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname',
-            'provences.provenceName as pname','transmissions.id as id','transmission_types.rate as rate')->where('orders.id',$id)->get();
+            'provences.provenceName as pname','transmissions.id as id','transmission_types.rate as rate')->where('orders.id',$id)->where('transmissions.status',0)->get();
 
             $type=transmissionType::all();
 
@@ -68,7 +68,7 @@ class transmissionController extends Controller
             $data->status = 0;
             $data->rate=0;
             $data->save();
-            
+
             return response()->json(['rate'=>0]);
 
         }
@@ -187,6 +187,43 @@ class transmissionController extends Controller
         $transmissionModel=transmissionModel::all();
         $transmissionType=transmissionType::all();
         return view('transmittion.add',compact('provence','transmissionModel','transmissionType','order'));
+
+    }
+
+    public function orderTransmissions($id){
+        $order=$id;
+         $transmissions=transmission::join('transmission_types','transmissions.transmission_type_id','transmission_types.id')
+         ->join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
+         ->join('provences','transmissions.provence_id','provences.id')
+         ->select('transmissions.*','transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname',
+         'provences.provenceName as pname')->where('transmissions.order_id',$id)->get();
+         return view('order.transmission',compact('transmissions','order'));
+
+    }
+
+    public function delete(Request $request){
+        transmission::where('id',$request->id)->delete();
+        orderDetails::where('order_id',$request->order)->decrement('transmissionQuantity');
+
+        $transmissions=transmission::join('transmission_types','transmissions.transmission_type_id','transmission_types.id')
+        ->join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
+        ->join('provences','transmissions.provence_id','provences.id')
+        ->select('transmissions.*','transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname',
+        'provences.provenceName as pname')->where('transmissions.order_id',$request->order)->get();
+
+         return response()->json(['data'=>$transmissions,'message'=>'Transmission Deleted Successfuly']);
+    }
+
+    public function edit(Request $request){
+        $tType=transmission::where('id',$request->id)->first()->transmission_type_id;
+        $tModel=transmission::where('id',$request->id)->first()->transmission_model_id;
+        $tProvence=transmission::where('id',$request->id)->first()->provence_id;
+        $tSerial=transmission::where('id',$request->id)->first()->serialNo;
+
+        $transmissionType=transmissionType::all();
+        $transmissionModel=transmissionModel::all();
+        $provences=provence::all();
+        return response()->json(['tType'=>$tType,'tModel'=>$tModel,'tProvence'=>$tProvence,'tSerial'=>$tSerial,'tra'=>$transmissionType,'tram'=>$transmissionModel,'pro'=>$provences]);
 
     }
 }

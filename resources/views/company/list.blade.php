@@ -61,9 +61,6 @@
                                     </tr>
 
                                     @endforeach
-
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -92,7 +89,7 @@
                         <div class="row">
                             <div class="col-md-4 cagents" >
                                 <select name="agent_id" id="agent_id" class="form-control">
-                                    <option selected disabled>د کمپنی/بنسټ نماینده انتخاب کړی</option>
+                                    <option selected>د کمپنی/بنسټ نماینده انتخاب کړی</option>
                                 </select>
 
                             </div>
@@ -127,19 +124,19 @@
                             <div class="row fr d-none">
 
                                 <div class="form-group col-md-4">
-                                    <label for="">د نماینده نوم</label>
+                                    <label for="">د نماینده نوم<span class="text-danger">*</span></label>
                                     <input type="text" name="agentName" class="form-control"
                                         placeholder="د نماینده نوم ولیکی">
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="">د پلار نوم</label>
+                                    <label for="">د پلار نوم<span class="text-danger">*</span></label>
                                     <input type="text" name="fName" class="form-control"
                                         placeholder="د نماینده د پلار نوم ">
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="">د نیکه نوم</label>
+                                    <label for="">د نیکه نوم<span class="text-danger">*</span></label>
                                     <input type="text" name="gFName" class="form-control"
                                         placeholder="د نماینده د نکیه نوم">
                                 </div>
@@ -149,13 +146,13 @@
 
 
                                 <div class="form-group col-md-4">
-                                    <label for="">د تذکره شمیره</label>
+                                    <label for="">د تذکره شمیره<span class="text-danger">*</span></label>
                                     <input type="text" name="NIC" class="form-control" placeholder="د تذکری شمیره">
                                 </div>
 
 
                                 <div class="form-group col-md-4">
-                                    <label for="">د تلفون شمیره</label>
+                                    <label for="">د تلفون شمیره<span class="text-danger">*</span></label>
                                     <input type="text" name="phone" class="form-control"
                                         placeholder="د نماینده داړیکی شمیره">
 
@@ -173,7 +170,7 @@
 
                             <div class="row fr d-none">
                                 <div class="form-group col-md-4">
-                                    <label for="">ولایت</label>
+                                    <label for="">ولایت<span class="text-danger">*</span></label>
                                     <select name="provence" id="provence" class="form-control">
                                         <option disabled selected>ولایت انتخاب کړی</option>
                                         @foreach ($provence as $item)
@@ -184,7 +181,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="">ولسوالی</label>
+                                    <label for="">ولسوالی<span class="text-danger">*</span></label>
                                     <select name="odistrict_id" id="odistrict_id" class="form-control">
                                         <option disabled selected>ولسوالی انتخاب کړی</option>
                                         @foreach ($district as $item)
@@ -194,7 +191,7 @@
                                 </div>
 
                                 <div class="from-group col-md-4">
-                                    <label for="">کلی</label>
+                                    <label for="">کلی<span class="text-danger">*</span></label>
                                     <input type="text" name="ovillage" class="form-control"
                                         placeholder="د اصلی کلی نوم ولیکی">
                                 </div>
@@ -204,8 +201,8 @@
 
                             <div class="row fr d-none">
                                 <div class="form-group col-md-4">
-                                    <label for="">ولایت</label>
-                                    <select name="provence" id="provence" class="form-control">
+                                    <label for="">ولایت<span class="text-danger">*</span></label>
+                                    <select name="cprovence" id="provence" class="form-control">
                                         <option disabled selected>ولایت انتخاب کړی</option>
                                         @foreach ($provence as $item)
                                             <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
@@ -215,7 +212,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="">ولسوالی</label>
+                                    <label for="">ولسوالی<span class="text-danger">*</span></label>
                                     <select name="cdistrict_id" id="cdistrict_id" class="form-control">
                                         <option disabled selected>ولسوالی انتخاب کړی</option>
                                         @foreach ($district as $item)
@@ -225,7 +222,7 @@
                                 </div>
 
                                 <div class="from-group col-md-4">
-                                    <label for="">کلی</label>
+                                    <label for="">کلی<span class="text-danger">*</span></label>
                                     <input type="text" name="cvillage" class="form-control"
                                         placeholder="د فعلی کلی نوم ولیکی">
                                 </div>
@@ -240,12 +237,12 @@
 
                             <div class="row fr d-none">
                                 <div class="form-group col-md-4">
-                                    <label>د نماینده عکس</label>
+                                    <label>د نماینده عکس<span class="text-danger">*</span></label>
                                     <input type="file" name="photo" class="form-control">
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>پشنهادی فایل</label>
+                                    <label>پشنهادی فایل<span class="text-danger">*</span></label>
                                     <input type="file" name="suggestion_file" class="form-control">
                                 </div>
                             </div>
@@ -263,10 +260,6 @@
             <!-- /.modal-dialog -->
         </div>
 
-
-
-
-
         {{-- End of Agent Register --}}
 
         {{-- Start Of Company Registration Model --}}
@@ -281,13 +274,13 @@
                         </button>
                     </div>
                     <div class="modal-body mr-5">
-                        <form action="{{ route('save.company') }}" method="POST" id="agentSave" enctype="multipart/form-data">
+                        <form action="{{ route('save.company') }}" method="POST" id="companySave" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">د موسسی/ بنسټ نوم</label>
+                                        <label for="">د موسسی/ بنسټ نوم<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="companyName"
                                             placeholder="د موسسی یا شرکت نوم داخل کړی">
                                         <span class="text text-danger" role="alert">
@@ -305,7 +298,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="text">د بنست ډول</label>
+                                        <label for="text">د بنست ډول<span class="text-danger">*</span></label>
                                         <select name="company_type_id" id="company_type_id"
                                             class="form-control">
                                             <option disabled selected>د بنست ډول انتخاب کړی</option>
@@ -326,7 +319,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">د فعالیت ډول</label>
+                                        <label for="">د فعالیت ډول<span class="text-danger">*</span></label>
                                         <select name="company_active_type_id" id="company_active_type_id"
                                             class="form-control">
                                             <option disabled selected>د فعالیت دول انتخاب کړی</option>
@@ -356,7 +349,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>د بنسټ/کمپنی آدرس</label>
+                                        <label>د بنسټ/کمپنی آدرس<span class="text-danger">*</span></label>
                                         <input type="text" placeholder="د کمپنی آدرس ولیکی" name="companyAddress" class="form-control">
                                     </div>
                                 </div>
@@ -382,7 +375,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="text">د بنست د ریس نوم</label>
+                                        <label for="text">د بنست د ریس نوم<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="companyManagerName"
                                             id="companyManagerName" placeholder="د بنست  ریس نوم ">
                                         <span class="text text-danger" role="alert">
@@ -395,7 +388,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="text">د بنست د ریس تابعیت</label>
+                                        <label for="text">د بنست د ریس تابعیت<span class="text-danger">*</span></label>
                                         <select name="citizenship_id" id="citizenship_id" class="form-control">
                                             <option selected disabled>تابعیت انتخاب کړی</option>
                                             @foreach ($citizenships as $item)
@@ -429,7 +422,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
 
-                                        <label>د جواز مرجع</label>
+                                        <label>د جواز مرجع<span class="text-danger">*</span></label>
                                         <select name="license_type_id" id="license_type_id"  class="form-control">
                                             <option selected disabled>د جواز مرجع انتخاب کړی</option>
                                             @foreach ($licenseType as $item)
@@ -482,6 +475,72 @@
     <script>
 
         $(document).ready(function() {
+
+
+            $("#agentSave").validate({
+                rules: {
+                    agentName: "required",
+                    fName: "required",
+                    gFName: "required",
+                    NIC: "required",
+                    phone: {
+                        required: true,
+                        number: true,
+                        minlength: 10,
+                        maxlength: 10,
+                    },
+                    provence: "required",
+                    cprovence: "required",
+                    odistrict_id: "required",
+                    cdistrict_id: "required",
+                    ovillage: "required",
+                    cvillage: "required",
+                    photo: "required",
+                    suggestion_file: "required",
+                },
+
+                messages: {
+                    agentName: "د نماینده نوم ضروری ده",
+                    fName: "د نماینده د پلار نوم ضروری ده",
+                    gFName: "د نماینده د نیکه نوم ضروری ده",
+                    NIC: "د تذکری شمیره ضروری ده",
+                    phone:{
+                        required: "د تلفون شمره ضروری ده",
+                        maxlength: "د تلفون شمیره باید له لسو عددونو زیاته نوی",
+                        minlength: "د تلفون شمیره باید له لسو عددونو څخه کمه نوی",
+                        number: "د تلفون شمیره کی یوازی اعداد باید داخل شی"
+                    },
+                    provence: "په مهربانی سره اصلی ولایت انتخاب کړی",
+                    cprovence: "په مهربانی سره اوسنی ولایت انتخاب کړی",
+                    odistrict_id: "اصلی ولسوالی ضروری ده",
+                    cdistrict_id: "فعلی ولسوالی ضروری ده",
+                    ovillage: "اصلی کلی داخل کړی",
+                    cvillage: "د اوسنی کلی نوم داخل کړی",
+                    photo: "د نماینده عکس داخل کړی",
+                    suggestion_file: "پشنهادی فایل ضروری ده",
+                }
+            });
+
+            $('#companySave').validate({
+                rules:{
+                    companyName:"required",
+                    company_type_id:"required",
+                    company_active_type_id:"required",
+                    companyAddress:"required",
+                    companyManagerName:"required",
+                    citizenship_id:"required",
+                    license_type_id:"required",
+                },
+                messages:{
+                    companyName:"د کمپنی نوم ضروری ده",
+                    company_type_id:"د کمپنی/بنسټ ډول ضروری ده",
+                    company_active_type_id:"د کمپنی/بنسټ د فعالیت ډول انتخاب کړی",
+                    companyAddress:"د کمپنی آدرس ضروری ده",
+                    companyManagerName:"د کمپنی/بنسټ د ریس نوم داخل کړی",
+                    citizenship_id:"د ریس تابعیت انتخاب کړی",
+                    license_type_id:"لیګ تر لیګه د یوه د جواز مرجع انتخاب کړی",
+                }
+            })
 
 
             function loadData(){
@@ -579,10 +638,10 @@
                 var id = $(this).val();
                  var economical=`<div class="form-group col-md-3" id="div`+id+`">
                     <button type="button" class="btn btn-sm btn-danger" onclick="$('#div`+id+`').remove()">Colse</button>
-                    <label>د اقتصاد وزارت جواز نمبر  </label>
+                    <label>جواز نمبر</label>
                     <input type="hidden" name="licenseTypeId[]" id="economical" value="`+id+`" class="form-control">
                     <input type="date" name="issueDate[]" id="issueDate" class="form-control">
-                    <input type="text"  placeholder="د اقتصاد وزارت جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
+                    <input type="text"  placeholder="جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
                     <input type="file" name="licenseFile[]" id="economicalId" class="form-control">
                      </div>
                     `;
@@ -642,7 +701,7 @@
                     success: function(response) {
                         console.log(response);
                         $('#agent_id').html('');
-                        $('#agent_id').append('<option selected disabled>د بنسټ نماینده انتخاب کړی</option>');
+                        $('#agent_id').append('<option selected>د بنسټ نماینده انتخاب کړی</option>');
 
                         $.each(response.agent, function(index, value) {
                              $('#agent_id').append('<option value="'+value.id+'">'+value.agentName+'</option>');

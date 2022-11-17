@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\transmissionModel;
 use App\Models\transmissionType;
 use App\Models\provence;
+use Illuminate\Support\Facades\DB;
 
 class agentController extends Controller
 {
@@ -94,6 +95,17 @@ class agentController extends Controller
         // return $agent;
 
 
+        $orders = order::join('companies','companies.id','orders.company_id')
+        ->join('order_details','order_details.order_id','orders.id')
+        ->join('company_agents','orders.company_agent_id','company_agents.id')
+        ->selectRaw('company_agents.agentName aname, orders.status status, companies.companyName company,orders.id `order`, orders.created_at created_at, SUM(order_details.transmissionQuantity) total_transmissions')
+        ->where('orders.company_id',$request->cid)->where('company_agents.id',$request->id)
+        ->groupByRaw('1,2,3,4')
+        ->get();
+
+
+
+
         $transmissions=companyAgent::Join('orders','company_agents.id','orders.company_agent_id')
         ->join('order_details','order_details.order_id','orders.id')
         ->join('transmission_types','transmission_types.id','order_details.transmission_type_id')
@@ -116,7 +128,7 @@ class agentController extends Controller
 
 
 
-        return view('agent.details',compact('agent','cagent','transmissions','company'));
+        return view('agent.details',compact('agent','cagent','transmissions','company','orders'));
 
 
     }

@@ -56,8 +56,15 @@ Route::get('transmission/status',[transmissionController::class,'changeStatus'])
 Route::post('transmission/save',[transmissionController::class,'saveTransmission'])->name('transmission.save1');
 Route::get('transmission/program/{id?}',[transmissionController::class,'program1'])->name('transmission.program');
 Route::get('transmission/rate',[transmissionController::class,'changeRate'])->name('transmission.rate');
+Route::get('order/transmission/{id}',[transmissionController::class,'orderTransmissions'])->name('order.transmission');
+Route::get('transmission/delete',[transmissionController::class,'delete'])->name('transmission.delete');
+Route::get('transmission/edit',[transmissionController::class,'edit'])->name('transmission.edit');
 
 
 Route::get('company/agents/{id}',[agentController::class,'companyAgent'])->name('list.cagent');
 Route::post('save/agents',[agentController::class,'saveAgent'])->name('save.agentd');
 Route::get('order/status/{id?}',[companyController::class,'orderStatus'])->name('order.status');
+
+Route::get('test',function(){
+    return view('test');
+});

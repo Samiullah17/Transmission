@@ -30,15 +30,22 @@
                     <div class="card-body table-responsive p-0">
                         <table class="table table-head-fixed">
                             <thead>
-                                <tr>
+                                {{-- <tr>
                                     <th>د مخابری ټایت</th>
                                      <th>تعداد</th>
-                                     <th>کتل</th>
+                                     <th>کتل</th> --}}
+
+
+                                     <th>د کمپنی نوم</th>
+                                     <th>د نماینده نوم</th>
+                                     <th>د غوښتنی د مراجعی نیټه</th>
+                                     <th>ّپه غوښتنه کی د ټولو مخابرو شمیر</th>
+                                     <th>حالت</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                @foreach ($transmissions as $item)
+                                {{-- @foreach ($transmissions as $item)
                                     <tr>
                                         <td>{{ $item->transmissionTypeName }}</td>
                                         <td>{{ $item->tquantity }}</td>
@@ -50,6 +57,28 @@
 
                                     </tr>
 
+
+                                @endforeach --}}
+
+                                @foreach ($orders as $order)
+
+                                <tr>
+                                    <td>{{ $order->company }}</td>
+                                    <td>{{ $order->aname }}</td>
+                                    <td>{{ $order->created_at }}</td>
+                                    <td>{{ $order->total_transmissions }}</td>
+                                     @if ($order->status==0)
+                                        <td><span style="color: red" class="text-bold">د پروګرام په حال کی</span></td>
+                                     @endif
+                                     @if ($order->status==1)
+                                     <td><span style="color: green" class="text-bold">پروګرام شوی</span></td>
+                                     @endif
+
+                                     <td><a href="{{ route('order.transmission',$order->order) }}" class="btn btn-primary">کتل</a></td>
+                                     <td><button type="button" class="btn btn-danger">حذف/پاکول</button></td>
+
+
+                                </tr>
 
                                 @endforeach
 

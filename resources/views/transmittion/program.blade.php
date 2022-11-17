@@ -20,9 +20,13 @@
                                         <button type="submit" class="btn btn-default"><i
                                                 class="fas fa-search"></i></button>
                                     </div>
-
                                 </div>
 
+
+
+                            </div>
+                            <div id="divprint" style="float: left;" class="d-none">
+                                <button id="btnprint" style="width: 5rem" class="btn btn-primary btn-sm">چاپ کول<i class="fa fa-print"></i></button>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -46,14 +50,8 @@
 
                                 <input type="button" id="srate" value="ثبت کول" style="height: 2rem" class="btn btn-primary col-md-1 pro d-none btn-sm mt-4">
                                 <div class="col-md-3"></div>
-                                <button id="btnprint" class="btn btn-primary col-md-1 mr-0 d-none btn-sm">چاپ کول</button>
 
                             </div>
-
-
-
-
-
 
                             <label>د مخابرو د پروګرام لپاره د کمپنی یا بنسټ نوم انتخاب کړی</label>
                             <select name="company_id" id="company_id" class="form-control">
@@ -263,6 +261,7 @@
                     $('#transmission_type_id1').removeClass('d-none');
                     $('#company_id').addClass('d-none');
                     $('#btnprint').removeClass('d-none');
+                    $('#divprint').removeClass('d-none');
                     $('#thead').append(
                         '<tr><th>د مخابری ډول</th><th>د مخابری ماډل</th><th>سریال نمبر</th><th>ولایت</th><th>قیمت</th></tr>'
                         )
@@ -423,8 +422,6 @@
 
          $(document).on('click','#btnprint',function(){
             var id=$(this).val();
-            alert(id);
-
             $.ajax({
                 type: "get",
                 url: "{{ route('order.status') }}/"+id,

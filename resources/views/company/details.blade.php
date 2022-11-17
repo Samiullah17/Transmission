@@ -118,8 +118,7 @@
                                         <td>{{ $item->email }}</td>
                                         <td></td>
                                         <td><a href="{{ route('agent.cdetails',['id'=>$item->id,'cid'=>$company->id]) }}" class="btn btn-primary">معلومات</a></td>
-                                        <td><a href="#" class="btn btn-primary">معلومات</a></td>
-                                    </tr>
+                                     </tr>
 
                                     @endforeach
                                 </tbody>
@@ -298,7 +297,7 @@
 
 
 
- 
+
 
 
             {{-- End of Second Dev --}}

@@ -233,7 +233,7 @@ class companyController extends Controller
 
         $cagent=Company::join('orders','companies.id','orders.company_id')
         ->rightjoin('company_agents','company_agents.id','orders.company_agent_id')
-        ->select('company_agents.*')->where('companies.id',$id)->get();
+        ->select('company_agents.*')->where('companies.id',$id)->groupBy('orders.company_agent_id')->get();
 
 
 
@@ -386,6 +386,22 @@ class companyController extends Controller
         $order=order::find($id);
         $order->status=1;
         $order->Save();
+        $transmissiontype=new transmissionType();
+        $transmission=transmissionType::find(1);
+        $transmission->rate=400;
+        $transmission->update();
+
+        $transmission=transmissionType::find(2);
+        $transmission->rate=600;
+        $transmission->update();
+
+        $transmission=transmissionType::find(3);
+        $transmission->rate=900;
+        $transmission->update();
+
+        $transmission=transmissionType::find(4);
+        $transmission->rate=1200;
+        $transmission->update();
         return response()->json(['order'=>$order,'message'=>'order status changed successfuly ']);
     }
 
