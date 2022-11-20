@@ -474,6 +474,10 @@
 @section('script')
     <script>
 
+ 
+
+
+
         $(document).ready(function() {
 
 
@@ -738,7 +742,7 @@
                         $('.table-agent').removeClass('d-none');
                              $('#adetails').html('');
                         // $.each(response.agent, function(index, value) {
-                             $('#adetails').html('<tr><td>'+response.agent.agentName+'</td><td>'+response.agent.fName+'</td><td>'+response.agent.NIC+'</td><td>'+response.agent.NIC+'</td><td><form method="POST" action="'+response.route+'">@csrf<input type="hidden" name="agent_id" value="'+response.agent_id+'"><input type="hidden" name="company_id" value="'+response.company_id+'"><div class="form-inline"><lable>پشنهادی فایل</lable><input type="file" name="suggestion_file" class="form-control"><input type="submit" value="نوی ثبت" class="btn btn-primary"></div></form></tr>');
+                             $('#adetails').html('<tr><td>'+response.agent.agentName+'</td><td>'+response.agent.fName+'</td><td>'+response.agent.NIC+'</td><td>'+response.agent.NIC+'</td><td><form method="POST" id="frmSugest" action="'+response.route+'">@csrf<input type="hidden" name="agent_id" value="'+response.agent_id+'"><input type="hidden" name="company_id" value="'+response.company_id+'"><div class="form-inline"><lable>پشنهادی فایل</lable><input type="file" name="suggestion_file" class="form-control"><input type="submit" value="نوی ثبت" class="btn btn-primary"></div></form></tr>');
                         //    });
                         // $("#exampleModal").modal("hide");
                         // alert('samiullah it was successfuly added ');

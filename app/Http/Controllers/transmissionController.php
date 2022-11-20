@@ -226,4 +226,24 @@ class transmissionController extends Controller
         return response()->json(['tType'=>$tType,'tModel'=>$tModel,'tProvence'=>$tProvence,'tSerial'=>$tSerial,'tra'=>$transmissionType,'tram'=>$transmissionModel,'pro'=>$provences]);
 
     }
+
+    public function saveEdit(Request $request){
+        $transmission=transmission::find($request->transmission_id);
+        $transmission->transmission_type_id = $request->transmission_type_id;
+        $transmission->transmission_model_id =$request->transmission_model_id;
+        $transmission->serialNo=$request->serialNO;
+        $transmission->provence_id =$request->provence_id;
+        $transmission->update();
+
+         return response()->json(['data'=>$request->all(),'message'=>'transmission Updated successfuly ']);
+    }
+
+    public function show($id){
+        $transmissions=transmission::join('transmission_types','transmissions.transmission_type_id','transmission_types.id')
+        ->join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
+        ->join('provences','transmissions.provence_id','provences.id')
+        ->select('transmissions.*','transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname',
+        'provences.provenceName as pname')->where('transmissions.order_id',$id)->get();
+         return response()->json(['message'=>'Data arived successfuly','data'=>$transmissions]);
+    }
 }

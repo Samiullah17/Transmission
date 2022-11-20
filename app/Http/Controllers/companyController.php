@@ -407,11 +407,48 @@ class companyController extends Controller
 
 
     public function edit($id){
+
+        $name=Company::where('id',$id)->first()->companyName;
+        $type=Company::where('id',$id)->first()->company_type_id;
+        $activeType=Company::where('id',$id)->first()->company_active_type_id;
+        $manager=Company::where('id',$id)->first()->companyManagerName;
+        $country=Company::where('id',$id)->first()->country_id;
+        $address=Company::where('id',$id)->first()->companyAddress;
+        $lat=Company::where('id',$id)->first()->latitude;
+        $lan=Company::where('id',$id)->first()->longtitude;
+
         $companyType=companyType::all();
         $companyActiveType=companyActiveType::all();
+        $countries=country::all();
         $citizenships=citizenship::all();
-        $countires=country::all();
-        $licenseType=licenseType::all();
-        return  view('company.edit',compact('companyType','companyActiveType','citizenships','countires','licenseType'));
+
+        return response()->json(['name'=>$name,'type'=>$type,'activeType'=>$activeType,'manager'=>$manager,'country'=>$country,'address'=>$address,'lat'=>$lat,
+        'lan'=>$lan,'companyType'=>$companyType,'companyActiveType'=>$companyActiveType,'countries'=>$countries,'citizenships'=>$citizenships]);
+
+    }
+
+
+    public function getCountry(){
+        return response()->json(['country'=>country::all()]);
+    }
+
+    public function update(Request $request){
+        $company=company::find($request->company_id);
+        $company->companyName=$request->companyName;
+        $company->company_type_id=$request->company_type_id;
+        $company->company_active_type_id=$request->company_active_type_id;
+        $company->companyManagerName=$request->companyManagerName;
+        $company->companyAddress=$request->companyAddress;
+        $company->latitude=$request->latitude;
+        $company->longtitude=$request->longtitude;
+        if($request->citizenship_id==1 || $request->citizenship_id==3){
+            $company->country_id =3;
+        }
+
+        else{
+            $company->country_id=$request->country_id;
+        }
+        $company->update();
+        return response()->json(['company'=>$request->all(),'message'=>'company Updated Successfuly']);
     }
 }

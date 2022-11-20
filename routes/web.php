@@ -46,7 +46,9 @@ Route::get('company/agent/{id?}',[agentController::class,'companyAgent'])->name(
 
 Route::get('list/company',[companyController::class,'index'])->name('list.company');
 Route::get('details/company/{id}',[companyController::class,'details'])->name('details.company');
-Route::get('edit/company{id}',[companyController::class,'edit'])->name('edit.company');
+Route::get('edit/company{id}',[companyController::class,'edit12'])->name('edit.company');
+Route::get('company/edit/{id}',[companyController::class,'edit'])->name('company.edit');
+Route::post('update/company',[companyController::class,'update'])->name('update.company');
 
 Route::post('company/{id}')->name('order.create');
 
@@ -59,11 +61,14 @@ Route::get('transmission/rate',[transmissionController::class,'changeRate'])->na
 Route::get('order/transmission/{id}',[transmissionController::class,'orderTransmissions'])->name('order.transmission');
 Route::get('transmission/delete',[transmissionController::class,'delete'])->name('transmission.delete');
 Route::get('transmission/edit',[transmissionController::class,'edit'])->name('transmission.edit');
+Route::post('transmission/saveEdit',[transmissionController::class,'saveEdit'])->name('transmission.saveEdit');
+Route::get('transmission/show/{id}',[transmissionController::class,'show'])->name('transmission.show');
 
 
 Route::get('company/agents/{id}',[agentController::class,'companyAgent'])->name('list.cagent');
 Route::post('save/agents',[agentController::class,'saveAgent'])->name('save.agentd');
 Route::get('order/status/{id?}',[companyController::class,'orderStatus'])->name('order.status');
+Route::get('get/country',[companyController::class,'getCountry'])->name('get.country');
 
 Route::get('test',function(){
     return view('test');
