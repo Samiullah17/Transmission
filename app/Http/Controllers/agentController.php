@@ -57,7 +57,7 @@ class agentController extends Controller
 
         $agent=Company::join('orders','companies.id','orders.company_id')
         ->join('company_agents','orders.company_agent_id','company_agents.id')->where('companies.id',$id)
-        ->select('company_agents.*')->get();
+        ->select('company_agents.*')->groupBy('orders.company_agent_id')->get();
         return response()->json(['agent'=>$agent]);
 
 

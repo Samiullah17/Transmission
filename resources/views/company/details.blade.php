@@ -18,9 +18,12 @@
 
 
 
+
+                                <button type="button" id="companyDelete" value="{{ $company->id }}" class="btn btn-danger"
+                                    data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button>
+
                                 <button type="button" id="companyEdit" value="{{ $company->id }}" class="btn btn-primary"
-                                    data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl">تغیرات
-                                    راوستل</button>
+                                    data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl"><i class="fas fa-edit"></i></button>
 
 
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
@@ -67,7 +70,7 @@
                                 <td>{{ $company->companyAddress }}</td>
                                 <td>{{ $company->latitude }}</td>
                                 <td>{{ $company->longtitude }}</td>
-                                <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه</button></td>
+                                <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i class="far fa-file-contract"></i></button></td>
 
 
                             </tbody>
@@ -96,8 +99,10 @@
                                         <td>{{ $item->ltname }}</td>
                                         <td>{{ $item->issueDate }}</td>
                                         <td>{{ $item->files }}</td>
-                                        <td><button type="button" value="{{ $item->id }}" id="licenseEdit" class="btn btn-primary">تغیر</button>
-                                        <button type="button" id="licenseDelete" class="btn btn-danger"><i class="bi bi-trash"></i></button></td>
+                                        <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
+                                                class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                                            <button type="button" id="licenseDelete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
 
                                     </tr>
                                 @endforeach
@@ -152,7 +157,8 @@
                                             @csrf
                                             <div class="row">
 
-                                                <input type="hidden" name="company_id" class="form-control" value="{{ $company->id }}">
+                                                <input type="hidden" name="company_id" class="form-control"
+                                                    value="{{ $company->id }}">
 
                                                 <div class="form-group col-md-4">
                                                     <label for="">د کمپنی/بنسټ نوم</label>
@@ -203,8 +209,8 @@
                                             <div class="row">
                                                 <div class="form-group col-md-4">
                                                     <label for="">د کمپنی/بنسټ د ریس نوم</label>
-                                                    <input type="text" name="companyManagerName" id="companyManagerName"
-                                                        class="form-control">
+                                                    <input type="text" name="companyManagerName"
+                                                        id="companyManagerName" class="form-control">
                                                 </div>
 
                                                 <div class="form-group col-md-4">
@@ -220,7 +226,8 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">بندول</button>
                                         <button type="submit" class="btn btn-primary">ذخیره کول</button>
                                         </form>
                                     </div>
@@ -241,6 +248,29 @@
 
         {{-- Start of Second Dev --}}
 
+
+
+        <div class="modal fade" id="modal-danger">
+            <div class="modal-dialog">
+                <div class="modal-content bg-danger">
+                    <div class="modal-header">
+                        <h4 class="modal-title">اخطار</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>آیا تاسو مطمین یې چی د ( {{ $company->companyName }} ) کمپنی/بنسټ حذف کړی؟</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">نه</button>
+                        <button type="button" class="btn btn-outline-light">هو</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
 
 
@@ -372,11 +402,11 @@
                                 $('.country').append('<lable>هیواد</lable>')
                                 $('.country').append(
                                     '<select name="country_id" id="country_id" class="form-control"></select>'
-                                    );
+                                );
 
                                 if (value.id == 2) {
 
-                                     $('#citizenship_id').append(
+                                    $('#citizenship_id').append(
                                         '<option selected value="' + value.id +
                                         '">' + value.citizenshipName + '</option>')
                                 } else {
@@ -432,7 +462,7 @@
 
                             $('.country').append(
                                 '<select name="country_id" id="country_id" class="form-control"><option selected disabled>هیواد انتخاب کړی</option></select>'
-                                )
+                            )
 
                             $.each(response.country, function(index, value) {
                                 $('#country_id').append('<option value="' + value.id +
@@ -441,9 +471,7 @@
 
                         }
                     })
-                }
-
-                else{
+                } else {
                     $('.country').html('');
                 }
 
@@ -452,19 +480,24 @@
             })
 
 
-            $(document).on('submit','#updateCompany',function(e){
+            $(document).on('submit', '#updateCompany', function(e) {
                 e.preventDefault();
                 $.ajax({
-                    type:"POST",
-                    url:"{{ route('update.company') }}",
-                    data:$(this).serialize(),
-                    dataType:"json",
-                    success:function(response){
+                    type: "POST",
+                    url: "{{ route('update.company') }}",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function(response) {
                         console.log(response);
+
+                        $('#modal-xl').css('display', 'none');
+                         $('[data-dismiss="modal"]').click();
+                         $('#updateCompany')[0].reset();
 
                     }
                 })
             })
+
 
 
 

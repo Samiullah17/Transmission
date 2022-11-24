@@ -1,5 +1,22 @@
 @extends('layouts.app')
 
+@section('style')
+    <style>
+        #toast-container * {
+            z-index: 3000;
+            background-color: #2ad606;
+            color: black;
+            font: bold;
+
+        }
+
+        .swal2-header *{
+            z-index:9000,
+
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="content-wrapper">
 
@@ -26,7 +43,8 @@
 
                             </div>
                             <div id="divprint" style="float: left;" class="d-none">
-                                <button id="btnprint" style="width: 5rem" class="btn btn-primary btn-sm">چاپ کول<i class="fa fa-print"></i></button>
+                                <button id="btnprint" style="width: 5rem" class="btn btn-primary btn-sm">چاپ کول<i
+                                        class="fa fa-print"></i></button>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -34,8 +52,9 @@
 
                             <div class="row" id="row">
                                 <div class="form-group col-md-3">
-                                    <label  id="transmission_type_id1" class="d-none">تخفیف ورکول</label>
-                                    <select name="transmission_type_id" id="transmission_type_id" class="form-control d-none">
+                                    <label id="transmission_type_id1" class="d-none">تخفیف ورکول</label>
+                                    <select name="transmission_type_id" id="transmission_type_id"
+                                        class="form-control d-none">
                                     </select>
 
                                 </div>
@@ -43,12 +62,14 @@
 
                                 <div class="form-group col-md-3 d-none pro form-inline">
                                     <label>د مخابری د پروګرام کولو قیمت وارد کړی</label>
-                                    <input type="text" id="nrate" name="rate" class="form-control" placeholder="د پروګرام قیمت اعلان کړه">
+                                    <input type="text" id="nrate" name="rate" class="form-control"
+                                        placeholder="د پروګرام قیمت اعلان کړه">
                                     <input type="hidden" name="hrate" id="hrate" class="form-control">
 
                                 </div>
 
-                                <input type="button" id="srate" value="ثبت کول" style="height: 2rem" class="btn btn-primary col-md-1 pro d-none btn-sm mt-4">
+                                <input type="button" id="srate" value="ثبت کول" style="height: 2rem"
+                                    class="btn btn-primary col-md-1 pro d-none btn-sm mt-4">
                                 <div class="col-md-3"></div>
 
                             </div>
@@ -228,16 +249,18 @@
                     $('#thead').html('');
                     $('#thead').append(
                         '<tr><th>د کمپنی نوم</th><th>د نماینده نوم</th><th>د غوښتنی د مراجعی نیته</th><th>په غوښتنه کی د ټولو مخابرو شمیر</th></tr>'
-                        );
+                    );
                     console.log(response.orders);
 
 
                     $.each(response.orders, function(index, value) {
-                        $('#tbody').append('<tr id="tr"><td>' + value.company + '</td><td>'+value.aname+'</td><td>' +
+                        $('#tbody').append('<tr id="tr"><td>' + value.company + '</td><td>' +
+                            value.aname + '</td><td>' +
                             value.created_at + '</td><td>' + value.total_transmissions +
                             '</td><td><button type="button" value="' + value.order +
-                            '" class="btn btn-primary btnprogram" onclick="program('+value.order+')">پروګرام کول</button></td></tr>'
-                            );
+                            '" class="btn btn-primary btnprogram" onclick="program(' + value
+                            .order + ')">پروګرام کول</button></td></tr>'
+                        );
 
                     });
                 }
@@ -245,8 +268,8 @@
 
         });
 
-        function program(oid){
-            var id=oid;
+        function program(oid) {
+            var id = oid;
             $('#btnprint').val(id);
             $('#hrate').val(id);
             $.ajax({
@@ -264,29 +287,31 @@
                     $('#divprint').removeClass('d-none');
                     $('#thead').append(
                         '<tr><th>د مخابری ډول</th><th>د مخابری ماډل</th><th>سریال نمبر</th><th>ولایت</th><th>قیمت</th></tr>'
-                        )
+                    )
                     $.each(response.orders, function(index, value) {
                         $('#tbody').append('<tr id="tr"><td>' + value.tname + '</td><td>' +
                             value.mname + '</td><td>' + value.sNo + '</td><td>' + value
-                            .pname + '</td><td id="td'+value.id+'">' + value.rate +
+                            .pname + '</td><td id="td' + value.id + '">' + value.rate +
                             '</td><td><button type="button" id="btn' + value.id +
                             '" value="' + value.id +
-                            '" class="btnpdone">پروګرام</button></td></tr>'
-                            )
+                            '" class="btnpdone"><i class="far fa-computer-classic"></i>پروګرام</button></td></tr>'
+                        )
 
                     });
 
                     $('#transmission_type_id').html('');
 
-                    $('#transmission_type_id').append('<option selected disabled>د مخابری ډول انتخاب کړی</option>')
+                    $('#transmission_type_id').append(
+                        '<option selected disabled>د مخابری ډول انتخاب کړی</option>')
 
-                    $.each(response.type, function(index,value) {
-                       $('#transmission_type_id').append('<option value="'+value.id+'">'+value.transmissionTypeName+'</option>');
+                    $.each(response.type, function(index, value) {
+                        $('#transmission_type_id').append('<option value="' + value.id + '">' + value
+                            .transmissionTypeName + '</option>');
 
                     });
 
 
-                 }
+                }
             });
 
         }
@@ -308,7 +333,7 @@
                     $('#company_id').addClass('d-none');
                     $('#thead').append(
                         '<tr><th>د مخابری ډول</th><th>د مخابری ماډل</th><th>سریال نمبر</th><th>ولایت</th><th>قیمت</th></tr>'
-                        )
+                    )
                     $.each(response.orders, function(index, value) {
                         $('#tbody').append('<tr id="tr"><td>' + value.tname + '</td><td>' +
                             value.mname + '</td><td>' + value.sNo + '</td><td>' + value
@@ -316,14 +341,16 @@
                             '</td><td><button type="button" id="btn' + value.id +
                             '" value="' + value.id +
                             '" class="btnpdone">پروګرام</button></td></tr>'
-                            )
+                        )
 
                     });
 
-                    $('#transmission_type_id').append('<option selected disabled>د مخابری ډول انتخاب کړی</option>')
+                    $('#transmission_type_id').append(
+                        '<option selected disabled>د مخابری ډول انتخاب کړی</option>')
 
-                    $.each(response.type, function(index,value) {
-                       $('#transmission_type_id').append('<option value="'+value.id+'">'+value.transmissionTypeName+'</option>');
+                    $.each(response.type, function(index, value) {
+                        $('#transmission_type_id').append('<option value="' + value.id + '">' +
+                            value.transmissionTypeName + '</option>');
 
                     });
                 }
@@ -334,7 +361,8 @@
         $(document).on('click', '.btnpdone', function(e) {
             e.preventDefault();
             var value = $(this).val();
-            $(this).html('پروګرام شوه').removeClass('btnpdone').addClass('cls').addClass('text-primary').removeClass('text-danger').addClass('text-bold');
+            $(this).html('پروګرام شوه').removeClass('btnpdone').addClass('cls').addClass('text-primary')
+                .removeClass('text-danger').addClass('text-bold');
             // $(this).removeClass('btnpdone');
             // $('#btn'+value).addClass('cls');
             // $(this).addClass('text-primary').removeClass('text-danger');
@@ -350,20 +378,38 @@
                 data: data,
                 dataType: "json",
                 success: function(response) {
+                    fireToastSuccess();
                     console.log(response);
-                    $('#td'+value).html(response.rate);
+                    $('#td' + value).html(response.rate);
+
                     // $('#rate' + id1).html(response.rate);
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
                 }
             });
 
-        })
+        });
 
-        $(document).on('click','.cls',function(e){
+
+        function fireToastSuccess() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-center',
+                showConfirmButton: false,
+                timer: 3000
+            });
+                Toast.fire({
+                    type: 'success',
+                    title: 'مخابره په بریالیتوب سره پروګرام شوه!'
+                })
+            };
+
+        $(document).on('click', '.cls', function(e) {
             e.preventDefault();
             var value = $(this).val();
-            $(this).html('ستونزه لری').removeClass('cls').addClass('btnpdone').removeClass('text-primary').addClass('text-danger');
+            $(this).html('ستونزه لری').removeClass('cls').addClass('btnpdone').removeClass(
+                'text-primary').addClass(
+                'text-danger');
             var data = {
                 'id': $(this).val(),
                 'status': 'pnotdone',
@@ -376,7 +422,8 @@
                 dataType: "json",
                 success: function(response) {
                     // $('#rate' + id1).html(response.rate);
-                    $('#td'+value).html(response.rate);
+                    $('#td' + value).html(response.rate);
+                    fireToastError();
 
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
@@ -384,20 +431,33 @@
             });
         })
 
-        $(document).on('change','#transmission_type_id',function(e){
+        function fireToastError() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-center',
+                showConfirmButton: false,
+                timer: 3000
+            });
+                Toast.fire({
+                    type: 'warning',
+                    title: 'مخابره ستونز لری'
+                })
+            };
+
+        $(document).on('change', '#transmission_type_id', function(e) {
             e.preventDefault();
             $('.pro').removeClass('d-none');
 
 
 
-         })
+        })
 
-         $(document).on('click','#srate',function(){
+        $(document).on('click', '#srate', function() {
 
 
-            var data={
-                'tra':$('#transmission_type_id').val(),
-                'rate':$('#nrate').val(),
+            var data = {
+                'tra': $('#transmission_type_id').val(),
+                'rate': $('#nrate').val(),
             }
 
             $.ajax({
@@ -418,17 +478,18 @@
             });
 
 
-         })
+        })
 
-         $(document).on('click','#btnprint',function(){
-            var id=$(this).val();
+        $(document).on('click', '#btnprint', function() {
+            var id = $(this).val();
             $.ajax({
                 type: "get",
-                url: "{{ route('order.status') }}/"+id,
+                url: "{{ route('order.status') }}/" + id,
                 dataType: "json",
                 success: function(response) {
                     // $('#rate' + id1).html(response.rate);
                     console.log(response);
+                    swal("مسج", "مخابری په بریالیتوب سره پروګرام شوی!!!", "success");
 
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
@@ -436,6 +497,6 @@
             });
 
 
-         })
+        })
     </script>
 @endsection

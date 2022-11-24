@@ -63,12 +63,14 @@ Route::get('transmission/delete',[transmissionController::class,'delete'])->name
 Route::get('transmission/edit',[transmissionController::class,'edit'])->name('transmission.edit');
 Route::post('transmission/saveEdit',[transmissionController::class,'saveEdit'])->name('transmission.saveEdit');
 Route::get('transmission/show/{id}',[transmissionController::class,'show'])->name('transmission.show');
+Route::get('all/transmission',[transmissionController::class,'allTransmissino'])->name('all.transmission');
 
 
 Route::get('company/agents/{id}',[agentController::class,'companyAgent'])->name('list.cagent');
 Route::post('save/agents',[agentController::class,'saveAgent'])->name('save.agentd');
 Route::get('order/status/{id?}',[companyController::class,'orderStatus'])->name('order.status');
 Route::get('get/country',[companyController::class,'getCountry'])->name('get.country');
+ 
 
 Route::get('test',function(){
     return view('test');

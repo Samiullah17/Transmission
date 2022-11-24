@@ -19,7 +19,7 @@
 {{--
                                 <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
                                     data-toggle="modal"data-target="#modal-xl">د مخابرو اضافه کول</button> --}}
-                                    <a href="{{ route('add.transmittion0',['id'=>$agent->id,'cid'=>$company->id]) }}" data-mdb-ripple-color="dark" class="btn btn-primary">د نوو مخابرو اضافه کول</a>
+                                    {{-- <a href="{{ route('add.transmittion0',['id'=>$agent->id,'cid'=>$company->id]) }}" data-mdb-ripple-color="dark" class="btn btn-primary">د نوو مخابرو اضافه کول</a> --}}
 
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
@@ -68,16 +68,19 @@
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->total_transmissions }}</td>
                                      @if ($order->status==0)
-                                        <td><span style="color: red" class="text-bold">د پروګرام په حال کی</span></td>
+                                        <td><span class="badge badge-danger text-bold">د پروګرام په حال کی</span></td>
                                      @endif
                                      @if ($order->status==1)
-                                     <td><span style="color: green" class="text-bold">پروګرام شوی</span></td>
+                                     <td><span class="badge badge-warning text-bold">پروګرام شوی</span></td>
                                      @endif
+                                     @if ($order->status==1)
+                                     <td><a href="{{ route('order.transmission',$order->order) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a></td>
+                                     @endif
+                                     @if ($order->status==0)
 
-                                     <td><a href="{{ route('order.transmission',$order->order) }}" class="btn btn-primary">کتل</a></td>
-                                     <td><button type="button" class="btn btn-danger">حذف/پاکول</button></td>
-
-
+                                     <td><a href="{{ route('order.transmission',$order->order) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                     <button type="button" class="btn btn-danger" data-toggle="modal"data-target="#modal-danger"><i class="fas fa-trash-alt"></button></td>
+                                     @endif
                                 </tr>
 
                                 @endforeach
@@ -88,15 +91,27 @@
 
 
 
+                        <div class="modal fade" id="modal-danger">
+                            <div class="modal-dialog">
+                                <div class="modal-content bg-danger">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">اخطار</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>آیا تاسو ډاډه یاست چي لاندینی غوښتنه پاکه کړی؟؟؟</p>
+                                     </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">نه</button>
+                                        <button type="button" class="btn btn-outline-light">هو</button>
+                                    </div>
+                                </div>
 
+                            </div>
 
-
-
-
-
-
-
-
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

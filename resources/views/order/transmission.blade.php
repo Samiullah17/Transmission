@@ -47,15 +47,55 @@
                                         <td>{{ $item->mname }}</td>
                                         <td>{{ $item->serialNo }}</td>
                                         <td>{{ $item->pname }}</td>
+                                        @if($item->ostatus==0)
                                         <td><button type="button" id="btnEdit" value="{{ $item->id }}"
                                                 class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"
-                                                data-toggle="modal" data-target="#modal-xl">تغیر</button>
-                                        <button type="button" id="btnDelete" value="{{ $item->id }}"
-                                                class="btn btn-danger btn-sm">حذف/پاکول</button></td>
+                                                data-toggle="modal" data-target="#modal-xl"><i
+                                                    class="fas fa-edit"></i></button>
+                                            <button type="button" id="btnDelete1" value="{{ $item->id }}"
+                                                class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                        @endif
+                                        @if ($item->status==0 && $item->ostatus==1)
+                                        <td><span class="badge badge-danger">ستونزه لری</span></td>
+                                        @endif
+                                        @if($item->status==1 && $item->ostatus==1)
+                                        <td><span class="badge badge-info">پروګرام شوی</span></td>
+                                        @endif
+                                        @if($item->status==0 && $item->ostatus==0)
+                                        <td><span class="badge badge-info">د پروګرام په حال کی</span></td>
+
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
+
+
+                        <div class="modal fade" id="modal-danger">
+                            <div class="modal-dialog">
+                                <div class="modal-content bg-danger">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">اخطار</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>آیا تاسو باوری یاست چي دا مخابره پاکه کړی؟؟&hellip;</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-outline-light"
+                                            data-dismiss="modal">نه</button>
+                                        <button type="button" id="btnDelete" class="btn btn-outline-light">هو</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
 
 
 
@@ -65,7 +105,7 @@
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">د بنسټ د ثبت برخه</h4>
+                                        <h5 class="modal-title">د مخابری د معلوماتو د تغیر برخه</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -152,6 +192,10 @@
 @endsection
 @section('script')
     <script>
+        $(document).on('click', '#btnDelete1', function(e) {
+            e.preventDefault();
+            $('#btnDelete').val($(this).val());
+        })
         $(document).on('click', '#btnDelete', function() {
 
             var data = {
@@ -172,10 +216,13 @@
                             .mname + '</td><td>' + value.serialNo + '</td><td>' + value
                             .pname + '</td><td><button type="button" id="btnEdit" value="' +
                             value.id +
-                            '" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"  data-toggle="modal" data-target="#modal-xl">تغیر راوستل</button><button type="button" id="btnDelete" value="' +
+                            '" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"  data-toggle="modal" data-target="#modal-xl"><i class="fas fa-edit"></i></button><button type="button" id="btnDelete1" value="' +
                             value.id +
-                            '" class="btn btn-danger btn-sm">حذف/پاکول</button></td></tr>');
+                            '" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button></td></tr>'
+                            );
                     });
+                    $('#modal-danger').css('display', 'none');
+                    $('[data-dismiss="modal"]').click();
                     console.log(response);
                 }
             });

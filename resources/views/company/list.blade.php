@@ -46,13 +46,9 @@
                                                     معلومات
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li class="dropdown-item"><a href="{{ route('edit.company',$company->id) }}"><i
-                                                                class="bi bi-archive"></i>تغیرات راوستل</a></li>
                                                     <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
                                                     <li class="dropdown-item"><button id="companyId" value="{{ $company->id }}" data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl1" class="text-primary">د مخابرو ثبت</button></li>
-                                                    <li class="dropdown-item"><a href="#"
-                                                            class="text text-danger">حذف</a></li>
-                                                    <li class="dropdown-divider"></li>
+
                                                 </ul>
                                             </div>
                                             <!-- /btn-group -->
@@ -341,7 +337,7 @@
 
 
                             </div>
-                            <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د موسسی/بنسټ د ادرس برخه</p>
+                            <p style="background-color:#dfe1e8; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:black" class="text-bold">د موسسی/بنسټ د ادرس برخه</p>
 
                             <div class="row">
 
@@ -371,7 +367,7 @@
                                 </div>
 
                             </div>
-                            <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د بنسټ د ریس معلومات</p>
+                            <p style="background-color:#dfe1e8; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:black" class="text-bold">د بنسټ د ریس معلومات</p>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -415,7 +411,7 @@
 
                             </div>
 
-                            <p style="background-color:#6b6865; width: 35%;border-radius: 4px 4px;padding: 0.2rem; color:white">د موسسی/بنسټ د جواز او د جواز مراجعو برخه</p>
+                            <p style="background-color:#dfe1e8; width: 35%;border-radius: 4px 4px;padding: 0.2rem; color:black" class="text-bold">د موسسی/بنسټ د جواز او د جواز مراجعو برخه</p>
 
 
                             <div class="row">
@@ -471,10 +467,20 @@
 
     </div>
 @endsection
+
 @section('script')
+@if (Session::has('success'))
+
+<script>
+    swal("Greet Job," ,"{!! Session::get('success') !!}","Ok",{
+        button:"OK",
+    })
+</script>
+
+@endif
     <script>
 
- 
+
 
 
 
@@ -761,5 +767,9 @@
         })
 
 
+
+
     </script>
+
+
 @endsection
