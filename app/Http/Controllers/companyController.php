@@ -475,6 +475,19 @@ class companyController extends Controller
             $company->country_id = $request->country_id;
         }
         $company->update();
-        return response()->json(['company' => $request->all(), 'message' => 'company Updated Successfuly']);
+        $cmp=Company::join('company_active_types','companies.company_active_type_id','company_active_types.id')
+        ->join('company_types','companies.company_type_id','company_types.id')
+        ->select('companies.*','company_active_types.companyName as aname','company_types.companyTypeName as tname')
+        ->where('companies.id',$request->company_id)->first();
+        return response()->json(['company' => $cmp, 'message' => 'د کمپنی معلومات په بریالیتوب سره تغیر شول!']);
+    }
+
+    public function editLicense($id){
+         $company=companyLicense::where('id',$id)->first()->company_id;
+         $licenseTypeId=companyLicense::where('id',$id)->first()->license_type_id;
+         $licenseType=licenseType::all();
+         $companyLicense=companyLicense::find($id);
+
+         return response()->json(['company'=>$company,'licenseTypeId'=>$licenseTypeId,'licenseType'=>$licenseType,'companyLicense'=>$companyLicense]);
     }
 }

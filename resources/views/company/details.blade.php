@@ -20,10 +20,12 @@
 
 
                                 <button type="button" id="companyDelete" value="{{ $company->id }}" class="btn btn-danger"
-                                    data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button>
+                                    data-toggle="modal" data-target="#modal-danger"><i
+                                        class="fas fa-trash-alt"></i></button>
 
                                 <button type="button" id="companyEdit" value="{{ $company->id }}" class="btn btn-primary"
-                                    data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl"><i class="fas fa-edit"></i></button>
+                                    data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl"><i
+                                        class="fas fa-edit"></i></button>
 
 
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
@@ -49,7 +51,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="cbody">
                                 <td>{{ $company->companyName }}</td>
                                 <td>{{ $company->aname }}</td>
                                 <td>{{ $company->tname }}</td>
@@ -70,7 +72,8 @@
                                 <td>{{ $company->companyAddress }}</td>
                                 <td>{{ $company->latitude }}</td>
                                 <td>{{ $company->longtitude }}</td>
-                                <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i class="far fa-file-contract"></i></button></td>
+                                <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i
+                                            class="far fa-file-contract"></i></button></td>
 
 
                             </tbody>
@@ -100,8 +103,10 @@
                                         <td>{{ $item->issueDate }}</td>
                                         <td>{{ $item->files }}</td>
                                         <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
-                                                class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                            <button type="button" id="licenseDelete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-edit"></i></button>
+                                            <button type="button" id="licenseDelete" value="{{ $item->id }}"
+                                                class="btn btn-danger"><i
+                                                    class="fas fa-trash-alt"></i></button>
                                         </td>
 
                                     </tr>
@@ -273,15 +278,40 @@
         </div>
 
 
-
-
-
-
-
-
         {{-- End of Second Dev --}}
+        {{-- Start of License Edit --}}
 
 
+
+        <div class="modal fade" id="modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">د {{ $company->companyName }} کمپنی/بنسټ د جواز د تغیر برخه</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                         <div id="LicenseEditDev" class="row">
+
+                         </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
+                        <button type="button" class="btn btn-primary">ثبت</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+
+
+
+        {{-- End of License Edit --}}
 
 
 
@@ -491,17 +521,89 @@
                         console.log(response);
 
                         $('#modal-xl').css('display', 'none');
-                         $('[data-dismiss="modal"]').click();
-                         $('#updateCompany')[0].reset();
+                        $('[data-dismiss="modal"]').click();
+                        $('#updateCompany')[0].reset();
+                        swal(response.message);
+                        $('#cbody').html('');
+                        if (response.company.country_id == 3) {
+
+                            var company = `<tr><td>` + response.company.companyName +
+                                `</td><td>` + response.company.aname + `</td>
+                            <td>` + response.company.tname + `</td><td>` + response.company.companyManagerName + `</td><td>داخلی</td>
+                            <td>` + response.company.companyAddress + `</td><td>` + response.company.latitude +
+                                `</td><td>` + response.company.longtitude +
+                                `</td>
+                            <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i class="far fa-file-contract"></i></button></td></tr>`;
+
+                        } else {
+
+                            var company = `<tr><td>` + response.company.companyName +
+                                `</td><td>` + response.company.aname + `</td>
+                            <td>` + response.company.tname + `</td><td>` + response.company.companyManagerName + `</td><td>خارجی</td>
+                            <td>` + response.company.companyAddress + `</td><td>` + response.company.latitude +
+                                `</td><td>` + response.company.longtitude +
+                                `</td>
+                            <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i class="far fa-file-contract"></i></button></td></tr>`;
+
+                        }
+
+                        $('#cbody').append(company);
 
                     }
                 })
             })
 
 
+            $(document).on('click', '#licenseEdit', function(e) {
+                e.preventDefault();
+                let url="{{ route('license.edit',':id') }}";
+                url=url.replace(':id',$(this).val());
+
+                $.ajax({
+                    type:"Get",
+                    url: url,
+                    dataType:"json",
+                    success:function(response){
+                        $('#LicenseEditDev').html('');
+
+                         let lNumber=`<div class="form-group col-md-3"><lable>د جواز نمبر</lable><input type="text" name="licenseNumber" class="form-control"
+                            value="`+response.companyLicense.licenseNumber+`"></div>`;
+
+                        $('#LicenseEditDev').append(lNumber);
+                        $('#LicenseEditDev').append('<div class="form-group col-md-3"><lable>د جواز مرجع</lable><select id="license_type_id" name="license_type_id" class="form-control"></select></div>');
+
+                        $.each(response.licenseType, function(index,value){
+                            if(value.id==response.licenseTypeId){
+                            $('#license_type_id').append('<option selected value="'+value.id+'">'+value.licenseTypeName+'</option>');
+                            }
+                            else{
+                                $('#license_type_id').append('<option value="'+value.id+'">'+value.licenseTypeName+'</option>');
+                            }
+                        })
+
+                        let lData=`<div class="form-group col-md-3"><lable>د جواز د صدور نیټه</lable><input type="date" name="issueDate" class="form-control"
+                            value="`+response.companyLicense.issueDate+`"></div>`;
+
+                         $('#LicenseEditDev').append(lData);
+
+                         let file=`<div class="form-group col-md-3"><lable>سکن شوی فایل</lable><input type="file" name="files" class="form-control"
+                            value="`+response.companyLicense.files+`"></div>`;
+
+                         $('#LicenseEditDev').append(file);
 
 
 
+
+
+                    }
+                })
+
+            })
+
+            $(document).on('click', '#licenseDelete', function(e) {
+                e.preventDefault();
+
+            })
 
         });
     </script>

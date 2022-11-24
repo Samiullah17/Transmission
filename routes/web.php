@@ -49,8 +49,8 @@ Route::get('details/company/{id}',[companyController::class,'details'])->name('d
 Route::get('edit/company{id}',[companyController::class,'edit12'])->name('edit.company');
 Route::get('company/edit/{id}',[companyController::class,'edit'])->name('company.edit');
 Route::post('update/company',[companyController::class,'update'])->name('update.company');
-
 Route::post('company/{id}')->name('order.create');
+Route::get('license/edit/{id}',[companyController::class,'editLicense'])->name('license.edit');
 
 Route::get('transmission/detials',[agentController::class,'traDetails'])->name('transmission.details');
 Route::get('programe/transmission',[transmissionController::class,'program'])->name('programe.transmission');
@@ -70,7 +70,7 @@ Route::get('company/agents/{id}',[agentController::class,'companyAgent'])->name(
 Route::post('save/agents',[agentController::class,'saveAgent'])->name('save.agentd');
 Route::get('order/status/{id?}',[companyController::class,'orderStatus'])->name('order.status');
 Route::get('get/country',[companyController::class,'getCountry'])->name('get.country');
- 
+
 
 Route::get('test',function(){
     return view('test');
