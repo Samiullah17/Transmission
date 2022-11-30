@@ -212,7 +212,12 @@ class transmissionController extends Controller
                 'provences.provenceName as pname',
                 'orders.status as ostatus'
             )->where('transmissions.order_id', $id)->get();
-        return view('order.transmission', compact('transmissions', 'order'));
+
+
+        $provence = provence::all();
+        $transmissionModel = transmissionModel::all();
+        $transmissionType = transmissionType::all();
+        return view('order.transmission', compact('transmissions', 'order','provence','transmissionModel','transmissionType'));
     }
 
     public function delete(Request $request)
@@ -257,6 +262,29 @@ class transmissionController extends Controller
         $transmission->update();
 
         return response()->json(['data' => $request->all(), 'message' => 'transmission Updated successfuly ']);
+    }
+
+    public function addNTransmission(Request $request){
+         $transmission=new transmission();
+         $transmission->transmission_type_id=$request->transmission_type_id;
+         $transmission->transmission_model_id=$request->transmission_model_id;
+         $transmission->serialNo=$request->serialNO;
+         $transmission->status=0;
+         $transmission->provence_id=$request->provence_id;
+         $transmission->order_id=$request->order_id;
+         $transmission->rate=0;
+         $transmission->save();
+        $tra=transmission::join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
+        ->join('transmission_types','transmissions.transmission_type_id','transmission_types.id')
+        ->join('provences','transmissions.provence_id','provences.id')
+        ->select('transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname',
+        'provences.provenceName as pname','transmissions.*')->where('transmissions.id',$transmission->id)->first();
+
+        $tr=transmission::where('id',$transmission->id)->first()->order_id;
+        $order=order::where('id',$tr)->first()->status;
+
+
+         return response()->json(['message'=>'مخابره په بریالیتوب سره ثبت شوه','tra'=>$tra,'order'=>$order]);
     }
 
     public function show($id)

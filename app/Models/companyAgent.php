@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class companyAgent extends Model
 {
     use HasFactory;
+
+    const IMAGE_PATH = 'public/agent/images';
 }

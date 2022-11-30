@@ -291,8 +291,8 @@
                     $.each(response.orders, function(index, value) {
                         $('#tbody').append('<tr id="tr"><td>' + value.tname + '</td><td>' +
                             value.mname + '</td><td>' + value.sNo + '</td><td>' + value
-                            .pname + '</td><td id="td' + value.id + '">' + value.rate +
-                            '</td><td><button type="button" id="btn' + value.id +
+                            .pname + '</td><td id="td' + value.id + '"><span id="rateSpan'+value.id+'">' + value.rate +
+                            '</span></td><td><button type="button" id="btn' + value.id +
                             '" value="' + value.id +
                             '" class="btnpdone"><i class="far fa-computer-classic"></i>پروګرام</button></td></tr>'
                         )
@@ -380,7 +380,8 @@
                 success: function(response) {
                     fireToastSuccess();
                     console.log(response);
-                    $('#td' + value).html(response.rate);
+                    $('#rateSpan' + value).html(response.rate);
+                    $('#rateSpan'+value).addClass('badge badge-success').removeClass('badge-danger');
 
                     // $('#rate' + id1).html(response.rate);
                     // $('#status' + sid).html('پروګرام شوه');
@@ -422,7 +423,8 @@
                 dataType: "json",
                 success: function(response) {
                     // $('#rate' + id1).html(response.rate);
-                    $('#td' + value).html(response.rate);
+                    $('#rateSpan' + value).html(response.rate);
+                    $('#rateSpan'+value).removeClass('badge-success').addClass('badge-danger');
                     fireToastError();
 
                     // $('#status' + sid).html('پروګرام شوه');

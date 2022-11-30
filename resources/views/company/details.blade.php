@@ -14,6 +14,17 @@
                             <div class="card-title">
 
 
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl1">د
+                                    نوی نماینده ثبت کول</button>
+
+
+
+
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modal-lg-add-license">د جواز اضافه کول</button>
+
+                                <button type="button" class="btn btn-primary jawaz"
+                                    data-mdb-ripple-color="dark">جوازونه</button>
 
 
 
@@ -26,6 +37,7 @@
                                 <button type="button" id="companyEdit" value="{{ $company->id }}" class="btn btn-primary"
                                     data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl"><i
                                         class="fas fa-edit"></i></button>
+
 
 
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
@@ -72,8 +84,8 @@
                                 <td>{{ $company->companyAddress }}</td>
                                 <td>{{ $company->latitude }}</td>
                                 <td>{{ $company->longtitude }}</td>
-                                <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i
-                                            class="far fa-file-contract"></i></button></td>
+                                {{-- <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i
+                                            class="far fa-file-contract"></i></button></td> --}}
 
 
                             </tbody>
@@ -81,31 +93,33 @@
 
 
                         <h6 style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white"
-                            id="jawaz1" class="d-none">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
+                            id="jawaz1">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
 
 
-                        <table id="jawaz" class="table table-striped table-bordered table-hover d-none">
+                        <table id="jawaz" class="table table-striped table-bordered table-hover">
 
                             <thead>
                                 <th>د جواز نمبر</th>
                                 <th>د جواز مرجع</th>
                                 <th>د جواز د صدرو تاریخ</th>
                                 <th>عکس</th>
-                                <th></th>
+
                             </thead>
-                            <tbody>
+                            <tbody id="licenseTbody">
 
 
                                 @foreach ($companylicense as $item)
                                     <tr>
-                                        <td>{{ $item->licenseNumber }}</td>
-                                        <td>{{ $item->ltname }}</td>
-                                        <td>{{ $item->issueDate }}</td>
-                                        <td>{{ $item->files }}</td>
+                                        <td id="lNumber{{ $item->id }}">{{ $item->licenseNumber }}</td>
+                                        <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
+                                        <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
+                                        <td><img height="80px" width="100px" src="{{ Storage::url($item->files) }}" alt=""></td>
                                         <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
-                                                class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-edit"></i></button>
+                                                class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i
+                                                    class="fas fa-edit"></i></button>
                                             <button type="button" id="licenseDelete" value="{{ $item->id }}"
-                                                class="btn btn-danger"><i
+                                                class="btn btn-danger" data-toggle="modal"
+                                                data-target="#modal-danger-license"><i
                                                     class="fas fa-trash-alt"></i></button>
                                         </td>
 
@@ -114,13 +128,11 @@
                             </tbody>
                         </table>
 
-                        <h6
-                            style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white">
-                            د بنسټ رسمی نماینده معلومات</h6>
+                        <h6 style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white">د بنسټ رسمی نماینده معلومات</h6>
 
 
 
-                        <table class="table table-striped table-hover table-border">
+                        {{-- <table class="table table-striped table-hover table-border">
                             <thead>
                                 <th>د نماینده نوم</th>
                                 <th>د پلار نوم</th>
@@ -142,6 +154,23 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                        </table> --}}
+
+                        <table class="table table-striped table-hover table-bordered">
+
+                            <thead>
+                                <th>د نماینده نوم</th>
+                                <th>د پلار نوم</th>
+                                <th>د تلفون شمیره</th>
+                                <th>ایمیل</th>
+                                <th>عکس</th>
+                                <th></th>
+                            </thead>
+
+                            <tbody id="agentTbody">
+
+                            </tbody>
+
                         </table>
 
 
@@ -278,6 +307,30 @@
         </div>
 
 
+        <div class="modal fade" id="modal-danger-license">
+            <div class="modal-dialog">
+                <div class="modal-content bg-danger">
+                    <div class="modal-header">
+                        <h4 class="modal-title">اخطار</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>آیا تاسو مطمین یې چي د {{ $company->companyName }} (<span id="license-delete"></span>) جواز
+                            پاک/حذف کړی؟</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">نه</button>
+                        <button type="button" id="btnDeleteLicense" class="btn btn-outline-light">هو</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
         {{-- End of Second Dev --}}
         {{-- Start of License Edit --}}
 
@@ -287,19 +340,25 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">د {{ $company->companyName }} کمپنی/بنسټ د جواز د تغیر برخه</h4>
+                        <h5 class="modal-title">د {{ $company->companyName }} کمپنی/بنسټ <span id="lEdit"></span>
+                            جواز د تغیر برخه</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                         <div id="LicenseEditDev" class="row">
+                        <form id="licenseEditForm" enctype="multipart/form-data">
+                            @csrf
 
-                         </div>
+
+                            <div id="LicenseEditDev" class="row">
+
+                            </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
-                        <button type="button" class="btn btn-primary">ثبت</button>
+                        <button type="submit" id="btnSubmit" class="btn btn-primary">ثبت</button>
+                        </form>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -312,6 +371,234 @@
 
 
         {{-- End of License Edit --}}
+
+
+        {{-- Start of License Adding --}}
+
+
+        <div class="modal fade" id="modal-lg-add-license">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">د {{ $company->companyName }} کمپنی/بنسټ <span id="lEdit"></span>
+                            جواز د ثبت برخه</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" id="licenseAddForm" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <input type="hidden" name="company_id" value="{{ $company->id }}"
+                                        class="form-control">
+                                    <label>د جواز مرجع </label>
+                                    <select name="license_type_id" id="license_type_id" class="form-control">
+                                        <option selected disabled>د جواز مرجع انتخاب کړی</option>
+                                        @foreach ($licenseType as $item)
+                                            <option value="{{ $item->id }}">{{ $item->licenseTypeName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>د جواز نمبر</label>
+                                    <input type="text" name="licenseNumber" placeholder="د جواز نمبر داخل کړی"
+                                        class="form-control">
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>د جواز د صدور نیټه</label>
+                                    <input type="date" name="issueDate" class="form-control">
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>د جواز سکن شوی فایل</label>
+                                    <input type="file" name="files" class="form-control">
+                                </div>
+                            </div>
+
+
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
+                        <button type="submit" id="licenseAddFormbutton" class="btn btn-primary">ثبت</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+
+        {{-- End of License Adding --}}
+
+        {{-- Start of Agent Registration --}}
+
+
+        <div class="modal fade" id="modal-xl1">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">د بنسټ د رسمی نماینده د ثبت برخه</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mr-5">
+                        {{-- نوی نماینده:<input type="radio" class="input-sm"> --}}
+                        {{-- پخوانی نماینده:<input type="radio" class="input-sm"> --}}
+
+
+
+                        <form action="{{ route('save.agent') }}" id="agentSave" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="row">
+
+
+
+
+
+                                <div class="form-group col-md-4">
+
+                                    <label for="">د نماینده نوم<span class="text-danger">*</span></label>
+                                    <input type="text" name="agentName" class="form-control"
+                                        placeholder="د نماینده نوم ولیکی">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د پلار نوم<span class="text-danger">*</span></label>
+                                    <input type="text" name="fName" class="form-control"
+                                        placeholder="د نماینده د پلار نوم ">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د نیکه نوم<span class="text-danger">*</span></label>
+                                    <input type="text" name="gFName" class="form-control"
+                                        placeholder="د نماینده د نکیه نوم">
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د تذکره شمیره<span class="text-danger">*</span></label>
+                                    <input type="text" name="NIC" class="form-control"
+                                        placeholder="د تذکری شمیره">
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د تلفون شمیره<span class="text-danger">*</span></label>
+                                    <input type="text" name="phone" class="form-control"
+                                        placeholder="د نماینده داړیکی شمیره">
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">ایمیل آدرس</label>
+                                    <input type="text" name="email" class="form-control"
+                                        placeholder="د نماینده ایمیل آدرس">
+                                </div>
+
+
+                            </div>
+                            <p class="">اصلی استوګنځی:</p>
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="">ولایت<span class="text-danger">*</span></label>
+                                    <select name="provence" id="provence" class="form-control">
+                                        <option disabled selected>ولایت انتخاب کړی</option>
+                                        @foreach ($provence as $item)
+                                            <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">ولسوالی<span class="text-danger">*</span></label>
+                                    <select name="odistrict_id" id="odistrict_id" class="form-control">
+                                        <option disabled selected>ولسوالی انتخاب کړی</option>
+                                        @foreach ($district as $item)
+                                            <option value="{{ $item->id }}">{{ $item->districtName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="from-group col-md-4">
+                                    <label for="">کلی<span class="text-danger">*</span></label>
+                                    <input type="text" name="ovillage" class="form-control"
+                                        placeholder="د اصلی کلی نوم ولیکی">
+                                </div>
+
+                            </div>
+                            <p class="">فعلی استوګنځی:</p>
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="">ولایت<span class="text-danger">*</span></label>
+                                    <select name="cprovence" id="provence" class="form-control">
+                                        <option disabled selected>ولایت انتخاب کړی</option>
+                                        @foreach ($provence as $item)
+                                            <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">ولسوالی<span class="text-danger">*</span></label>
+                                    <select name="cdistrict_id" id="cdistrict_id" class="form-control">
+                                        <option disabled selected>ولسوالی انتخاب کړی</option>
+                                        @foreach ($district as $item)
+                                            <option value="{{ $item->id }}">{{ $item->districtName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="from-group col-md-4">
+                                    <label for="">کلی<span class="text-danger">*</span></label>
+                                    <input type="text" name="cvillage" class="form-control"
+                                        placeholder="د فعلی کلی نوم ولیکی">
+                                </div>
+
+                                <input type="hidden" class="form-control" name="company_id" id="company_id"
+                                    value="{{ $company->id }}">
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>د نماینده عکس<span class="text-danger">*</span></label>
+                                    <input type="file" id="file" name="photo" class="form-control">
+                                </div>
+                            </div>
+
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
+                        <button type="submit" class="btn btn-primary">ذخیره کول</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+
+        {{-- End of Agent Registration --}}
 
 
 
@@ -331,6 +618,36 @@
         $(document).ready(function() {
 
 
+            loadAgent();
+
+
+
+
+            function loadAgent() {
+                let cid = $('#companyEdit').val();
+                let url = "{{ route('loade.agent', ':id') }}";
+                url = url.replace(':id', cid);
+
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                        $.each(response.agents, function(index, value) {
+
+                            $('#agentTbody').append('<tr><td>' + value.agentName + '</td><td>' +
+                                value.fName + '</td><td>' + value.phone + '</td><td>' +
+                                value.email + '</td><td> <img height="80px" width="100px"  src="http://localhost:8000/storage/' + value.photo.replace('public/','') +
+                                '" /></td><td><a href="{{ route('agent.cdetails') }}/' + value
+                                .id + '"  class="btn btn-primary">معلومات</a></td></tr>');
+
+                        });
+                    }
+                })
+            }
+
+
 
             $('#agentSave').on('submit', function(e) {
                 e.preventDefault();
@@ -338,17 +655,26 @@
                 $.ajax({
                     type: "POST",
                     url: "{{ route('save.agent') }}",
-                    data: $(this).serialize(),
+                    data: new FormData(this),
                     dataType: "json",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
                     success: function(response) {
                         // $("#exampleModal").modal("hide");
                         // alert('samiullah it was successfuly added ');
                         // $('#exampleModal').modal('hide');
-                        $('#modal-xl').css('display', 'none');
+                        console.log(response);
+                        $('#modal-xl1').css('display', 'none');
                         $('[data-dismiss="modal"]').click();
                         $('#agentSave')[0].reset();
+                        swal(response.message);
+
+                        $('#agentTbody').append('<tr><td>'+response.nagent.agentName+'</td><td>'+response.nagent.fName+'</td><td>'+response.nagent.phone+'</td><td>'+response.nagent.email+'</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +  response.nagent.photo.replace('public/','') +'" /></td><td><a href="{{ route('agent.cdetails') }}/' + response.nagent.id + '"  class="btn btn-primary">معلومات</a></td></tr>');
+
                     }
                 });
+
             })
 
             $(document).on('click', '.jawaz', function() {
@@ -460,12 +786,7 @@
                                             '<option selected value="' +
                                             value.id + '">' + value
                                             .contryName + '</option>')
-
-
                                     }
-
-
-
                                 });
 
                             }
@@ -556,40 +877,50 @@
 
             $(document).on('click', '#licenseEdit', function(e) {
                 e.preventDefault();
-                let url="{{ route('license.edit',':id') }}";
-                url=url.replace(':id',$(this).val());
+                let url = "{{ route('license.edit', ':id') }}";
+                url = url.replace(':id', $(this).val());
 
                 $.ajax({
-                    type:"Get",
+                    type: "Get",
                     url: url,
-                    dataType:"json",
-                    success:function(response){
+                    dataType: "json",
+                    success: function(response) {
                         $('#LicenseEditDev').html('');
 
-                         let lNumber=`<div class="form-group col-md-3"><lable>د جواز نمبر</lable><input type="text" name="licenseNumber" class="form-control"
-                            value="`+response.companyLicense.licenseNumber+`"></div>`;
+                        let lNumber = `<div class="form-group col-md-3"><lable>د جواز نمبر</lable><input type="text" name="licenseNumber" class="form-control"
+                            value="` + response.companyLicense.licenseNumber + `"></div>`;
 
                         $('#LicenseEditDev').append(lNumber);
-                        $('#LicenseEditDev').append('<div class="form-group col-md-3"><lable>د جواز مرجع</lable><select id="license_type_id" name="license_type_id" class="form-control"></select></div>');
+                        $('#LicenseEditDev').append(
+                            '<div class="form-group col-md-3"><lable>د جواز مرجع</lable><select id="license_type_id" name="license_type_id" class="form-control"></select></div>'
+                        );
 
-                        $.each(response.licenseType, function(index,value){
-                            if(value.id==response.licenseTypeId){
-                            $('#license_type_id').append('<option selected value="'+value.id+'">'+value.licenseTypeName+'</option>');
-                            }
-                            else{
-                                $('#license_type_id').append('<option value="'+value.id+'">'+value.licenseTypeName+'</option>');
+                        $.each(response.licenseType, function(index, value) {
+                            if (value.id == response.licenseTypeId) {
+                                $('#lEdit').html(value.licenseTypeName);
+                                $('#license_type_id').append(
+                                    '<option selected value="' + value.id + '">' +
+                                    value.licenseTypeName + '</option>');
+                            } else {
+                                $('#license_type_id').append('<option value="' + value
+                                    .id + '">' + value.licenseTypeName + '</option>'
+                                );
                             }
                         })
 
-                        let lData=`<div class="form-group col-md-3"><lable>د جواز د صدور نیټه</lable><input type="date" name="issueDate" class="form-control"
-                            value="`+response.companyLicense.issueDate+`"></div>`;
+                        let lData = `<div class="form-group col-md-3"><lable>د جواز د صدور نیټه</lable><input type="date" name="issueDate" class="form-control"
+                            value="` + response.companyLicense.issueDate + `"></div>`;
 
-                         $('#LicenseEditDev').append(lData);
+                        $('#LicenseEditDev').append(lData);
 
-                         let file=`<div class="form-group col-md-3"><lable>سکن شوی فایل</lable><input type="file" name="files" class="form-control"
-                            value="`+response.companyLicense.files+`"></div>`;
+                        let file = `<div class="form-group col-md-3"><lable>سکن شوی فایل</lable><input type="file" name="files" class="form-control"
+                            value="` + response.companyLicense.files + `"></div>`;
 
-                         $('#LicenseEditDev').append(file);
+                        let companyLicenseId = `<div class="form-group col-md-3"><input type="hidden" id="company_license_id" name="company_license_id" class="form-control"
+                        value="` + response.companyLicense.id + `"></div>`;
+
+                        $('#LicenseEditDev').append(file);
+                        $('#LicenseEditDev').append(companyLicenseId);
 
 
 
@@ -600,10 +931,119 @@
 
             })
 
-            $(document).on('click', '#licenseDelete', function(e) {
+            $(document).on('submit', '#licenseEditForm', function(e) {
                 e.preventDefault();
+                let lId = $('#company_license_id').val();
+
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('license.update') }}",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function(response) {
+                        // alert('Samiullah Jahani Stanikzai');
+                        console.log(response);
+                        $('#lNumber' + lId).html(response.companyLices.licenseNumber);
+                        $('#lTname' + lId).html(response.companyLices.ltname);
+                        $('#issueDate' + lId).html(response.companyLices.issueDate);
+                        $('#modal-lg').css('display', 'none');
+                        $('[data-dismiss="modal"]').click();
+                        $('#licenseEditForm')[0].reset();
+                        swal(response.message);
+
+                    }
+                })
 
             })
+
+            $(document).on('click', '#licenseDelete', function(e) {
+                e.preventDefault();
+                $('#license-delete').html($('#lTname' + $(this).val()).html());
+                $('#btnDeleteLicense').val($(this).val());
+            })
+
+            $(document).on('click', '#btnDeleteLicense', function(e) {
+                e.preventDefault();
+                let data = {
+                    'id': $(this).val(),
+                    'cmpId': $('#companyEdit').val(),
+                }
+                let url = "{{ route('license.delete') }}";
+
+
+
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    data: data,
+                    dataType: "json",
+                    success: function(response) {
+
+                        console.log(response);
+                        $('#licenseTbody').html('');
+                        $('#jawaz').removeClass('d-none');
+                        $.each(response.data, function(index, value) {
+
+                            $('#licenseTbody').append('<tr><td id="lNumber' + value.id +
+                                '">' + value.licenseNumber + '</td><td id="lTname' +
+                                value.id + '">' + value.ltname +
+                                '</td><td id="issueDate' + value.id + '">' + value
+                                .issueDate + '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' + value.files.replace('public/','') +
+                                '" /></td><td><button type="button" value="' + value
+                                .id +
+                                '" id="licenseEdit" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-edit"></i></button><button type="button" id="licenseDelete" value="' +
+                                value.id +
+                                '" class="btn btn-danger" data-toggle="modal" data-target="#modal-danger-license"><i class="fas fa-trash-alt"></i></button></td></tr>'
+                            );
+                        })
+                        swal(response.message);
+                        $('#modal-danger-license').css('display', 'none');
+                        $('[data-dismiss="modal"]').click();
+
+
+                    }
+                })
+
+
+            })
+
+
+
+            $(document).on('submit', '#licenseAddForm', function(e) {
+                e.preventDefault();
+
+                // console.log();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('add.license') }}",
+                    data: new FormData(this),
+                    dataType: "json",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(response) {
+                        // $("#exampleModal").modal("hide");
+                        // alert('samiullah it was successfuly added ');
+                        // $('#exampleModal').modal('hide');
+                        console.log(response);
+                        $('#modal-lg-add-license').css('display', 'none');
+                        $('[data-dismiss="modal"]').click();
+                        $('#licenseAddForm')[0].reset();
+                        swal(response.message);
+                        $('#licenseTbody').append('<tr><td>' + response.license.licenseNumber +
+                            '</td><td>' + response.license.lname + '</td><td>' + response
+                            .license.issueDate + '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +  response.license.files.replace('public/','') +
+                                '" /></td><td><button type="button" value="' + response.license.id +
+                            '" id="licenseEdit" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-edit"></i></button><button type="button" id="licenseDelete" value="' +
+                            response.license.id +
+                            '"class="btn btn-danger" data-toggle="modal"data-target="#modal-danger-license"><i class="fas fa-trash-alt"></i></button></td></tr>'
+                            )
+
+                    }
+                });
+            });
+
 
         });
     </script>

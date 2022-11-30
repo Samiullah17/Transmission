@@ -29,7 +29,7 @@ Route::post('save/company',[companyController::class,'saveCompnay'])->name('save
 Route::post('save/company1',[companyController::class,'saveCompany1'])->name('save.company1');
 
 Route::post('save/agent',[agentController::class,'saveAgent'])->name('save.agent');
-Route::get('agent/cdetails/{id?}/{cid?}',[agentController::class,'cdetails'])->name('agent.cdetails');
+Route::get('agent/cdetails/{id?}',[agentController::class,'cdetails'])->name('agent.cdetails');
 
 Route::get('add/transmittion',[companyController::class,'addTransmittion'])->name('add.transmittion');
 // Route::get('add/transmittion/{id}/{oId}',[transmissionController::class,'addTransmittion_new_transmission'])->name('add.transmittion.id');
@@ -50,7 +50,10 @@ Route::get('edit/company{id}',[companyController::class,'edit12'])->name('edit.c
 Route::get('company/edit/{id}',[companyController::class,'edit'])->name('company.edit');
 Route::post('update/company',[companyController::class,'update'])->name('update.company');
 Route::post('company/{id}')->name('order.create');
+Route::post('license/add',[companyController::class,'addLicense'])->name('add.license');
 Route::get('license/edit/{id}',[companyController::class,'editLicense'])->name('license.edit');
+Route::post('license/update',[companyController::class,'updateLicese'])->name('license.update');
+Route::get('license/delete',[companyController::class,'deleteLicense'])->name('license.delete');
 
 Route::get('transmission/detials',[agentController::class,'traDetails'])->name('transmission.details');
 Route::get('programe/transmission',[transmissionController::class,'program'])->name('programe.transmission');
@@ -64,12 +67,14 @@ Route::get('transmission/edit',[transmissionController::class,'edit'])->name('tr
 Route::post('transmission/saveEdit',[transmissionController::class,'saveEdit'])->name('transmission.saveEdit');
 Route::get('transmission/show/{id}',[transmissionController::class,'show'])->name('transmission.show');
 Route::get('all/transmission',[transmissionController::class,'allTransmissino'])->name('all.transmission');
+Route::post('add/nTransmission',[transmissionController::class,'addNTransmission'])->name('add.ntransmission');
 
 
 Route::get('company/agents/{id}',[agentController::class,'companyAgent'])->name('list.cagent');
 Route::post('save/agents',[agentController::class,'saveAgent'])->name('save.agentd');
 Route::get('order/status/{id?}',[companyController::class,'orderStatus'])->name('order.status');
 Route::get('get/country',[companyController::class,'getCountry'])->name('get.country');
+Route::get('load/agent/{id}',[agentController::class,'loadAgent'])->name('loade.agent');
 
 
 Route::get('test',function(){

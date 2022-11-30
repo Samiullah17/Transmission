@@ -90,13 +90,8 @@
 
                             </div>
 
-                            <div class="col-md-10"></div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>نوی نماینده ثبتول</label>
-                                    <input type="checkbox" name="nagent" id="nagent" class="input-sm">
-                                </div>
-                             </div>
+
+
                         </div>
                         <div class="row">
                             <table class="table table-striped table-hover table-bordered table-agent d-none">
@@ -115,140 +110,11 @@
                         </div>
 
 
-                        <form action="{{ route('save.agentd') }}" id="agentSave" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row fr d-none">
-
-                                <div class="form-group col-md-4">
-                                    <label for="">د نماینده نوم<span class="text-danger">*</span></label>
-                                    <input type="text" name="agentName" class="form-control"
-                                        placeholder="د نماینده نوم ولیکی">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="">د پلار نوم<span class="text-danger">*</span></label>
-                                    <input type="text" name="fName" class="form-control"
-                                        placeholder="د نماینده د پلار نوم ">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="">د نیکه نوم<span class="text-danger">*</span></label>
-                                    <input type="text" name="gFName" class="form-control"
-                                        placeholder="د نماینده د نکیه نوم">
-                                </div>
-                            </div>
-
-                            <div class="row fr d-none">
-
-
-                                <div class="form-group col-md-4">
-                                    <label for="">د تذکره شمیره<span class="text-danger">*</span></label>
-                                    <input type="text" name="NIC" class="form-control" placeholder="د تذکری شمیره">
-                                </div>
-
-
-                                <div class="form-group col-md-4">
-                                    <label for="">د تلفون شمیره<span class="text-danger">*</span></label>
-                                    <input type="text" name="phone" class="form-control"
-                                        placeholder="د نماینده داړیکی شمیره">
-
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="">ایمیل آدرس</label>
-                                    <input type="text" name="email" class="form-control"
-                                        placeholder="د نماینده ایمیل آدرس">
-                                </div>
-
-
-                            </div>
-                            <p class="fr d-none">اصلی استوګنځی:</p>
-
-                            <div class="row fr d-none">
-                                <div class="form-group col-md-4">
-                                    <label for="">ولایت<span class="text-danger">*</span></label>
-                                    <select name="provence" id="provence" class="form-control">
-                                        <option disabled selected>ولایت انتخاب کړی</option>
-                                        @foreach ($provence as $item)
-                                            <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="">ولسوالی<span class="text-danger">*</span></label>
-                                    <select name="odistrict_id" id="odistrict_id" class="form-control">
-                                        <option disabled selected>ولسوالی انتخاب کړی</option>
-                                        @foreach ($district as $item)
-                                            <option value="{{ $item->id }}">{{ $item->districtName }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="from-group col-md-4">
-                                    <label for="">کلی<span class="text-danger">*</span></label>
-                                    <input type="text" name="ovillage" class="form-control"
-                                        placeholder="د اصلی کلی نوم ولیکی">
-                                </div>
-
-                            </div>
-                            <p class="fr d-none">فعلی استوګنځی:</p>
-
-                            <div class="row fr d-none">
-                                <div class="form-group col-md-4">
-                                    <label for="">ولایت<span class="text-danger">*</span></label>
-                                    <select name="cprovence" id="provence" class="form-control">
-                                        <option disabled selected>ولایت انتخاب کړی</option>
-                                        @foreach ($provence as $item)
-                                            <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="">ولسوالی<span class="text-danger">*</span></label>
-                                    <select name="cdistrict_id" id="cdistrict_id" class="form-control">
-                                        <option disabled selected>ولسوالی انتخاب کړی</option>
-                                        @foreach ($district as $item)
-                                            <option value="{{ $item->id }}">{{ $item->districtName }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="from-group col-md-4">
-                                    <label for="">کلی<span class="text-danger">*</span></label>
-                                    <input type="text" name="cvillage" class="form-control"
-                                        placeholder="د فعلی کلی نوم ولیکی">
-                                </div>
-
-                                <input type="hidden" class="form-control" name="company_id" id="company_id">
-
-
-
-
-
-                            </div>
-
-                            <div class="row fr d-none">
-                                <div class="form-group col-md-4">
-                                    <label>د نماینده عکس<span class="text-danger">*</span></label>
-                                    <input type="file" name="photo" class="form-control">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label>پشنهادی فایل<span class="text-danger">*</span></label>
-                                    <input type="file" name="suggestion_file" class="form-control">
-                                </div>
-                            </div>
-
-
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
-                        <button type="submit" class="btn btn-primary fr d-none">ذخیره کول</button>
-                    </form>
+                        {{-- <button type="submit" class="btn btn-primary fr d-none">ذخیره کول</button> --}}
+
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -469,15 +335,7 @@
 @endsection
 
 @section('script')
-@if (Session::has('success'))
 
-<script>
-    swal("Greet Job," ,"{!! Session::get('success') !!}","Ok",{
-        button:"OK",
-    })
-</script>
-
-@endif
     <script>
 
 
@@ -728,17 +586,11 @@
             })
 
 
-            $(document).on('change','#nagent',function(){
 
-                $('.cagents').toggleClass('d-none');
-                $('.fr').toggleClass('d-none');
-                $('.table-agent').addClass('d-none');
-                $('#adetails').html('');
-
-            });
 
             $(document).on('change','#agent_id',function(){
                 var id=$(this).val();
+              
 
                 $.ajax({
                     type: "GET",
@@ -747,8 +599,9 @@
                     success: function(response) {
                         $('.table-agent').removeClass('d-none');
                              $('#adetails').html('');
+                             console.log(response);
                         // $.each(response.agent, function(index, value) {
-                             $('#adetails').html('<tr><td>'+response.agent.agentName+'</td><td>'+response.agent.fName+'</td><td>'+response.agent.NIC+'</td><td>'+response.agent.NIC+'</td><td><form method="POST" id="frmSugest" action="'+response.route+'">@csrf<input type="hidden" name="agent_id" value="'+response.agent_id+'"><input type="hidden" name="company_id" value="'+response.company_id+'"><div class="form-inline"><lable>پشنهادی فایل</lable><input type="file" name="suggestion_file" class="form-control"><input type="submit" value="نوی ثبت" class="btn btn-primary"></div></form></tr>');
+                             $('#adetails').html('<tr><td>'+response.agent.agentName+'</td><td>'+response.agent.fName+'</td><td>'+response.agent.NIC+'</td><td>'+response.agent.NIC+'</td><td><form method="POST" id="frmSugest" action="'+response.route+'">@csrf<input type="hidden" name="agent_id" value="'+response.agent_id+'"><input type="hidden" name="company_id" value="'+response.company_id+'"><div class="form-inline"><lable>پشنهادی فایل</lable><input type="file" name="suggestion_file" class="form-control"><input type="submit" value="ثبت" class="btn btn-primary"></div></form></tr>');
                         //    });
                         // $("#exampleModal").modal("hide");
                         // alert('samiullah it was successfuly added ');

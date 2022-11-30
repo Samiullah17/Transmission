@@ -9,8 +9,8 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                د {{ $agent->agentName }} د مخابرو لیست چی د {{ $agent->companyName }} کمپنی لپاره یی راوړی
-                                <input type="hidden" value="{{ $agent->id }}" id="agentId">
+                                د {{ $aname->agentName }} د مخابرو لیست چی د {{ $company->companyName }} کمپنی لپاره یی راوړی
+                                <input type="hidden" value="{{ $aname->id }}" id="agentId">
                               </div>
                             <div class="card-title">
 
@@ -28,14 +28,44 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-bordred table-hover">
+                            <thead>
+                                <th>د نماینده نوم</th>
+                                <th>د پلار نوم</th>
+                                <th>د نیکه نوم</th>
+                                <th>د تلفون شمیره</th>
+                                <th>ایمیل</th>
+                                <th>د تذکری شمیره</th>
+                                <th>اصلی ولسوالی</th>
+                                <th>اصلی کلی</th>
+                                <th>اوسنی ولسوالی</th>
+                                <th>اوسنی کلی</th>
+
+
+                            </thead>
+                            <tbody>
+
+
+                                <tr>
+                                    <td>{{ $curentAgent->agentName }}</td>
+                                    <td>{{ $curentAgent->fName }}</td>
+                                    <td>{{ $curentAgent->gFName }}</td>
+                                    <td>{{ $curentAgent->phone }}</td>
+                                    <td>{{ $curentAgent->email }}</td>
+                                    <td>{{ $curentAgent->NIC }}</td>
+                                    <td>{{ $curentAgent->oname }}</td>
+                                    <td>{{ $curentAgent->ovillage }}</td>
+                                    <td>{{ $curentAgent->cname }}</td>
+                                    <td>{{ $curentAgent->cvillage }}</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+
+                        <h6 style="background-color:#7f8f7f; width: 40%;border-radius: 4px 4px;padding: 0.4rem; color:white">د بنسټ رسمی نماینده  لخوا د راوړل شویو وړاندیزونو لیست</h6>
                         <table class="table table-head-fixed">
                             <thead>
-                                {{-- <tr>
-                                    <th>د مخابری ټایت</th>
-                                     <th>تعداد</th>
-                                     <th>کتل</th> --}}
-
-
                                      <th>د کمپنی نوم</th>
                                      <th>د نماینده نوم</th>
                                      <th>د غوښتنی د مراجعی نیټه</th>
@@ -45,20 +75,6 @@
                             </thead>
                             <tbody>
 
-                                {{-- @foreach ($transmissions as $item)
-                                    <tr>
-                                        <td>{{ $item->transmissionTypeName }}</td>
-                                        <td>{{ $item->tquantity }}</td>
-                                        <td><button id="btn{{ $item->id }}" value="{{ $item->id }}" class="btn btn-primary btntr">+</button>
-
-                                        </td>
-                                    </tr>
-                                    <tr class="btn{{ $item->id }}">
-
-                                    </tr>
-
-
-                                @endforeach --}}
 
                                 @foreach ($orders as $order)
 

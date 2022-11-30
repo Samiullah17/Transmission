@@ -27,7 +27,8 @@ return new class extends Migration
             $table->string('ovillage');
             $table->foreignIdFor(district::class,'cdistrict_id')->constrained('districts');
             $table->string('cvillage');
-            $table->string('photo');
+            $table->string('photo')->nullable();
+            $table->foreignIdFor(Company::class)->constrained();
             $table->timestamps();
         });
     }

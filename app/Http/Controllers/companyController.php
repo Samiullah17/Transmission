@@ -248,6 +248,9 @@ class companyController extends Controller
                 'license_types.licenseTypeName as ltname'
             )->where('companies.id', $id)->first();
 
+
+            $licenseType=licenseType::all();
+
         $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
             ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
             ->select('company_licenses.*', 'license_types.licenseTypeName as ltname')->where('companies.id', $company->id)->get();
@@ -258,7 +261,7 @@ class companyController extends Controller
 
 
 
-        return view('company.details', compact('company', 'provence', 'district', 'companylicense', 'cagent'));
+        return view('company.details', compact('company', 'provence', 'district', 'companylicense', 'cagent','licenseType'));
     }
 
 
@@ -489,5 +492,47 @@ class companyController extends Controller
          $companyLicense=companyLicense::find($id);
 
          return response()->json(['company'=>$company,'licenseTypeId'=>$licenseTypeId,'licenseType'=>$licenseType,'companyLicense'=>$companyLicense]);
+    }
+
+    public function updateLicese(Request $request){
+         $companyLicense=companyLicense::find($request->company_license_id);
+         $companyLicense->license_type_id = $request->license_type_id;
+         $companyLicense->licenseNumber=$request->licenseNumber;
+         $companyLicense->issueDate=$request->issueDate;
+         $companyLicense->update();
+
+         $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
+         ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
+         ->select('company_licenses.*', 'license_types.licenseTypeName as ltname','companies.companyName as cname')->where('company_licenses.id', $request->company_license_id)->first();
+
+
+         return response()->json(['companyLices'=>$companylicense,'message'=>'د کمپنی لیسانس په بریالیتوب سره تغیر شو!']);
+
+    }
+
+    public function deleteLicense(Request $request){
+        $cmp=companyLicense::find($request->id)->delete();
+        $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
+        ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
+        ->select('company_licenses.*', 'license_types.licenseTypeName as ltname')->where('companies.id', $request->cmpId)->get();
+        return response()->json(['data'=>$companylicense,'message'=>'د کمپنی لیسانس په بریالیتوب سره پاک/حذف شو!']);
+
+    }
+
+
+    public function addLicense(Request $request){
+
+
+        $cmpLicense=new companyLicense();
+        $cmpLicense->company_id=$request->company_id;
+        $cmpLicense->license_type_id=$request->license_type_id;
+        $cmpLicense->licenseNumber=$request->licenseNumber;
+        $cmpLicense->issueDate=$request->issueDate;
+        $cmpLicense->files=$request->file('files')->store(companyLicense::IMAGE_PATH);
+        $cmpLicense->save();
+        $clicense= companyLicense::join('companies','company_licenses.company_id','companies.id')
+        ->join('license_types','company_licenses.license_type_id','license_types.id')
+        ->select('companies.companyName as cname','license_types.licenseTypeName as lname','company_licenses.*')->where('company_licenses.id',$cmpLicense->id)->first();
+        return response()->json(['message'=>'د کمپنی لیسانس په بریالیتوب سره اضافه کړل شو!','license'=>$clicense]);
     }
 }
