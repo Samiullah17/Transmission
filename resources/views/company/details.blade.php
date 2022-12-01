@@ -9,18 +9,30 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                اضافی معلومات
-                            </div>
+                                د {{ $company->companyName }} کمپنی/بنسټ
+                             </div>
                             <div class="card-title">
 
 
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl1">د
+
+                                <button type="button" class="btn btn-primary backAgent d-none">
+                                    شاته تلل</button>
+
+
+
+
+                                <button type="button" class="btn btn-primary showAgents">
+                                           نماینده ګان</button>
+
+
+
+                                <button type="button" class="btn btn-primary d-none abutton" data-toggle="modal" data-target="#modal-xl1">د
                                     نوی نماینده ثبت کول</button>
 
 
 
 
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                <button type="button" class="btn btn-primary addLicense d-none" data-toggle="modal"
                                     data-target="#modal-lg-add-license">د جواز اضافه کول</button>
 
                                 <button type="button" class="btn btn-primary jawaz"
@@ -30,11 +42,11 @@
 
 
 
-                                <button type="button" id="companyDelete" value="{{ $company->id }}" class="btn btn-danger"
+                                <button type="button" id="companyDelete" value="{{ $company->id }}" class="btn btn-danger companyDelete"
                                     data-toggle="modal" data-target="#modal-danger"><i
                                         class="fas fa-trash-alt"></i></button>
 
-                                <button type="button" id="companyEdit" value="{{ $company->id }}" class="btn btn-primary"
+                                <button type="button" id="companyEdit" value="{{ $company->id }}" class="btn btn-primary companyEdit"
                                     data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl"><i
                                         class="fas fa-edit"></i></button>
 
@@ -49,7 +61,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-head-fixed">
+                        <table class="table table-head-fixed company">
                             <thead>
                                 <tr>
                                     <th>د کمپنی نوم</th>
@@ -92,11 +104,11 @@
                         </table>
 
 
-                        <h6 style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white"
+                        <h6 class="d-none" style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white"
                             id="jawaz1">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
 
 
-                        <table id="jawaz" class="table table-striped table-bordered table-hover">
+                        <table id="jawaz" class="table table-striped table-bordered table-hover d-none">
 
                             <thead>
                                 <th>د جواز نمبر</th>
@@ -156,7 +168,7 @@
                             </tbody>
                         </table> --}}
 
-                        <table class="table table-striped table-hover table-bordered">
+                        <table class="table table-striped table-hover table-bordered d-none agents">
 
                             <thead>
                                 <th>د نماینده نوم</th>
@@ -617,6 +629,50 @@
         var citizenship = 0;
         $(document).ready(function() {
 
+            $(document).on('click','.showAgents',function(e){
+                e.preventDefault();
+                $('.abutton').removeClass('d-none');
+                $('.company').addClass('d-none');
+                $('.agents').removeClass('d-none');
+                $(this).addClass('d-none');
+                $('.addLicense').addClass('d-none');
+                $('.jawaz').addClass('d-none');
+                $('.companyDelete').addClass('d-none');
+                $('.companyEdit').addClass('d-none');
+                $('.backAgent').removeClass('d-none');
+            })
+
+            $(document).on('click','.backAgent',function(e){
+                e.preventDefault();
+                $(this).addClass('d-none');
+                $('.abutton').addClass('d-none');
+                $('.company').removeClass('d-none');
+                $('.agents').addClass('d-none');
+                $('.addLicense').addClass('d-none');
+                $('#jawaz').addClass('d-none');
+
+                $('.jawaz').removeClass('d-none');
+                $('.companyDelete').removeClass('d-none');
+                $('.companyEdit').removeClass('d-none');
+                 $('.showAgents').removeClass('d-none');
+
+            })
+
+            $(document).on('click','.jawaz',function(e){
+                e.preventDefault();
+                $('.addLicense').removeClass('d-none');
+                $('.company').addClass('d-none');
+                $(this).addClass('d-none');
+                $('.companyDelete').addClass('d-none');
+                $('.companyEdit').addClass('d-none');
+                $('.backAgent').removeClass('d-none');
+                $('#jawaz').removeClass('d-none');
+                $('.showAgents').addClass('d-none');
+            })
+
+
+
+
 
             loadAgent();
 
@@ -678,8 +734,8 @@
             })
 
             $(document).on('click', '.jawaz', function() {
-                $('#jawaz').toggleClass('d-none');
-                $('#jawaz1').toggleClass('d-none');
+                // $('#jawaz').toggleClass('d-none');
+                // $('#jawaz1').toggleClass('d-none');
             })
 
 

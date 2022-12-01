@@ -15,7 +15,7 @@
 
 
                                 <button type="button" id="addNewTransmission" data-toggle="modal"
-                                    data-target="#addTransmission" class="btn btn-primary btn-sm">د نوی مخابری اضافه
+                                    data-target="#addTransmission" class="btn btn-primary btn-sm d-none">د نوی مخابری اضافه
                                     کول</button>
 
 
@@ -272,6 +272,17 @@
 @endsection
 @section('script')
     <script>
+
+       addTransmission();
+
+
+
+        function addTransmission(){
+            let tr=$('#btnEdit').val();
+            if(tr>0){
+                $('#addNewTransmission').removeClass('d-none');
+            }
+        }
         $(document).on('click', '#btnDelete1', function(e) {
             e.preventDefault();
             $('#btnDelete').val($(this).val());
@@ -479,6 +490,7 @@
                     $('#addTransmission').css('display','none');
                     $('[data-dismiss="modal"]').click();
                     $('#traAdd')[0].reset();
+                    swal(response.message);
 
 
 
