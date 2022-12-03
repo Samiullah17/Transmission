@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
+use DataTables;
 
 class companyController extends Controller
 {
@@ -42,13 +43,13 @@ class companyController extends Controller
         $countires = country::all();
         $licenseType = licenseType::all();
 
-        $companies = Company::join('company_active_types', 'companies.company_active_type_id', 'company_active_types.id')
-            ->join('company_types', 'companies.company_type_id', 'company_types.id')
-            ->select(
-                'company_active_types.companyName as aname',
-                'company_types.companyTypeName as tname',
-                'companies.*'
-            )->get();
+        // $companies = Company::join('company_active_types', 'companies.company_active_type_id', 'company_active_types.id')
+        //     ->join('company_types', 'companies.company_type_id', 'company_types.id')
+        //     ->select(
+        //         'company_active_types.companyName as aname',
+        //         'company_types.companyTypeName as tname',
+        //         'companies.*'
+        //     )->get();
 
 
 
@@ -60,7 +61,29 @@ class companyController extends Controller
         // 'citizenships.citizenshipName as cname','companies.companyName as name','companies.companyManagerName as mname','companies.id as comp_id')->get();
 
 
-        return view('company.list', compact('licenseType', 'countires', 'companyType', 'companyActiveType', 'citizenships', 'provence', 'district', 'companies'));
+        return view('company.list', compact('licenseType', 'countires', 'companyType', 'companyActiveType', 'citizenships', 'provence', 'district'));
+    }
+
+    public function index1(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Company::join('company_active_types', 'companies.company_active_type_id', 'company_active_types.id')
+                ->join('company_types', 'companies.company_type_id', 'company_types.id')
+                ->select(
+                    'company_active_types.companyName as aname',
+                    'company_types.companyTypeName as tname',
+                    'companies.*'
+                )->get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $btn = '<a href="'.route('details.company',['id'=>$data->id]).'" class="btn btn-primary btn-sm">View</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('company.list');
     }
 
     public function addCompany()
@@ -120,57 +143,7 @@ class companyController extends Controller
 
 
 
-
-        // $agent=new companyAgent();
-        // $agent->agentName=$request->agentName;
-        // $agent->fName=$request->fName;
-        // $agent->gFName=$request->gFName;
-        // $agent->NIC=$request->NIC;
-        // $agent->phone=$request->phone;
-        // $agent->email=$request->email;
-        // $agent->company_id =$company->id;
-        // $agent->odistrict_id=$request->odistrict_id;
-        // $agent->ovillage=$request->ovillage;
-        // $agent->cdistrict_id=$request->cdistrict_id;
-        // $agent->cvillage=$request->cvillage;
-        // $agent->Save();
-
-
-
-        // for($x=0; $x<count($request->frqNo); $x++){
-
-        //  $order=new order();
-        // $order->company_id=$company->id;
-        // $order->company_agent_id =$agent->id;
-        // $order->frqNo=$request->frqNo[$x];
-        // $order->freQuantity=$request->freQuantity;
-        // $order->save();
-
-        // }
-
-
-
-
-
-        // for($i=0;$i<count($request->transmission_type_id);$i++){
-        //     $transmission=new transmission();
-        //     $transmission->transmission_type_id  =$request->transmission_type_id[$i];
-        //     $transmission->transmission_model_id =$request->transmission_model_id[$i];
-        //     $transmission->provence_id= $request->provence_id[$i];
-        //     $transmission->serialNo=$request->serialNo[$i];
-        //     $transmission->order_id = $order->id;
-        //     $transmission->save();
-        //  }
-
-
-
-
-
-
-        // return response()->json([
-        //     'message' => 'company Added Successfuly ',
-        // ]);
-        // return response()->json(['data'=>$request->all()]);
+ 
 
 
     }
@@ -249,7 +222,12 @@ class companyController extends Controller
             )->where('companies.id', $id)->first();
 
 
-            $licenseType=licenseType::all();
+        $orders = Company::join('orders', 'companies.id', 'orders.company_id')
+            ->join('company_agents', 'orders.company_agent_id', 'company_agents.id')
+            ->select('companies.companyName as cname', 'company_agents.agentName as aname', 'orders.*')->where('companies.id', $id)->get();
+
+
+        $licenseType = licenseType::all();
 
         $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
             ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
@@ -261,7 +239,7 @@ class companyController extends Controller
 
 
 
-        return view('company.details', compact('company', 'provence', 'district', 'companylicense', 'cagent','licenseType'));
+        return view('company.details', compact('company', 'provence', 'district', 'companylicense', 'cagent', 'licenseType', 'orders'));
     }
 
 
@@ -478,61 +456,63 @@ class companyController extends Controller
             $company->country_id = $request->country_id;
         }
         $company->update();
-        $cmp=Company::join('company_active_types','companies.company_active_type_id','company_active_types.id')
-        ->join('company_types','companies.company_type_id','company_types.id')
-        ->select('companies.*','company_active_types.companyName as aname','company_types.companyTypeName as tname')
-        ->where('companies.id',$request->company_id)->first();
+        $cmp = Company::join('company_active_types', 'companies.company_active_type_id', 'company_active_types.id')
+            ->join('company_types', 'companies.company_type_id', 'company_types.id')
+            ->select('companies.*', 'company_active_types.companyName as aname', 'company_types.companyTypeName as tname')
+            ->where('companies.id', $request->company_id)->first();
         return response()->json(['company' => $cmp, 'message' => 'د کمپنی معلومات په بریالیتوب سره تغیر شول!']);
     }
 
-    public function editLicense($id){
-         $company=companyLicense::where('id',$id)->first()->company_id;
-         $licenseTypeId=companyLicense::where('id',$id)->first()->license_type_id;
-         $licenseType=licenseType::all();
-         $companyLicense=companyLicense::find($id);
+    public function editLicense($id)
+    {
+        $company = companyLicense::where('id', $id)->first()->company_id;
+        $licenseTypeId = companyLicense::where('id', $id)->first()->license_type_id;
+        $licenseType = licenseType::all();
+        $companyLicense = companyLicense::find($id);
 
-         return response()->json(['company'=>$company,'licenseTypeId'=>$licenseTypeId,'licenseType'=>$licenseType,'companyLicense'=>$companyLicense]);
+        return response()->json(['company' => $company, 'licenseTypeId' => $licenseTypeId, 'licenseType' => $licenseType, 'companyLicense' => $companyLicense]);
     }
 
-    public function updateLicese(Request $request){
-         $companyLicense=companyLicense::find($request->company_license_id);
-         $companyLicense->license_type_id = $request->license_type_id;
-         $companyLicense->licenseNumber=$request->licenseNumber;
-         $companyLicense->issueDate=$request->issueDate;
-         $companyLicense->update();
+    public function updateLicese(Request $request)
+    {
+        $companyLicense = companyLicense::find($request->company_license_id);
+        $companyLicense->license_type_id = $request->license_type_id;
+        $companyLicense->licenseNumber = $request->licenseNumber;
+        $companyLicense->issueDate = $request->issueDate;
+        $companyLicense->update();
 
-         $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
-         ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
-         ->select('company_licenses.*', 'license_types.licenseTypeName as ltname','companies.companyName as cname')->where('company_licenses.id', $request->company_license_id)->first();
-
-
-         return response()->json(['companyLices'=>$companylicense,'message'=>'د کمپنی لیسانس په بریالیتوب سره تغیر شو!']);
-
-    }
-
-    public function deleteLicense(Request $request){
-        $cmp=companyLicense::find($request->id)->delete();
         $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
-        ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
-        ->select('company_licenses.*', 'license_types.licenseTypeName as ltname')->where('companies.id', $request->cmpId)->get();
-        return response()->json(['data'=>$companylicense,'message'=>'د کمپنی لیسانس په بریالیتوب سره پاک/حذف شو!']);
+            ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
+            ->select('company_licenses.*', 'license_types.licenseTypeName as ltname', 'companies.companyName as cname')->where('company_licenses.id', $request->company_license_id)->first();
 
+
+        return response()->json(['companyLices' => $companylicense, 'message' => 'د کمپنی لیسانس په بریالیتوب سره تغیر شو!']);
+    }
+
+    public function deleteLicense(Request $request)
+    {
+        $cmp = companyLicense::find($request->id)->delete();
+        $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
+            ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
+            ->select('company_licenses.*', 'license_types.licenseTypeName as ltname')->where('companies.id', $request->cmpId)->get();
+        return response()->json(['data' => $companylicense, 'message' => 'د کمپنی لیسانس په بریالیتوب سره پاک/حذف شو!']);
     }
 
 
-    public function addLicense(Request $request){
+    public function addLicense(Request $request)
+    {
 
 
-        $cmpLicense=new companyLicense();
-        $cmpLicense->company_id=$request->company_id;
-        $cmpLicense->license_type_id=$request->license_type_id;
-        $cmpLicense->licenseNumber=$request->licenseNumber;
-        $cmpLicense->issueDate=$request->issueDate;
-        $cmpLicense->files=$request->file('files')->store(companyLicense::IMAGE_PATH);
+        $cmpLicense = new companyLicense();
+        $cmpLicense->company_id = $request->company_id;
+        $cmpLicense->license_type_id = $request->license_type_id;
+        $cmpLicense->licenseNumber = $request->licenseNumber;
+        $cmpLicense->issueDate = $request->issueDate;
+        $cmpLicense->files = $request->file('files')->store(companyLicense::IMAGE_PATH);
         $cmpLicense->save();
-        $clicense= companyLicense::join('companies','company_licenses.company_id','companies.id')
-        ->join('license_types','company_licenses.license_type_id','license_types.id')
-        ->select('companies.companyName as cname','license_types.licenseTypeName as lname','company_licenses.*')->where('company_licenses.id',$cmpLicense->id)->first();
-        return response()->json(['message'=>'د کمپنی لیسانس په بریالیتوب سره اضافه کړل شو!','license'=>$clicense]);
+        $clicense = companyLicense::join('companies', 'company_licenses.company_id', 'companies.id')
+            ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
+            ->select('companies.companyName as cname', 'license_types.licenseTypeName as lname', 'company_licenses.*')->where('company_licenses.id', $cmpLicense->id)->first();
+        return response()->json(['message' => 'د کمپنی لیسانس په بریالیتوب سره اضافه کړل شو!', 'license' => $clicense]);
     }
 }

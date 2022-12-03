@@ -12,6 +12,7 @@ use App\Models\transmissionModel;
 use App\Models\transmissionType;
 use App\Models\provence;
 use Illuminate\Support\Facades\DB;
+use DataTables;
 
 class agentController extends Controller
 {
@@ -64,12 +65,27 @@ class agentController extends Controller
 
     public function companyAgent($id)
     {
-
+        // dd($id);
         // $agent1=Company::join('orders','companies.id','orders.company_id')
         // ->join('company_agents','orders.company_agent_id','company_agents.id')->where('companies.id',$id)
         // ->select('company_agents.*')->groupBy('orders.company_agent_id')->get();
-        $agent = companyAgent::where('company_id', $id)->get();
-        return response()->json(['agent' => $agent]);
+        // $agent = companyAgent::where('company_id', $id)->get();
+
+
+            $data =  companyAgent::where('company_id', 1)->get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    // $btn = '<a href="'.route('details.company',['id'=>$data->id]).'" class="btn btn-primary btn-sm">View</a>';
+                    // return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+
+
+        return view('company.list');
+
+
+        // return response()->json(['agent' => $agent]);
     }
 
     // public function details($id){

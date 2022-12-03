@@ -10,45 +10,50 @@
                         <div class="card-header">
                             <div class="card-tools">
                                 د {{ $company->companyName }} کمپنی/بنسټ
-                             </div>
+                            </div>
                             <div class="card-title">
 
 
-
-                                <button type="button" class="btn btn-primary backAgent d-none">
-                                    شاته تلل</button>
-
+                                <button type="button" value="{{ $company->id }}"
+                                    class="btn btn-primary btnbtn">kdfjkdfj</button>
 
 
 
-                                <button type="button" class="btn btn-primary showAgents">
-                                           نماینده ګان</button>
+
+                                <input type="text" id="thisid" name="coname" value="{{ $company->id }}">
+
+                                <button type="button" class="btn btn-primary showOrders btn-sm">د بنسټ ټولی غوښتنی</button>
+
+
+                                <button type="button" class="btn btn-primary showAgents btn-sm">
+                                    نماینده ګان</button>
 
 
 
-                                <button type="button" class="btn btn-primary d-none abutton" data-toggle="modal" data-target="#modal-xl1">د
+                                <button type="button" class="btn btn-primary d-none abutton btn-sm" data-toggle="modal"
+                                    data-target="#modal-xl1">د
                                     نوی نماینده ثبت کول</button>
 
 
 
 
-                                <button type="button" class="btn btn-primary addLicense d-none" data-toggle="modal"
+                                <button type="button" class="btn btn-primary addLicense d-none btn-sm" data-toggle="modal"
                                     data-target="#modal-lg-add-license">د جواز اضافه کول</button>
 
-                                <button type="button" class="btn btn-primary jawaz"
+                                <button type="button" class="btn btn-primary jawaz btn-sm"
                                     data-mdb-ripple-color="dark">جوازونه</button>
 
 
 
 
 
-                                <button type="button" id="companyDelete" value="{{ $company->id }}" class="btn btn-danger companyDelete"
-                                    data-toggle="modal" data-target="#modal-danger"><i
-                                        class="fas fa-trash-alt"></i></button>
+                                <button type="button" id="companyDelete" value="{{ $company->id }}"
+                                    class="btn btn-danger companyDelete btn-sm" data-toggle="modal"
+                                    data-target="#modal-danger">د بنسټ غیر فعالول</button>
 
-                                <button type="button" id="companyEdit" value="{{ $company->id }}" class="btn btn-primary companyEdit"
-                                    data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl"><i
-                                        class="fas fa-edit"></i></button>
+                                <button type="button" id="companyEdit" value="{{ $company->id }}"
+                                    class="btn btn-primary companyEdit btn-sm" data-mdb-ripple-color="dark"
+                                    data-toggle="modal"data-target="#modal-xl"><i class="fas fa-edit"></i></button>
 
 
 
@@ -60,229 +65,277 @@
                         </div>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-head-fixed company">
-                            <thead>
-                                <tr>
-                                    <th>د کمپنی نوم</th>
-                                    <th>د فعالیت ډول</th>
-                                    <th>د موسسی/بنست ډول</th>
-                                    <th>د ریس نوم</th>
-                                    <th>د ریس تابعیت</th>
-                                    <th>د کمپنی ادرس</th>
-                                    <th>لیتیتود</th>
-                                    <th>لونک تیتود</th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="cbody">
-                                <td>{{ $company->companyName }}</td>
-                                <td>{{ $company->aname }}</td>
-                                <td>{{ $company->tname }}</td>
-                                <td>{{ $company->companyManagerName }}</td>
-                                <td>
-
-                                    @if ($company->country_id == 3)
-                                        داخلی
-                                    @endif
-
-                                    @if ($company->country_id != 3)
-                                        خارجی
-                                    @endif
-
-                                </td>
-
-
-                                <td>{{ $company->companyAddress }}</td>
-                                <td>{{ $company->latitude }}</td>
-                                <td>{{ $company->longtitude }}</td>
-                                {{-- <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i
-                                            class="far fa-file-contract"></i></button></td> --}}
-
-
-                            </tbody>
-                        </table>
-
-
-                        <h6 class="d-none" style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white"
-                            id="jawaz1">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
-
-
-                        <table id="jawaz" class="table table-striped table-bordered table-hover d-none">
-
-                            <thead>
-                                <th>د جواز نمبر</th>
-                                <th>د جواز مرجع</th>
-                                <th>د جواز د صدرو تاریخ</th>
-                                <th>عکس</th>
-
-                            </thead>
-                            <tbody id="licenseTbody">
-
-
-                                @foreach ($companylicense as $item)
-                                    <tr>
-                                        <td id="lNumber{{ $item->id }}">{{ $item->licenseNumber }}</td>
-                                        <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
-                                        <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
-                                        <td><img height="80px" width="100px" src="{{ Storage::url($item->files) }}" alt=""></td>
-                                        <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
-                                                class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i
-                                                    class="fas fa-edit"></i></button>
-                                            <button type="button" id="licenseDelete" value="{{ $item->id }}"
-                                                class="btn btn-danger" data-toggle="modal"
-                                                data-target="#modal-danger-license"><i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                        <h6 style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white">د بنسټ رسمی نماینده معلومات</h6>
-
-
-
-                        {{-- <table class="table table-striped table-hover table-border">
-                            <thead>
-                                <th>د نماینده نوم</th>
-                                <th>د پلار نوم</th>
-                                <th>د تلفون شمیره</th>
-                                <th>ایمیل</th>
-                                <th>عکس</th>
-                                <th></th>
-                            </thead>
-                            <tbody>
-                                @foreach ($cagent as $item)
-                                    <tr>
-                                        <td>{{ $item->agentName }}</td>
-                                        <td>{{ $item->fName }}</td>
-                                        <td>{{ $item->phone }}</td>
-                                        <td>{{ $item->email }}</td>
-                                        <td></td>
-                                        <td><a href="{{ route('agent.cdetails', ['id' => $item->id, 'cid' => $company->id]) }}"
-                                                class="btn btn-primary">معلومات</a></td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table> --}}
-
-                        <table class="table table-striped table-hover table-bordered d-none agents">
-
-                            <thead>
-                                <th>د نماینده نوم</th>
-                                <th>د پلار نوم</th>
-                                <th>د تلفون شمیره</th>
-                                <th>ایمیل</th>
-                                <th>عکس</th>
-                                <th></th>
-                            </thead>
-
-                            <tbody id="agentTbody">
-
-                            </tbody>
-
-                        </table>
-
-
-
-
-
-                        <div class="modal fade" id="modal-xl">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">د کمپنی/بنسټ د معلوماتو تغیرول</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body mr-5">
-                                        <form action="#" id="updateCompany" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="row">
-
-                                                <input type="hidden" name="company_id" class="form-control"
-                                                    value="{{ $company->id }}">
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="">د کمپنی/بنسټ نوم</label>
-                                                    <input type="text" name="companyName" id="companyName"
-                                                        class="form-control" placeholder="د نماینده نوم ولیکی">
-                                                </div>
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="">د کمپنی/بنسټ نوعه</label>
-                                                    <select name="company_type_id" id="company_type_id"
-                                                        class="form-control"></select>
-                                                </div>
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="">د کمپنی/بنسټ د فعالیت ډول</label>
-                                                    <select name="company_active_type_id" id="company_active_type_id"
-                                                        class="form-control"></select>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="row">
-
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="">د کمپنی آدرس</label>
-                                                    <input type="text" name="companyAddress" id="companyAddress"
-                                                        class="form-control" placeholder="د کمپنی آدرس">
-                                                </div>
-
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="">لیتیتود</label>
-                                                    <input type="text" name="latitude" id="latitude"
-                                                        class="form-control">
-
-                                                </div>
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="">لونګ تیتود</label>
-                                                    <input type="text" name="longtitude" id="longtitude"
-                                                        class="form-control">
-                                                </div>
-
-
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="">د کمپنی/بنسټ د ریس نوم</label>
-                                                    <input type="text" name="companyManagerName"
-                                                        id="companyManagerName" class="form-control">
-                                                </div>
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="">تابعیت</label>
-                                                    <select name="citizenship_id" id="citizenship_id"
-                                                        class="form-control"></select>
-                                                </div>
-
-                                                <div class="form-group col-md-4 country">
-
-                                                </div>
-
-                                            </div>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">بندول</button>
-                                        <button type="submit" class="btn btn-primary">ذخیره کول</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
+                    <div class="card">
+                        <div class="card-header d-none backAgent">
+                            <button type="button" style="float: right" class="btn btn-outline-primary">
+                                <svg width="10" height="16" fill="currentColor" class="bi bi-arrow-right"
+                                    viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                            </button>
                         </div>
+                        <div class="card-body">
+                            <table class="table company">
+                                <thead>
+                                    <tr>
+                                        <th>د کمپنی نوم</th>
+                                        <th>د فعالیت ډول</th>
+                                        <th>د موسسی/بنست ډول</th>
+                                        <th>د ریس نوم</th>
+                                        <th>د ریس تابعیت</th>
+                                        <th>د کمپنی ادرس</th>
+                                        <th>لیتیتود</th>
+                                        <th>لونک تیتود</th>
 
+                                    </tr>
+                                </thead>
+                                <tbody id="cbody">
+                                    <td>{{ $company->companyName }}</td>
+                                    <td>{{ $company->aname }}</td>
+                                    <td>{{ $company->tname }}</td>
+                                    <td>{{ $company->companyManagerName }}</td>
+                                    <td>
+
+                                        @if ($company->country_id == 3)
+                                            داخلی
+                                        @endif
+
+                                        @if ($company->country_id != 3)
+                                            خارجی
+                                        @endif
+
+                                    </td>
+
+
+                                    <td>{{ $company->companyAddress }}</td>
+                                    <td>{{ $company->latitude }}</td>
+                                    <td>{{ $company->longtitude }}</td>
+                                    {{-- <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i
+                                                class="far fa-file-contract"></i></button></td> --}}
+
+
+                                </tbody>
+                            </table>
+
+
+                            <h6 class="d-none"
+                                style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white"
+                                id="jawaz1">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
+
+
+                            <table id="jawaz" class="table table-striped table-bordered table-hover d-none">
+
+                                <thead>
+                                    <th>د جواز نمبر</th>
+                                    <th>د جواز مرجع</th>
+                                    <th>د جواز د صدرو تاریخ</th>
+                                    <th>عکس</th>
+
+                                </thead>
+                                <tbody id="licenseTbody">
+
+
+                                    @foreach ($companylicense as $item)
+                                        <tr>
+                                            <td id="lNumber{{ $item->id }}">{{ $item->licenseNumber }}</td>
+                                            <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
+                                            <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
+                                            <td><img height="80px" width="100px" src="{{ Storage::url($item->files) }}"
+                                                    alt=""></td>
+                                            <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
+                                                    class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i
+                                                        class="fas fa-edit"></i></button>
+                                                <button type="button" id="licenseDelete" value="{{ $item->id }}"
+                                                    class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#modal-danger-license"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <h6 class="d-none"
+                                style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white">
+                                د بنسټ رسمی نماینده معلومات</h6>
+
+
+                            <table class="table table-striped table-hover table-bordered d-none agents">
+
+                                <thead>
+                                    <th>د نماینده نوم</th>
+                                    <th>د پلار نوم</th>
+                                    <th>د تلفون شمیره</th>
+                                    <th>ایمیل</th>
+                                    <th>عکس</th>
+                                    <th></th>
+                                </thead>
+
+                                <tbody id="agentTbody">
+
+                                </tbody>
+
+                            </table>
+
+
+
+                            <table class="table table-striped table-hover d-none orders">
+
+                                <thead>
+                                    <th>د کمپنی نوم</th>
+                                    <th>د نماینده نوم</th>
+                                    <th>د غوښتنی د مراجعی نیټه</th>
+                                    <th>حالت</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders as $item)
+                                        <tr>
+                                            <td>{{ $item->cname }}</td>
+                                            <td>{{ $item->aname }}</td>
+                                            <td>{{ $item->created_at }}</td>
+                                            @if ($item->status == 0)
+                                                <td><span class="badge badge-info">د پروګرام په حال کی</span></td>
+                                            @else
+                                                <td><span class="badge badge-primary">پروګرام شوی</span></td>
+                                            @endif
+
+                                            <td><a href="{{ route('order.transmission', $item->id) }}"
+                                                    class="btn btn-info">کتل</a></td>
+
+
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+
+
+
+
+
+
+
+
+
+                            <div class="modal fade" id="modal-xl">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">د کمپنی/بنسټ د معلوماتو تغیرول</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body mr-5">
+                                            <form action="#" id="updateCompany" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row">
+
+                                                    <input type="hidden" name="company_id" class="form-control"
+                                                        value="{{ $company->id }}">
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">د کمپنی/بنسټ نوم</label>
+                                                        <input type="text" name="companyName" id="companyName"
+                                                            class="form-control" placeholder="د نماینده نوم ولیکی">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">د کمپنی/بنسټ نوعه</label>
+                                                        <select name="company_type_id" id="company_type_id"
+                                                            class="form-control"></select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">د کمپنی/بنسټ د فعالیت ډول</label>
+                                                        <select name="company_active_type_id" id="company_active_type_id"
+                                                            class="form-control"></select>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">د کمپنی آدرس</label>
+                                                        <input type="text" name="companyAddress" id="companyAddress"
+                                                            class="form-control" placeholder="د کمپنی آدرس">
+                                                    </div>
+
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">لیتیتود</label>
+                                                        <input type="text" name="latitude" id="latitude"
+                                                            class="form-control">
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">لونګ تیتود</label>
+                                                        <input type="text" name="longtitude" id="longtitude"
+                                                            class="form-control">
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">د کمپنی/بنسټ د ریس نوم</label>
+                                                        <input type="text" name="companyManagerName"
+                                                            id="companyManagerName" class="form-control">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">تابعیت</label>
+                                                        <select name="citizenship_id" id="citizenship_id"
+                                                            class="form-control"></select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4 country">
+
+                                                    </div>
+
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">بندول</button>
+                                            <button type="submit" class="btn btn-primary">ذخیره کول</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="card mt-5">
+                        <table class="table table-bordred table-striped agentsTable">
+
+                            <thead>
+                                <th>د نماینده نوم</th>
+                                <th>د پلار نوم</th>
+                                <th>د تلفون شمیره</th>
+                                <th>ایمیل</th>
+                            </thead>
+
+                            <tbody>
+
+                            </tbody>
+
+                        </table>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -626,10 +679,59 @@
 @endsection
 @section('script')
     <script>
+        $(document).on('click', '.btnbtn', function(e) {
+            e.preventDefault();
+
+            $(function() {
+                alert('kdjfkdjf')
+                var id = $('#thisid').val();
+                var table = $('.agentsTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('company.agent') }}/" + id,
+                    columns: [{
+                            data: 'agentName'
+                        },
+                        {
+                            data: 'fName'
+                        },
+                        {
+                            data: 'phone'
+                        },
+                        {
+                            data: 'email'
+                        },
+
+                        // {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+                    language: {
+                        "emptyTable": "دیتا موجود نیست .",
+                        "lengthMenu": "نمایش MENU معلومات",
+                        "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                        "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                        "search": "جستجو کردن : ",
+                        "sProcessing": "در حال اضافه نمودن معلومات...",
+                        "paginate": {
+                            "first": "اول",
+                            "last": "آخر",
+                            "next": "بعدی",
+                            "previous": "قبلی"
+                        },
+                    },
+                });
+            });
+
+
+        })
+
+
+
+
+
         var citizenship = 0;
         $(document).ready(function() {
 
-            $(document).on('click','.showAgents',function(e){
+            $(document).on('click', '.showAgents', function(e) {
                 e.preventDefault();
                 $('.abutton').removeClass('d-none');
                 $('.company').addClass('d-none');
@@ -640,9 +742,10 @@
                 $('.companyDelete').addClass('d-none');
                 $('.companyEdit').addClass('d-none');
                 $('.backAgent').removeClass('d-none');
+                $('.showOrders').addClass('d-none');
             })
 
-            $(document).on('click','.backAgent',function(e){
+            $(document).on('click', '.backAgent', function(e) {
                 e.preventDefault();
                 $(this).addClass('d-none');
                 $('.abutton').addClass('d-none');
@@ -650,15 +753,16 @@
                 $('.agents').addClass('d-none');
                 $('.addLicense').addClass('d-none');
                 $('#jawaz').addClass('d-none');
-
                 $('.jawaz').removeClass('d-none');
                 $('.companyDelete').removeClass('d-none');
                 $('.companyEdit').removeClass('d-none');
-                 $('.showAgents').removeClass('d-none');
+                $('.showAgents').removeClass('d-none');
+                $('.showOrders').removeClass('d-none');
+                $('.orders').addClass('d-none');
 
             })
 
-            $(document).on('click','.jawaz',function(e){
+            $(document).on('click', '.jawaz', function(e) {
                 e.preventDefault();
                 $('.addLicense').removeClass('d-none');
                 $('.company').addClass('d-none');
@@ -668,6 +772,19 @@
                 $('.backAgent').removeClass('d-none');
                 $('#jawaz').removeClass('d-none');
                 $('.showAgents').addClass('d-none');
+                $('.showOrders').addClass('d-none');
+            })
+
+            $(document).on('click', '.showOrders', function(e) {
+                e.preventDefault();
+                $(this).addClass('d-none');
+                $('.company').addClass('d-none');
+                $('.companyDelete').addClass('d-none');
+                $('.companyEdit').addClass('d-none');
+                $('.backAgent').removeClass('d-none');
+                $('.showAgents').addClass('d-none');
+                $('.orders').removeClass('d-none');
+                $('.jawaz').addClass('d-none');
             })
 
 
@@ -694,8 +811,11 @@
 
                             $('#agentTbody').append('<tr><td>' + value.agentName + '</td><td>' +
                                 value.fName + '</td><td>' + value.phone + '</td><td>' +
-                                value.email + '</td><td> <img height="80px" width="100px"  src="http://localhost:8000/storage/' + value.photo.replace('public/','') +
-                                '" /></td><td><a href="{{ route('agent.cdetails') }}/' + value
+                                value.email +
+                                '</td><td> <img height="80px" width="100px"  src="http://localhost:8000/storage/' +
+                                value.photo.replace('public/', '') +
+                                '" /></td><td><a href="{{ route('agent.cdetails') }}/' +
+                                value
                                 .id + '"  class="btn btn-primary">معلومات</a></td></tr>');
 
                         });
@@ -726,7 +846,14 @@
                         $('#agentSave')[0].reset();
                         swal(response.message);
 
-                        $('#agentTbody').append('<tr><td>'+response.nagent.agentName+'</td><td>'+response.nagent.fName+'</td><td>'+response.nagent.phone+'</td><td>'+response.nagent.email+'</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +  response.nagent.photo.replace('public/','') +'" /></td><td><a href="{{ route('agent.cdetails') }}/' + response.nagent.id + '"  class="btn btn-primary">معلومات</a></td></tr>');
+                        $('#agentTbody').append('<tr><td>' + response.nagent.agentName +
+                            '</td><td>' + response.nagent.fName + '</td><td>' + response
+                            .nagent.phone + '</td><td>' + response.nagent.email +
+                            '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +
+                            response.nagent.photo.replace('public/', '') +
+                            '" /></td><td><a href="{{ route('agent.cdetails') }}/' +
+                            response.nagent.id +
+                            '"  class="btn btn-primary">معلومات</a></td></tr>');
 
                     }
                 });
@@ -1044,7 +1171,9 @@
                                 '">' + value.licenseNumber + '</td><td id="lTname' +
                                 value.id + '">' + value.ltname +
                                 '</td><td id="issueDate' + value.id + '">' + value
-                                .issueDate + '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' + value.files.replace('public/','') +
+                                .issueDate +
+                                '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +
+                                value.files.replace('public/', '') +
                                 '" /></td><td><button type="button" value="' + value
                                 .id +
                                 '" id="licenseEdit" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-edit"></i></button><button type="button" id="licenseDelete" value="' +
@@ -1089,12 +1218,15 @@
                         swal(response.message);
                         $('#licenseTbody').append('<tr><td>' + response.license.licenseNumber +
                             '</td><td>' + response.license.lname + '</td><td>' + response
-                            .license.issueDate + '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +  response.license.files.replace('public/','') +
-                                '" /></td><td><button type="button" value="' + response.license.id +
+                            .license.issueDate +
+                            '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +
+                            response.license.files.replace('public/', '') +
+                            '" /></td><td><button type="button" value="' + response.license
+                            .id +
                             '" id="licenseEdit" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-edit"></i></button><button type="button" id="licenseDelete" value="' +
                             response.license.id +
                             '"class="btn btn-danger" data-toggle="modal"data-target="#modal-danger-license"><i class="fas fa-trash-alt"></i></button></td></tr>'
-                            )
+                        )
 
                     }
                 });

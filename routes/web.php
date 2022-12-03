@@ -3,6 +3,7 @@
 use App\Http\Controllers\agentController;
 use App\Http\Controllers\classController;
 use App\Http\Controllers\companyController;
+use App\Http\Controllers\orderController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\subjectController;
 use App\Http\Controllers\teacherController;
@@ -77,6 +78,6 @@ Route::get('get/country',[companyController::class,'getCountry'])->name('get.cou
 Route::get('load/agent/{id}',[agentController::class,'loadAgent'])->name('loade.agent');
 
 
-Route::get('test',function(){
-    return view('test');
-});
+Route::get('orders/details/{id}',[orderController::class,'details'])->name('orders.details');
+
+Route::get('users/index',[companyController::class,'index1'])->name('users.index');

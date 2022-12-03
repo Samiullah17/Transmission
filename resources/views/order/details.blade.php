@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                 د {{ $cname }} کمپنی/بنسټ
+                                 د {{ $name }} کمپنی/بنسټ
                             </div>
                             <div class="card-title" id="ctitle">
 

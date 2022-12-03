@@ -213,11 +213,14 @@ class transmissionController extends Controller
                 'orders.status as ostatus'
             )->where('transmissions.order_id', $id)->get();
 
+            $cid=order::where('id',$id)->first()->company_id;
+            $cname=Company::where('id',$cid)->first()->companyName;
+
 
         $provence = provence::all();
         $transmissionModel = transmissionModel::all();
         $transmissionType = transmissionType::all();
-        return view('order.transmission', compact('transmissions', 'order','provence','transmissionModel','transmissionType'));
+        return view('order.transmission', compact('transmissions', 'order','provence','transmissionModel','transmissionType','cname'));
     }
 
     public function delete(Request $request)

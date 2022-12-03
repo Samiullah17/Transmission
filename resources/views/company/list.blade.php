@@ -19,8 +19,8 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-head-fixed table-hover table-striped">
+                        <div class="card-body table-responsive">
+                            {{-- <table class="table table-head-fixed table-hover table-striped d-none">
                                 <thead>
                                     <tr>
                                         <th>د کمپنی نوم</th>
@@ -58,6 +58,27 @@
 
                                     @endforeach
                                 </tbody>
+                            </table> --}}
+
+                            <table class="table table-hover user_datatable">
+
+                                <thead >
+
+                                    <tr>
+                                        <th style="text-align: start">د کمپنی نوم</th>
+                                        <th style="text-align: start">د فعالیت ډول</th>
+                                        <th style="text-align: start">د موسسی/بنست ډول</th>
+                                        <th style="text-align: start">د ریس نوم</th>
+                                        <th style="text-align: start">معلومات</th>
+                                        {{-- <th></th> --}}
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+
                             </table>
                         </div>
 
@@ -68,61 +89,6 @@
             </div>
         </div>
 
-        {{-- Start of Agent Register  --}}
-
-         <div class="modal fade" id="modal-xl1">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">د بنسټ د رسمی نماینده د ثبت برخه</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body mr-5">
-                        {{-- نوی نماینده:<input type="radio" class="input-sm"> --}}
-                        {{-- پخوانی نماینده:<input type="radio" class="input-sm"> --}}
-                        <div class="row">
-                            <div class="col-md-4 cagents" >
-                                <select name="agent_id" id="agent_id" class="form-control">
-                                    <option selected>د کمپنی/بنسټ نماینده انتخاب کړی</option>
-                                </select>
-
-                            </div>
-
-
-
-                        </div>
-                        <div class="row">
-                            <table class="table table-striped table-hover table-bordered table-agent d-none">
-                                <thead>
-                                    <th>د نماینده نوم</th>
-                                    <th>د پلار نوم</th>
-                                    <th>د تذکری شمیره</th>
-                                    <th>عکس</th>
-                                </thead>
-                                <tbody id="adetails">
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
-                        {{-- <button type="submit" class="btn btn-primary fr d-none">ذخیره کول</button> --}}
-
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-
-        {{-- End of Agent Register --}}
 
         {{-- Start Of Company Registration Model --}}
 
@@ -337,6 +303,37 @@
 @section('script')
 
     <script>
+
+
+$(function () {
+    var table = $('.user_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('users.index') }}",
+        columns: [
+            {data:'companyName'},
+            {data: 'aname'},
+            {data: 'tname'},
+            {data: 'companyManagerName'},
+            {data: 'action'},
+            // {data: 'action', name: 'action', orderable: false, searchable: false},
+        ],
+        language: {
+                    "emptyTable": "دیتا موجود نیست .",
+                    "lengthMenu": "نمایش MENU معلومات",
+                    "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                    "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                    "search": "جستجو کردن : ",
+                    "sProcessing": "در حال اضافه نمودن معلومات...",
+                    "paginate": {
+                        "first": "اول",
+                        "last": "آخر",
+                        "next": "بعدی",
+                        "previous": "قبلی"
+                    },
+                },
+    });
+  });
 
 
 
@@ -590,7 +587,7 @@
 
             $(document).on('change','#agent_id',function(){
                 var id=$(this).val();
-              
+
 
                 $.ajax({
                     type: "GET",
