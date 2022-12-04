@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class companyController extends Controller
 {
@@ -143,7 +143,7 @@ class companyController extends Controller
 
 
 
- 
+
 
 
     }

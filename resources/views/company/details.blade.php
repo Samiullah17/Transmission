@@ -14,31 +14,24 @@
                             <div class="card-title">
 
 
+                                {{-- <button type="button" value="{{ $company->id }}"
+                                    class="btn btn-primary btnbtn">kdfjkdfj</button> --}}
+
+
+
+
+                                <input type="hidden" id="thisid" name="coname" value="{{ $company->id }}">
+
                                 <button type="button" value="{{ $company->id }}"
-                                    class="btn btn-primary btnbtn">kdfjkdfj</button>
+                                    class="btn btn-primary showOrder btn-sm">د بنسټ ټولی غوښتنی</button>
 
 
-
-
-                                <input type="text" id="thisid" name="coname" value="{{ $company->id }}">
-
-                                <button type="button" class="btn btn-primary showOrders btn-sm">د بنسټ ټولی غوښتنی</button>
-
-
-                                <button type="button" class="btn btn-primary showAgents btn-sm">
+                                <button type="button" class="btn btn-primary  showAgents btn-sm">
                                     نماینده ګان</button>
 
 
 
-                                <button type="button" class="btn btn-primary d-none abutton btn-sm" data-toggle="modal"
-                                    data-target="#modal-xl1">د
-                                    نوی نماینده ثبت کول</button>
 
-
-
-
-                                <button type="button" class="btn btn-primary addLicense d-none btn-sm" data-toggle="modal"
-                                    data-target="#modal-lg-add-license">د جواز اضافه کول</button>
 
                                 <button type="button" class="btn btn-primary jawaz btn-sm"
                                     data-mdb-ripple-color="dark">جوازونه</button>
@@ -119,101 +112,6 @@
                             </table>
 
 
-                            <h6 class="d-none"
-                                style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white"
-                                id="jawaz1">د کمپنی/بنسټ د جوازونو او مراجعو معلومات</h6>
-
-
-                            <table id="jawaz" class="table table-striped table-bordered table-hover d-none">
-
-                                <thead>
-                                    <th>د جواز نمبر</th>
-                                    <th>د جواز مرجع</th>
-                                    <th>د جواز د صدرو تاریخ</th>
-                                    <th>عکس</th>
-
-                                </thead>
-                                <tbody id="licenseTbody">
-
-
-                                    @foreach ($companylicense as $item)
-                                        <tr>
-                                            <td id="lNumber{{ $item->id }}">{{ $item->licenseNumber }}</td>
-                                            <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
-                                            <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
-                                            <td><img height="80px" width="100px" src="{{ Storage::url($item->files) }}"
-                                                    alt=""></td>
-                                            <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
-                                                    class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i
-                                                        class="fas fa-edit"></i></button>
-                                                <button type="button" id="licenseDelete" value="{{ $item->id }}"
-                                                    class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#modal-danger-license"><i
-                                                        class="fas fa-trash-alt"></i></button>
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-
-                            <h6 class="d-none"
-                                style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.4rem; color:white">
-                                د بنسټ رسمی نماینده معلومات</h6>
-
-
-                            <table class="table table-striped table-hover table-bordered d-none agents">
-
-                                <thead>
-                                    <th>د نماینده نوم</th>
-                                    <th>د پلار نوم</th>
-                                    <th>د تلفون شمیره</th>
-                                    <th>ایمیل</th>
-                                    <th>عکس</th>
-                                    <th></th>
-                                </thead>
-
-                                <tbody id="agentTbody">
-
-                                </tbody>
-
-                            </table>
-
-
-
-                            <table class="table table-striped table-hover d-none orders">
-
-                                <thead>
-                                    <th>د کمپنی نوم</th>
-                                    <th>د نماینده نوم</th>
-                                    <th>د غوښتنی د مراجعی نیټه</th>
-                                    <th>حالت</th>
-                                </thead>
-                                <tbody>
-                                    @foreach ($orders as $item)
-                                        <tr>
-                                            <td>{{ $item->cname }}</td>
-                                            <td>{{ $item->aname }}</td>
-                                            <td>{{ $item->created_at }}</td>
-                                            @if ($item->status == 0)
-                                                <td><span class="badge badge-info">د پروګرام په حال کی</span></td>
-                                            @else
-                                                <td><span class="badge badge-primary">پروګرام شوی</span></td>
-                                            @endif
-
-                                            <td><a href="{{ route('order.transmission', $item->id) }}"
-                                                    class="btn btn-info">کتل</a></td>
-
-
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-
-                            </table>
-
-
-
 
 
 
@@ -225,8 +123,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">د کمپنی/بنسټ د معلوماتو تغیرول</h4>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -321,14 +218,20 @@
 
 
 
-                    <div class="card mt-5">
+                    <div class="d-none card mt-5 agentCard">
+                        <div class="card-title">
+                            <button type="button" style="float: left" class="btn btn-primary abutton btn-sm" data-toggle="modal"
+                            data-target="#modal-xl1">د
+                            نوی نماینده ثبت کول</button>
+                        </div>
                         <table class="table table-bordred table-striped agentsTable">
 
                             <thead>
-                                <th>د نماینده نوم</th>
-                                <th>د پلار نوم</th>
-                                <th>د تلفون شمیره</th>
-                                <th>ایمیل</th>
+                                <th style="text-align: start">د نماینده نوم</th>
+                                <th style="text-align: start">د پلار نوم</th>
+                                <th style="text-align: start">د تلفون شمیره</th>
+                                <th style="text-align: start">ایمیل</th>
+                                <th style="text-align: start"></th>
                             </thead>
 
                             <tbody>
@@ -336,6 +239,70 @@
                             </tbody>
 
                         </table>
+                    </div>
+
+
+                    <div class="d-none card mt-5 orderCard">
+                        <table class="table table-bordred table-striped OrdersTable">
+
+                            <thead>
+                                <th style="text-align: start">د کمپنی نوم</th>
+                                <th style="text-align: start">د نماینده نوم</th>
+                                <th style="text-align: start">د غوښتنی د مراجعی نیټه</th>
+                                <th style="text-align: start">حالت</th>
+                                <th style="text-align: start"></th>
+
+                            </thead>
+
+                            <tbody style="text-align: start">
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <div class="card d-none licenseCard mt-5">
+
+                        <div class="card-title">
+
+                            <button type="button" style="float: left" class="btn btn-primary addLicense btn-sm" data-toggle="modal"
+                            data-target="#modal-lg-add-license">د جواز اضافه کول</button>
+                        </div>
+
+
+                        <table class="table table-striped table-bordered table-hover">
+
+                            <thead>
+                                <th style="text-align: start">د جواز نمبر</th>
+                                <th style="text-align: start">د جواز مرجع</th>
+                                <th style="text-align: start">د جواز د صدرو تاریخ</th>
+                                <th style="text-align: start">عکس</th>
+
+                            </thead>
+                            <tbody id="licenseTbody">
+
+
+                                @foreach ($companylicense as $item)
+                                    <tr>
+                                        <td id="lNumber{{ $item->id }}">{{ $item->licenseNumber }}</td>
+                                        <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
+                                        <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
+                                        <td><img height="80px" width="100px" src="{{ Storage::url($item->files) }}"
+                                                alt=""></td>
+                                        <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
+                                                class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i
+                                                    class="fas fa-edit"></i></button>
+                                            <button type="button" id="licenseDelete" value="{{ $item->id }}"
+                                                class="btn btn-danger" data-toggle="modal"
+                                                data-target="#modal-danger-license"><i
+                                                    class="fas fa-trash-alt"></i></button>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -679,11 +646,14 @@
 @endsection
 @section('script')
     <script>
-        $(document).on('click', '.btnbtn', function(e) {
+        $(document).on('click', '.showAgents', function(e) {
             e.preventDefault();
+            $('.orderCard').addClass('d-none');
+            $('.agentCard').removeClass('d-none');
+            $('.licenseCard').addClass('d-none');
+            $(this).removeClass('showAgents').addClass('agents');
 
             $(function() {
-                alert('kdjfkdjf')
                 var id = $('#thisid').val();
                 var table = $('.agentsTable').DataTable({
                     processing: true,
@@ -700,6 +670,79 @@
                         },
                         {
                             data: 'email'
+                        },
+                        {
+                            data:'action'
+                        },
+
+
+                        // {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+                    language: {
+                        "emptyTable": "دیتا موجود نیست .",
+                        "lengthMenu": "نمایش MENU معلومات",
+                        "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                        "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                        "search": "جستجو کردن : ",
+                        "sProcessing": "در حال اضافه نمودن معلومات...",
+                        "paginate": {
+                            "first": "اول",
+                            "last": "آخر",
+                            "next": "بعدی",
+                            "previous": "قبلی"
+                        },
+                    },
+                });
+
+
+            });
+
+
+        })
+
+        $(document).on('click','.agents',function(e){
+            e.preventDefault();
+            $('.orderCard').addClass('d-none');
+            $('.agentCard').removeClass('d-none');
+            $('.licenseCard').addClass('d-none');
+
+        })
+
+
+
+
+        $(document).on('click', '.showOrder', function(e) {
+            e.preventDefault();
+            $('.agentCard').addClass('d-none');
+            $('.orderCard').removeClass('d-none');
+            $('.licenseCard').addClass('d-none');
+
+
+            $(this).removeClass('showOrder').addClass('order');
+            var id = $(this).val();
+
+
+            $(function() {
+
+                var table = $('.OrdersTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('company.orders') }}/"+id,
+                    columns: [{
+                            data: 'cname'
+                        },
+                        {
+                            data: 'aname'
+                        },
+                        {
+                            data: 'created_at'
+                        },
+                        {
+                            data: 'status'
+                        },
+                        {
+                            data:'action'
+
                         },
 
                         // {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -719,9 +762,27 @@
                         },
                     },
                 });
+
+                // $('.agentsTable').removeClass('agentsTable').addClass('showCOrder');
             });
 
+        })
 
+
+        $(document).on('click','.order',function(e){
+            e.preventDefault();
+            $('.agentCard').addClass('d-none');
+            $('.orderCard').removeClass('d-none');
+            $('.licenseCard').addClass('d-none');
+
+        })
+
+
+        $(document).on('click','.jawaz',function(e){
+            e.preventDefault();
+            $('.licenseCard').removeClass('d-none');
+            $('.agentCard').addClass('d-none');
+            $('.orderCard').addClass('d-none');
         })
 
 
@@ -730,64 +791,6 @@
 
         var citizenship = 0;
         $(document).ready(function() {
-
-            $(document).on('click', '.showAgents', function(e) {
-                e.preventDefault();
-                $('.abutton').removeClass('d-none');
-                $('.company').addClass('d-none');
-                $('.agents').removeClass('d-none');
-                $(this).addClass('d-none');
-                $('.addLicense').addClass('d-none');
-                $('.jawaz').addClass('d-none');
-                $('.companyDelete').addClass('d-none');
-                $('.companyEdit').addClass('d-none');
-                $('.backAgent').removeClass('d-none');
-                $('.showOrders').addClass('d-none');
-            })
-
-            $(document).on('click', '.backAgent', function(e) {
-                e.preventDefault();
-                $(this).addClass('d-none');
-                $('.abutton').addClass('d-none');
-                $('.company').removeClass('d-none');
-                $('.agents').addClass('d-none');
-                $('.addLicense').addClass('d-none');
-                $('#jawaz').addClass('d-none');
-                $('.jawaz').removeClass('d-none');
-                $('.companyDelete').removeClass('d-none');
-                $('.companyEdit').removeClass('d-none');
-                $('.showAgents').removeClass('d-none');
-                $('.showOrders').removeClass('d-none');
-                $('.orders').addClass('d-none');
-
-            })
-
-            $(document).on('click', '.jawaz', function(e) {
-                e.preventDefault();
-                $('.addLicense').removeClass('d-none');
-                $('.company').addClass('d-none');
-                $(this).addClass('d-none');
-                $('.companyDelete').addClass('d-none');
-                $('.companyEdit').addClass('d-none');
-                $('.backAgent').removeClass('d-none');
-                $('#jawaz').removeClass('d-none');
-                $('.showAgents').addClass('d-none');
-                $('.showOrders').addClass('d-none');
-            })
-
-            $(document).on('click', '.showOrders', function(e) {
-                e.preventDefault();
-                $(this).addClass('d-none');
-                $('.company').addClass('d-none');
-                $('.companyDelete').addClass('d-none');
-                $('.companyEdit').addClass('d-none');
-                $('.backAgent').removeClass('d-none');
-                $('.showAgents').addClass('d-none');
-                $('.orders').removeClass('d-none');
-                $('.jawaz').addClass('d-none');
-            })
-
-
 
 
 
@@ -812,9 +815,7 @@
                             $('#agentTbody').append('<tr><td>' + value.agentName + '</td><td>' +
                                 value.fName + '</td><td>' + value.phone + '</td><td>' +
                                 value.email +
-                                '</td><td> <img height="80px" width="100px"  src="http://localhost:8000/storage/' +
-                                value.photo.replace('public/', '') +
-                                '" /></td><td><a href="{{ route('agent.cdetails') }}/' +
+                                '</td><td> <img height="80px" width="100px"  src="http://localhost:8000/storage/' +value.photo.replace('public/', '') +'" /></td><td><a href="{{ route('agent.cdetails') }}/' +
                                 value
                                 .id + '"  class="btn btn-primary">معلومات</a></td></tr>');
 
@@ -845,25 +846,12 @@
                         $('[data-dismiss="modal"]').click();
                         $('#agentSave')[0].reset();
                         swal(response.message);
-
-                        $('#agentTbody').append('<tr><td>' + response.nagent.agentName +
-                            '</td><td>' + response.nagent.fName + '</td><td>' + response
-                            .nagent.phone + '</td><td>' + response.nagent.email +
-                            '</td><td><img height="80px" width="100px"  src="http://localhost:8000/storage/' +
-                            response.nagent.photo.replace('public/', '') +
-                            '" /></td><td><a href="{{ route('agent.cdetails') }}/' +
-                            response.nagent.id +
-                            '"  class="btn btn-primary">معلومات</a></td></tr>');
-
                     }
                 });
 
             })
 
-            $(document).on('click', '.jawaz', function() {
-                // $('#jawaz').toggleClass('d-none');
-                // $('#jawaz1').toggleClass('d-none');
-            })
+
 
 
             $(document).on('click', '#companyEdit', function(e) {

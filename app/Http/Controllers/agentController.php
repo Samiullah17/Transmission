@@ -12,7 +12,7 @@ use App\Models\transmissionModel;
 use App\Models\transmissionType;
 use App\Models\provence;
 use Illuminate\Support\Facades\DB;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class agentController extends Controller
 {
@@ -72,12 +72,14 @@ class agentController extends Controller
         // $agent = companyAgent::where('company_id', $id)->get();
 
 
-            $data =  companyAgent::where('company_id', 1)->get();
+            $data =  companyAgent::where('company_id', $id)->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    // $btn = '<a href="'.route('details.company',['id'=>$data->id]).'" class="btn btn-primary btn-sm">View</a>';
-                    // return $btn;
+                    $btn = '<a href="'.route('agent.cdetails',['id'=>$data->id]).'" class="btn btn-primary btn-sm">معلومات</a>';
+                    return $btn;
                 })
+
+
                 ->rawColumns(['action'])
                 ->make(true);
 

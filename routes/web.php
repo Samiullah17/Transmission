@@ -39,7 +39,10 @@ Route::get('ad/trasmission/{id?}/{cid?}',[companyController::class,'addTransmiss
 
 Route::post('save/transmittion',[companyController::class,'addTransmission'])->name('transmission.save');
 
-Route::get('list/transmission',[transmissionController::class,'listTransmission'])->name('list.transmission');
+Route::get('comopanies/orders',[transmissionController::class,'listTransmission'])->name('companies.orders');
+Route::get('list/transmission',function(){
+    return view('transmittion.list');
+})->name('list.transmission');
 Route::get('company/transmission/{id?}',[companyController::class,'companyTransmission'])->name('company.transmission');
 
 Route::get('company/agent/{id?}',[agentController::class,'companyAgent'])->name('company.agent');
@@ -81,3 +84,5 @@ Route::get('load/agent/{id}',[agentController::class,'loadAgent'])->name('loade.
 Route::get('orders/details/{id}',[orderController::class,'details'])->name('orders.details');
 
 Route::get('users/index',[companyController::class,'index1'])->name('users.index');
+
+Route::get('show/orders/{id?}',[orderController::class,'getOrder'])->name('company.orders');

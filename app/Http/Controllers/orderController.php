@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class orderController extends Controller
 {
@@ -57,5 +58,29 @@ class orderController extends Controller
 
 
         }
+    }
+
+    public function getOrder($id){
+        $order=order::join('companies','orders.company_id','companies.id')
+        ->join('company_agents','orders.company_agent_id','company_agents.id')
+        ->select('orders.*','companies.companyName as cname','company_agents.agentName as aname')->where('orders.company_id',$id)->get();
+
+        return Datatables::of($order)->addIndexColumn()
+            ->addColumn('action', function ($order) {
+                $btn = '<a href="'.route('order.transmission',['id'=>$order->id]).'" class="btn btn-primary btn-sm">کتل</a>';
+                return $btn;
+            })
+            ->addColumn('status', function ($order) {
+                if($order->status == 0){
+                    $btn = '<span class="badge badge-info">د پروگرام په حال</span>';
+                }else{
+                    $btn = '<span class="badge badge-success">پروګرام شوی</span>';
+                }
+                return $btn;
+            })
+            ->rawColumns(['action','status'])
+            ->make(true);
+
+            return view('company.list');
     }
 }

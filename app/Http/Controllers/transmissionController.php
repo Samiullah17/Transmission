@@ -12,6 +12,7 @@ use App\Models\provence;
 use App\Models\transmissionModel;
 use App\Models\transmissionType;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class transmissionController extends Controller
 {
@@ -177,9 +178,27 @@ class transmissionController extends Controller
     public function listTransmission()
     {
 
-        $companies = Company::all();
+        $order = order::join('companies', 'orders.company_id', 'companies.id')
+            ->join('company_agents', 'orders.company_agent_id', 'company_agents.id')
+            ->select('companies.companyName as cname', 'company_agents.agentName as aname', 'orders.*')->get();
 
-        return view('transmittion.list', compact('companies'));
+        return Datatables::of($order)->addIndexColumn()
+            ->addColumn('action', function ($order) {
+                $btn = '<a href="' . route('order.transmission', ['id' => $order->id]) . '" class="btn btn-primary btn-sm">کتل</a>';
+                return $btn;
+            })
+            ->addColumn('status', function ($order) {
+                if ($order->status == 0) {
+                    $btn = '<span class="badge badge-info">د پروگرام په حال</span>';
+                } else {
+                    $btn = '<span class="badge badge-success">پروګرام شوی</span>';
+                }
+                return $btn;
+            })
+            ->rawColumns(['action', 'status'])
+            ->make(true);
+
+        return view('transmittion.list');
     }
 
     public function addTransmittion_new_transmission(Request $request)
@@ -204,7 +223,7 @@ class transmissionController extends Controller
         $transmissions = transmission::join('transmission_types', 'transmissions.transmission_type_id', 'transmission_types.id')
             ->join('transmission_models', 'transmissions.transmission_model_id', 'transmission_models.id')
             ->join('provences', 'transmissions.provence_id', 'provences.id')
-            ->join('orders','transmissions.order_id','orders.id')
+            ->join('orders', 'transmissions.order_id', 'orders.id')
             ->select(
                 'transmissions.*',
                 'transmission_types.transmissionTypeName as tname',
@@ -213,14 +232,14 @@ class transmissionController extends Controller
                 'orders.status as ostatus'
             )->where('transmissions.order_id', $id)->get();
 
-            $cid=order::where('id',$id)->first()->company_id;
-            $cname=Company::where('id',$cid)->first()->companyName;
+        $cid = order::where('id', $id)->first()->company_id;
+        $cname = Company::where('id', $cid)->first()->companyName;
 
 
         $provence = provence::all();
         $transmissionModel = transmissionModel::all();
         $transmissionType = transmissionType::all();
-        return view('order.transmission', compact('transmissions', 'order','provence','transmissionModel','transmissionType','cname'));
+        return view('order.transmission', compact('transmissions', 'order', 'provence', 'transmissionModel', 'transmissionType', 'cname'));
     }
 
     public function delete(Request $request)
@@ -237,7 +256,7 @@ class transmissionController extends Controller
                 'transmission_models.transmissionModelName as mname',
                 'provences.provenceName as pname'
             )->where('transmissions.order_id', $request->order)->get();
-            Alert::error('ریکارډ ډیلیټ شو','ریکارډ ډیلیټ شو');
+        Alert::error('ریکارډ ډیلیټ شو', 'ریکارډ ډیلیټ شو');
 
         return response()->json(['data' => $transmissions, 'message' => 'Transmission Deleted Successfuly']);
     }
@@ -267,27 +286,32 @@ class transmissionController extends Controller
         return response()->json(['data' => $request->all(), 'message' => 'transmission Updated successfuly ']);
     }
 
-    public function addNTransmission(Request $request){
-         $transmission=new transmission();
-         $transmission->transmission_type_id=$request->transmission_type_id;
-         $transmission->transmission_model_id=$request->transmission_model_id;
-         $transmission->serialNo=$request->serialNO;
-         $transmission->status=0;
-         $transmission->provence_id=$request->provence_id;
-         $transmission->order_id=$request->order_id;
-         $transmission->rate=0;
-         $transmission->save();
-        $tra=transmission::join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
-        ->join('transmission_types','transmissions.transmission_type_id','transmission_types.id')
-        ->join('provences','transmissions.provence_id','provences.id')
-        ->select('transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname',
-        'provences.provenceName as pname','transmissions.*')->where('transmissions.id',$transmission->id)->first();
+    public function addNTransmission(Request $request)
+    {
+        $transmission = new transmission();
+        $transmission->transmission_type_id = $request->transmission_type_id;
+        $transmission->transmission_model_id = $request->transmission_model_id;
+        $transmission->serialNo = $request->serialNO;
+        $transmission->status = 0;
+        $transmission->provence_id = $request->provence_id;
+        $transmission->order_id = $request->order_id;
+        $transmission->rate = 0;
+        $transmission->save();
+        $tra = transmission::join('transmission_models', 'transmissions.transmission_model_id', 'transmission_models.id')
+            ->join('transmission_types', 'transmissions.transmission_type_id', 'transmission_types.id')
+            ->join('provences', 'transmissions.provence_id', 'provences.id')
+            ->select(
+                'transmission_types.transmissionTypeName as tname',
+                'transmission_models.transmissionModelName as mname',
+                'provences.provenceName as pname',
+                'transmissions.*'
+            )->where('transmissions.id', $transmission->id)->first();
 
-        $tr=transmission::where('id',$transmission->id)->first()->order_id;
-        $order=order::where('id',$tr)->first()->status;
+        $tr = transmission::where('id', $transmission->id)->first()->order_id;
+        $order = order::where('id', $tr)->first()->status;
 
 
-         return response()->json(['message'=>'مخابره په بریالیتوب سره ثبت شوه','tra'=>$tra,'order'=>$order]);
+        return response()->json(['message' => 'مخابره په بریالیتوب سره ثبت شوه', 'tra' => $tra, 'order' => $order]);
     }
 
     public function show($id)
@@ -304,33 +328,34 @@ class transmissionController extends Controller
         return response()->json(['message' => 'Data arived successfuly', 'data' => $transmissions]);
     }
 
-    public function allTransmissino(Request $request){
+    public function allTransmissino(Request $request)
+    {
 
-        if($request->status=='allTra'){
+        if ($request->status == 'allTra') {
 
-            $allTransmissions=order::join('companies','orders.company_id','companies.id')
-            ->join('transmissions','transmissions.order_id','orders.id')
-            ->join('transmission_types','transmissions.transmission_type_id','transmission_types.id')
-            ->join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
-            ->join('provences','transmissions.provence_id','provences.id')
-            ->select('transmissions.*','transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname',
-            'provences.provenceName as pname')->where('companies.id',$request->id)->get();
-            return response()->json(['data'=>$allTransmissions]);
+            $allTransmissions = order::join('companies', 'orders.company_id', 'companies.id')
+                ->join('transmissions', 'transmissions.order_id', 'orders.id')
+                ->join('transmission_types', 'transmissions.transmission_type_id', 'transmission_types.id')
+                ->join('transmission_models', 'transmissions.transmission_model_id', 'transmission_models.id')
+                ->join('provences', 'transmissions.provence_id', 'provences.id')
+                ->select(
+                    'transmissions.*',
+                    'transmission_types.transmissionTypeName as tname',
+                    'transmission_models.transmissionModelName as mname',
+                    'provences.provenceName as pname'
+                )->where('companies.id', $request->id)->get();
+            return response()->json(['data' => $allTransmissions]);
         }
 
-        if($request->status=='allOrders'){
-            $orders = order::join('companies','companies.id','orders.company_id')
-            ->join('order_details','order_details.order_id','orders.id')
-            ->join('company_agents','orders.company_agent_id','company_agents.id')
-            ->selectRaw('company_agents.agentName aname, orders.status status, companies.companyName company,orders.id `order`, orders.created_at created_at, SUM(order_details.transmissionQuantity) total_transmissions')
-            ->where('orders.company_id',$request->id)
-            ->groupByRaw('1,2,3,4')
-            ->get();
-            return response()->json(['data'=>$orders]);
+        if ($request->status == 'allOrders') {
+            $orders = order::join('companies', 'companies.id', 'orders.company_id')
+                ->join('order_details', 'order_details.order_id', 'orders.id')
+                ->join('company_agents', 'orders.company_agent_id', 'company_agents.id')
+                ->selectRaw('company_agents.agentName aname, orders.status status, companies.companyName company,orders.id `order`, orders.created_at created_at, SUM(order_details.transmissionQuantity) total_transmissions')
+                ->where('orders.company_id', $request->id)
+                ->groupByRaw('1,2,3,4')
+                ->get();
+            return response()->json(['data' => $orders]);
         }
-
-
-
-
     }
 }
