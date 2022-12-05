@@ -23,6 +23,7 @@ use App\Models\transmissionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class companyController extends Controller
 {
     public function index(){
@@ -64,6 +65,7 @@ class companyController extends Controller
         $companyActiveType=companyActiveType::all();
         $citizenships=citizenship::all();
         $countires=country::all();
+        $licenseType=licenseType::all();
 
 
         return view('company.add',compact('licenseType','countires','companyType','companyActiveType','citizenships','provence','district','transmissionModel','transmissionType'));
@@ -73,12 +75,13 @@ class companyController extends Controller
     public function saveCompnay(Request $request){
 
 
+        
 
 
 
         $company=new Company();
         $company->companyName=$request->companyName;
-        $company->companyId = $request->compnayID;
+        // $company->companyId = $request->compnayID;
         $company->company_type_id = $request->company_type_id;
         $company->company_active_type_id = $request->company_active_type_id;
         $company->companyManagerName = $request->companyManagerName;
@@ -189,6 +192,11 @@ class companyController extends Controller
 
 
         return view('company.details',compact('company','provence','district','companylicense','cagent'));
+    }
+
+    public function saveRight($id)
+    {
+
     }
 
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\citizenship;
+use App\Models\Company;
 use App\Models\companyActiveType;
 use App\Models\companyType;
 use App\Models\country;
@@ -21,7 +22,7 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('companyName');
-            $table->uuid('companyId');
+            $table->uuid(Company::COMPANY_UNIQUE_ID_COLUMN_NAME);
             $table->foreignIdFor(companyType::class)->constrained();
             $table->foreignIdFor(companyActiveType::class)->constrained();
             $table->string('companyManagerName');

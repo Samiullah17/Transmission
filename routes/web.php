@@ -3,10 +3,15 @@
 use App\Http\Controllers\agentController;
 use App\Http\Controllers\classController;
 use App\Http\Controllers\companyController;
+use App\Http\Controllers\CompanyFineController;
+use App\Http\Controllers\LicenseExtensionController;
+use App\Http\Controllers\RegistrationRightController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\subjectController;
 use App\Http\Controllers\teacherController;
+use App\Models\RegistrationRight;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Finder\Finder;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +47,22 @@ Route::get('company/agent/{id?}',[companyController::class,'companyAgent'])->nam
 
 Route::get('list/company',[companyController::class,'index'])->name('list.company');
 Route::get('details/company/{id}',[companyController::class,'details'])->name('details.company');
+Route::get('saveRight/company/{id}',[RegistrationRightController::class,'show'])->name('saveRight.company');
+Route::get('oldRegRight.company/{id}',[RegistrationRightController::class,'OldRight'])->name('oldRegRight.company');
+Route::post('createsaveRight/company/{id}',[RegistrationRightController::class,'store'])->name('createsaveRight.company');
+route::get('EditRegRight/company/{id}',[RegistrationRightController::class,'edit'])->name('EditRegRight.company');
+Route::put('updatesaveRight/company/{id}',[RegistrationRightController::class,'update'])->name('updatesaveRight.company');
+Route::post('createFine/company/{id}',[CompanyFineController::class,'store'])->name('createFine.company');
+Route::get('licence/company/{id}',[LicenseExtensionController::class,'show'])->name('licence.company');
+Route::delete('delteLicenseExt/company/{id}',[LicenseExtensionController::class,'destroy'])->name('delteLicenseExt.company');
+Route::post('CreatelicenseExtension/company/{id}',[LicenseExtensionController::class,'store'])->name('CreatelicenseExtension.company');
+Route::get('giveFrequency/{provinceId}/{companyId}',[LicenseExtensionController::class,'frequencySearch'])->name('giveFrequency');
+Route::get('licenseExtEdit/company/{id}',[LicenseExtensionController::class,'edit'])->name('licenseExtEdit.company');
+Route::get('EditlicenseExtension/company/{id}',[LicenseExtensionController::class,'update'])->name('EditlicenseExtension.company');
+Route::get('fine/company/{id}',[CompanyFineController::class,'show'])->name('fine.company');
+Route::delete('delteFine/company/{id}',[CompanyFineController::class,'destroy'])->name('delteFine.company');
+Route::PUT('UpdateFine/company/{id}',[CompanyFineController::class,'update'])->name('UpdateFine.company');
+Route::get('EditFine/company/{id}',[CompanyFineController::class,'edit'])->name('EditFine.company');
 Route::get('edit/company{id}',[companyController::class,'edit'])->name('edit.company');
 
 Route::post('company/{id}')->name('order.create');

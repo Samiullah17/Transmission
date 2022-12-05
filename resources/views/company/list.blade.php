@@ -21,7 +21,7 @@
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
                             <table class="table table-head-fixed table-hover table-striped">
-                                <thead>
+                                <thead> 
                                     <tr>
                                         <th>د کمپنی نوم</th>
                                         <th>د فعالیت ډول</th>
@@ -46,9 +46,14 @@
                                                     معلومات
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li class="dropdown-item"><a href="#"><i
-                                                                class="bi bi-archive"></i>ویرایش</a></li>
+                                                    {{-- <li class="dropdown-item"><a href="#"><i
+                                                                class="bi bi-archive"></i>ویرایش</a></li> --}}
                                                     <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
+                                                    <li class="dropdown-item"><a href="{{ route('saveRight.company',$company->id) }}">حق ثبت</a></li>
+                                                    <li class="dropdown-item"><a href="{{ route('licence.company',$company->id) }}">تمدید</a></li>
+                                                    <li class="dropdown-item"><a href="{{ route('fine.company',$company->id) }}">جریمه</a></li>
+
+
                                                     <li class="dropdown-item"><a href="#"
                                                             class="text text-danger">حذف</a></li>
                                                     <li class="dropdown-divider"></li>
@@ -445,7 +450,7 @@
 
 
 
-    </div>
+
 @endsection
 @section('script')
     <script>
