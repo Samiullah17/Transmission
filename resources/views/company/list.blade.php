@@ -70,6 +70,7 @@
                                         <th style="text-align: start">د موسسی/بنست ډول</th>
                                         <th style="text-align: start">د ریس نوم</th>
                                         <th style="text-align: start">معلومات</th>
+                                        <th></th>
                                         {{-- <th></th> --}}
                                     </tr>
 

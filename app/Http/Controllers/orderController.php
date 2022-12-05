@@ -72,7 +72,7 @@ class orderController extends Controller
             })
             ->addColumn('status', function ($order) {
                 if($order->status == 0){
-                    $btn = '<span class="badge badge-info">د پروگرام په حال</span>';
+                    $btn = '<span class="badge badge-warning">د پروگرام په حال</span>';
                 }else{
                     $btn = '<span class="badge badge-success">پروګرام شوی</span>';
                 }

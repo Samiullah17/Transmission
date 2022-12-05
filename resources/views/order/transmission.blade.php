@@ -6,12 +6,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
                                  د {{ $cname }} کمپنی/بنسټ
                             </div>
                             <div class="card-title" id="ctitle">
+
+
+                                <a href="{{ route('order.transmission',$order) }}" class="btn btn-primary btn-sm">پروګرام کول</a>
 
 
                                 <button type="button" id="addNewTransmission" data-toggle="modal"

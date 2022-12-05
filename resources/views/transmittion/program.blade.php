@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body table-responsive">
 
                             <div class="row" id="row">
                                 <div class="form-group col-md-3">

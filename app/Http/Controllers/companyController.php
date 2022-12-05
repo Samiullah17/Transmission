@@ -76,7 +76,9 @@ class companyController extends Controller
                 )->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $btn = '<a href="'.route('details.company',['id'=>$data->id]).'" class="btn btn-primary btn-sm">View</a>';
+                 $btn = '<a href="' . route('details.company', ['id' => $data->id]) . '" class="btn btn-primary btn-sm">View</a>';
+
+                    // $btn='<div class="input-group input-group-sm mb-3"><div class="input-group-prepend"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">معلومات</button><ul class="dropdown-menu"><li class="dropdown-item"><a href="' . route('details.company', ['id' => $data->id]) . '">تاریخچه</a></li><li class="ropdown-item"><button type="button" class="btn btn-primary">click here</button></li></ul></div></div>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -140,12 +142,6 @@ class companyController extends Controller
 
 
         return redirect()->back();
-
-
-
-
-
-
     }
 
     public function saveCompany1(Request $request)
