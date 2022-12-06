@@ -83,4 +83,26 @@ class orderController extends Controller
 
             return view('company.list');
     }
+
+    public function program($id){
+        $order=$id;
+        $status=order::where('id',$id)->first()->status;
+
+        $transmissinos = order::join('transmissions', 'orders.id', 'transmissions.order_id')
+        ->join('transmission_types', 'transmissions.transmission_type_id', 'transmission_types.id')
+        ->join('transmission_models', 'transmissions.transmission_model_id', 'transmission_models.id')
+        ->join('provences', 'transmissions.provence_id', 'provences.id')
+        ->select(
+            'transmissions.serialNo as sNo',
+            'transmission_types.transmissionTypeName as tname',
+            'transmission_types.id as tid',
+            'transmission_models.transmissionModelName as mname',
+            'provences.provenceName as pname',
+            'transmissions.id as id',
+            'transmission_types.rate as rate'
+        )->where('orders.id', $id)->get();
+        $transmissionTypes=transmissionType::all();
+
+        return view('transmittion.program',compact('transmissinos','order','transmissionTypes','status'));
+    }
 }

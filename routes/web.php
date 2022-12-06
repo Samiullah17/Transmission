@@ -86,3 +86,4 @@ Route::get('orders/details/{id}',[orderController::class,'details'])->name('orde
 Route::get('users/index',[companyController::class,'index1'])->name('users.index');
 
 Route::get('show/orders/{id?}',[orderController::class,'getOrder'])->name('company.orders');
+Route::get('orders/program/{id?}',[orderController::class,'program'])->name('order.program');

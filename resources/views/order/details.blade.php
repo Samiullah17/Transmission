@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
+                    <div class="card-body table-responsive">
 
                         <input type="hidden" id="order" name="order" value="{{ $order }}">
 

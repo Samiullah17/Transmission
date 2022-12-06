@@ -23,7 +23,7 @@ class transmissionController extends Controller
     public function program()
     {
         $companies = Company::all();
-        return view('transmittion.program', compact('companies'));
+        return view('transmittion.program');
     }
 
     public function program1($id)
@@ -57,7 +57,7 @@ class transmissionController extends Controller
         return response()->json(['rate' => $request->rate]);
 
 
-        return response()->json(['rate' => $request->rate, 'tra' => $request->tra]);
+        // return response()->json(['rate' => $request->rate, 'tra' => $request->tra]);
     }
 
     public function changeStatus(Request $request)

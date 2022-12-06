@@ -15,12 +15,19 @@
                             <div class="card-title" id="ctitle">
 
 
-                                <a href="{{ route('order.transmission',$order) }}" class="btn btn-primary btn-sm">پروګرام کول</a>
+                                <a href="{{ route('order.program',$order) }}"  class="btn btn-primary btn-sm programOrder d-none">پروګرام کول</a>
 
 
                                 <button type="button" id="addNewTransmission" data-toggle="modal"
                                     data-target="#addTransmission" class="btn btn-primary btn-sm d-none">د نوی مخابری اضافه
-                                    کول</button>
+                                   کول</button>
+
+
+
+                                <button type="button" id="printBill" value="{{ $order }}" class="btn btn-primary btn-sm">بیل چاپ کول</button>
+
+
+
 
 
 
@@ -284,7 +291,12 @@
         function addTransmission(){
             let tr=$('#btnEdit').val();
             if(tr>0){
+                $('.programOrder').removeClass('d-none');
                 $('#addNewTransmission').removeClass('d-none');
+                $('#printBill').addClass('d-none');
+            }
+            else{
+
             }
         }
         $(document).on('click', '#btnDelete1', function(e) {
