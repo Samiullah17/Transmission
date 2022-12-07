@@ -3,21 +3,11 @@
 use App\Http\Controllers\agentController;
 use App\Http\Controllers\classController;
 use App\Http\Controllers\companyController;
-<<<<<<< HEAD
 use App\Http\Controllers\CompanyFineController;
 use App\Http\Controllers\LicenseExtensionController;
 use App\Http\Controllers\RegistrationRightController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\subjectController;
-use App\Http\Controllers\teacherController;
+
 use App\Models\RegistrationRight;
-=======
-use App\Http\Controllers\orderController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\subjectController;
-use App\Http\Controllers\teacherController;
-use App\Http\Controllers\transmissionController;
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Finder;
 
@@ -62,7 +52,6 @@ Route::get('company/agent/{id?}',[agentController::class,'companyAgent'])->name(
 Route::get('list/company',[companyController::class,'index'])->name('list.company');
 Route::get('users/index',[companyController::class,'index1'])->name('users.index');
 Route::get('details/company/{id}',[companyController::class,'details'])->name('details.company');
-<<<<<<< HEAD
 Route::get('saveRight/company/{id}',[RegistrationRightController::class,'show'])->name('saveRight.company');
 Route::get('oldRegRight.company/{id}',[RegistrationRightController::class,'OldRight'])->name('oldRegRight.company');
 Route::post('createsaveRight/company/{id}',[RegistrationRightController::class,'store'])->name('createsaveRight.company');
@@ -81,11 +70,6 @@ Route::PUT('UpdateFine/company/{id}',[CompanyFineController::class,'update'])->n
 Route::get('EditFine/company/{id}',[CompanyFineController::class,'edit'])->name('EditFine.company');
 Route::get('edit/company{id}',[companyController::class,'edit'])->name('edit.company');
 
-=======
-Route::get('edit/company{id}',[companyController::class,'edit12'])->name('edit.company');
-Route::get('company/edit/{id}',[companyController::class,'edit'])->name('company.edit');
-Route::post('update/company',[companyController::class,'update'])->name('update.company');
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
 Route::post('company/{id}')->name('order.create');
 Route::post('license/add',[companyController::class,'addLicense'])->name('add.license');
 Route::get('license/edit/{id}',[companyController::class,'editLicense'])->name('license.edit');

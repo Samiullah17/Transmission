@@ -19,15 +19,9 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-<<<<<<< HEAD
                         <div class="card-body table-responsive ">
                             <table class="table  table-hover  user_datatable ">
                                 <thead> 
-=======
-                        <div class="card-body table-responsive">
-                            {{-- <table class="table table-head-fixed table-hover table-striped d-none">
-                                <thead>
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
                                     <tr>
                                         <th class="col-md-3" style="text-align: start">د کمپنی نوم</th>
                                         <th class="col-md-3" style="text-align:  start">د فعالیت ډول</th>
@@ -53,7 +47,6 @@
                                                     data-toggle="dropdown">
                                                     معلومات
                                                 </button>
-<<<<<<< HEAD
                                                 <ul class="dropdown-menu"> 
                                                     <li class="dropdown-item"><a href="#"><i
                                                                 class="bi bi-archive"></i>ویرایش</a></li>
@@ -66,12 +59,6 @@
                                                     <li class="dropdown-item"><a href="#"
                                                             class="text text-danger">حذف</a></li>
                                                     <li class="dropdown-divider"></li>
-=======
-                                                <ul class="dropdown-menu">
-                                                    <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
-                                                    <li class="dropdown-item"><button id="companyId" value="{{ $company->id }}" data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl1" class="text-primary">د مخابرو ثبت</button></li>
-
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
                                                 </ul>
                                             </div> --}}
                                             <!-- /btn-group -->
@@ -80,35 +67,15 @@
                                     </tr>
 
                                     @endforeach
-<<<<<<< HEAD
  --}}
-=======
-                                </tbody>
-                            </table> --}}
 
-                            <table class="table table-hover user_datatable">
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
-
-                                <thead >
-
-                                    <tr>
-                                        <th style="text-align: start">د کمپنی نوم</th>
-                                        <th style="text-align: start">د فعالیت ډول</th>
-                                        <th style="text-align: start">د موسسی/بنست ډول</th>
-                                        <th style="text-align: start">د ریس نوم</th>
-                                        <th style="text-align: start">معلومات</th>
-                                        <th></th>
-                                        {{-- <th></th> --}}
-                                    </tr>
-
-                                </thead>
-
-                                <tbody>
 
                                 </tbody>
-
                             </table>
                         </div>
+
+
+
 
                         <!-- /.card-body -->
                     </div>
@@ -117,6 +84,155 @@
             </div>
         </div>
 
+        {{-- Start of Agent Register  --}}
+
+        {{-- <div class="modal fade" id="modal-xl">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">د بنسټ د رسمی نماینده د ثبت برخه</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mr-5">
+                        <form action="#" id="agentSave" enctype="multipart/form-data">
+                            <div class="row">
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د نماینده نوم</label>
+                                    <input type="text" name="agentName" class="form-control"
+                                        placeholder="د نماینده نوم ولیکی">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د پلار نوم</label>
+                                    <input type="text" name="fName" class="form-control"
+                                        placeholder="د نماینده د پلار نوم ">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د نیکه نوم</label>
+                                    <input type="text" name="gFName" class="form-control"
+                                        placeholder="د نماینده د نکیه نوم">
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div class="row">
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د تذکره شمیره</label>
+                                    <input type="text" name="NIC" class="form-control" placeholder="د تذکری شمیره">
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="">د تلفون شمیره</label>
+                                    <input type="text" name="phone" class="form-control"
+                                        placeholder="د نماینده داړیکی شمیره">
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">ایمیل آدرس</label>
+                                    <input type="text" name="email" class="form-control"
+                                        placeholder="د نماینده ایمیل آدرس">
+                                </div>
+
+
+                            </div>
+                            <p>اصلی استوګنځی:</p>
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="">ولایت</label>
+                                    <select name="provence" id="provence" class="form-control">
+                                        <option disabled selected>ولایت انتخاب کړی</option>
+                                        @foreach ($provence as $item)
+                                            <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">ولسوالی</label>
+                                    <select name="odistrict_id " id="odistrict_id " class="form-control">
+                                        <option disabled selected>ولسوالی انتخاب کړی</option>
+                                        @foreach ($district as $item)
+                                            <option value="{{ $item->id }}">{{ $item->districtName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="from-group col-md-4">
+                                    <label for="">کلی</label>
+                                    <input type="text" name="ovillage" class="form-control"
+                                        placeholder="د اصلی کلی نوم ولیکی">
+                                </div>
+
+                            </div>
+                            <p>فعلی استوګنځی:</p>
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="">ولایت</label>
+                                    <select name="provence" id="provence" class="form-control">
+                                        <option disabled selected>ولایت انتخاب کړی</option>
+                                        @foreach ($provence as $item)
+                                            <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="">ولسوالی</label>
+                                    <select name="cdistrict_id " id="odistrict_id " class="form-control">
+                                        <option disabled selected>ولسوالی انتخاب کړی</option>
+                                        @foreach ($district as $item)
+                                            <option value="{{ $item->id }}">{{ $item->districtName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="from-group col-md-4">
+                                    <label for="">کلی</label>
+                                    <input type="text" name="cvillage" class="form-control"
+                                        placeholder="د فعلی کلی نوم ولیکی">
+                                </div>
+
+                                <input type="hidden" class="form-control" name="company_id" id="company_id">
+
+
+
+
+
+                            </div>
+
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
+                        <button type="submit" class="btn btn-primary">ذخیره کول</button>
+                    </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div> --}}
+
+
+
+
+
+        {{-- End of Agent Register --}}
 
         {{-- Start Of Company Registration Model --}}
 
@@ -124,19 +240,19 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">د بنسټ د ثبت برخه</h4>
+                        <h4 class="modal-title">د بنسټ د رسمی نماینده د ثبت برخه</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body mr-5">
-                        <form action="{{ route('save.company') }}" method="POST" id="companySave" enctype="multipart/form-data">
+                        <form action="{{ route('save.company') }}" method="POST" id="agentSave" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">د موسسی/ بنسټ نوم<span class="text-danger">*</span></label>
+                                        <label for="">د موسسی/ بنسټ نوم</label>
                                         <input type="text" class="form-control" name="companyName"
                                             placeholder="د موسسی یا شرکت نوم داخل کړی">
                                         <span class="text text-danger" role="alert">
@@ -154,7 +270,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="text">د بنست ډول<span class="text-danger">*</span></label>
+                                        <label for="text">د بنست ډول</label>
                                         <select name="company_type_id" id="company_type_id"
                                             class="form-control">
                                             <option disabled selected>د بنست ډول انتخاب کړی</option>
@@ -175,7 +291,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">د فعالیت ډول<span class="text-danger">*</span></label>
+                                        <label for="">د فعالیت ډول</label>
                                         <select name="company_active_type_id" id="company_active_type_id"
                                             class="form-control">
                                             <option disabled selected>د فعالیت دول انتخاب کړی</option>
@@ -197,7 +313,7 @@
 
 
                             </div>
-                            <p style="background-color:#dfe1e8; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:black" class="text-bold">د موسسی/بنسټ د ادرس برخه</p>
+                            <h6>د موسسی/بنسټ د ادرس برخه</h6>
 
                             <div class="row">
 
@@ -205,7 +321,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>د بنسټ/کمپنی آدرس<span class="text-danger">*</span></label>
+                                        <label>د بنسټ/کمپنی آدرس</label>
                                         <input type="text" placeholder="د کمپنی آدرس ولیکی" name="companyAddress" class="form-control">
                                     </div>
                                 </div>
@@ -227,11 +343,11 @@
                                 </div>
 
                             </div>
-                            <p style="background-color:#dfe1e8; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:black" class="text-bold">د بنسټ د ریس معلومات</p>
+                            <h6>د بنسټ د ریس معلومات</h6>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="text">د بنست د ریس نوم<span class="text-danger">*</span></label>
+                                        <label for="text">د بنست د ریس نوم</label>
                                         <input type="text" class="form-control" name="companyManagerName"
                                             id="companyManagerName" placeholder="د بنست  ریس نوم ">
                                         <span class="text text-danger" role="alert">
@@ -244,7 +360,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="text">د بنست د ریس تابعیت<span class="text-danger">*</span></label>
+                                        <label for="text">د بنست د ریس تابعیت</label>
                                         <select name="citizenship_id" id="citizenship_id" class="form-control">
                                             <option selected disabled>تابعیت انتخاب کړی</option>
                                             @foreach ($citizenships as $item)
@@ -271,14 +387,14 @@
 
                             </div>
 
-                            <p style="background-color:#dfe1e8; width: 35%;border-radius: 4px 4px;padding: 0.2rem; color:black" class="text-bold">د موسسی/بنسټ د جواز او د جواز مراجعو برخه</p>
+                            <h6>د موسسی/بنسټ د جواز او د جواز مراجعو برخه</h6>
 
 
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
 
-                                        <label>د جواز مرجع<span class="text-danger">*</span></label>
+                                        <label>د جواز مرجع</label>
                                         <select name="license_type_id" id="license_type_id"  class="form-control">
                                             <option selected disabled>د جواز مرجع انتخاب کړی</option>
                                             @foreach ($licenseType as $item)
@@ -298,6 +414,17 @@
                             <div class="row license">
 
                             </div>
+
+
+
+
+
+
+
+
+
+
+
 
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -327,15 +454,9 @@
 
 
 @endsection
-
 @section('script')
-
     <script>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
 $(function () {
     var table = $('.user_datatable').DataTable({
         processing: true,
@@ -367,79 +488,7 @@ $(function () {
   });
 
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
         $(document).ready(function() {
-
-
-            $("#agentSave").validate({
-                rules: {
-                    agentName: "required",
-                    fName: "required",
-                    gFName: "required",
-                    NIC: "required",
-                    phone: {
-                        required: true,
-                        number: true,
-                        minlength: 10,
-                        maxlength: 10,
-                    },
-                    provence: "required",
-                    cprovence: "required",
-                    odistrict_id: "required",
-                    cdistrict_id: "required",
-                    ovillage: "required",
-                    cvillage: "required",
-                    photo: "required",
-                    suggestion_file: "required",
-                },
-
-                messages: {
-                    agentName: "د نماینده نوم ضروری ده",
-                    fName: "د نماینده د پلار نوم ضروری ده",
-                    gFName: "د نماینده د نیکه نوم ضروری ده",
-                    NIC: "د تذکری شمیره ضروری ده",
-                    phone:{
-                        required: "د تلفون شمره ضروری ده",
-                        maxlength: "د تلفون شمیره باید له لسو عددونو زیاته نوی",
-                        minlength: "د تلفون شمیره باید له لسو عددونو څخه کمه نوی",
-                        number: "د تلفون شمیره کی یوازی اعداد باید داخل شی"
-                    },
-                    provence: "په مهربانی سره اصلی ولایت انتخاب کړی",
-                    cprovence: "په مهربانی سره اوسنی ولایت انتخاب کړی",
-                    odistrict_id: "اصلی ولسوالی ضروری ده",
-                    cdistrict_id: "فعلی ولسوالی ضروری ده",
-                    ovillage: "اصلی کلی داخل کړی",
-                    cvillage: "د اوسنی کلی نوم داخل کړی",
-                    photo: "د نماینده عکس داخل کړی",
-                    suggestion_file: "پشنهادی فایل ضروری ده",
-                }
-            });
-
-            $('#companySave').validate({
-                rules:{
-                    companyName:"required",
-                    company_type_id:"required",
-                    company_active_type_id:"required",
-                    companyAddress:"required",
-                    companyManagerName:"required",
-                    citizenship_id:"required",
-                    license_type_id:"required",
-                },
-                messages:{
-                    companyName:"د کمپنی نوم ضروری ده",
-                    company_type_id:"د کمپنی/بنسټ ډول ضروری ده",
-                    company_active_type_id:"د کمپنی/بنسټ د فعالیت ډول انتخاب کړی",
-                    companyAddress:"د کمپنی آدرس ضروری ده",
-                    companyManagerName:"د کمپنی/بنسټ د ریس نوم داخل کړی",
-                    citizenship_id:"د ریس تابعیت انتخاب کړی",
-                    license_type_id:"لیګ تر لیګه د یوه د جواز مرجع انتخاب کړی",
-                }
-            })
 
 
             function loadData(){
@@ -537,10 +586,10 @@ $(function () {
                 var id = $(this).val();
                  var economical=`<div class="form-group col-md-3" id="div`+id+`">
                     <button type="button" class="btn btn-sm btn-danger" onclick="$('#div`+id+`').remove()">Colse</button>
-                    <label>جواز نمبر</label>
+                    <label>د اقتصاد وزارت جواز نمبر  </label>
                     <input type="hidden" name="licenseTypeId[]" id="economical" value="`+id+`" class="form-control">
                     <input type="date" name="issueDate[]" id="issueDate" class="form-control">
-                    <input type="text"  placeholder="جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
+                    <input type="text"  placeholder="د اقتصاد وزارت جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
                     <input type="file" name="licenseFile[]" id="economicalId" class="form-control">
                      </div>
                     `;
@@ -588,72 +637,9 @@ $(function () {
 
 
 
-            $(document).on('click','#companyId',function(e){
-                $('#company_id').val($(this).val());
-                var id=$(this).val();
-                $('#adetails').html('');
-
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('company.agent') }}/"+id,
-                    dataType: "json",
-                    success: function(response) {
-                        console.log(response);
-                        $('#agent_id').html('');
-                        $('#agent_id').append('<option selected>د بنسټ نماینده انتخاب کړی</option>');
-
-                        $.each(response.agent, function(index, value) {
-                             $('#agent_id').append('<option value="'+value.id+'">'+value.agentName+'</option>');
-                           });
-                        // $("#exampleModal").modal("hide");
-                        // alert('samiullah it was successfuly added ');
-                        // $('#exampleModal').modal('hide');
-                        // $('#exampleModal').css('display', 'none');
-                        // $('[data-dismiss="modal"]').click();
-                        // $('#regForm')[0].reset();
-                    }
-                });
-
-            })
-
-
-
-
-            $(document).on('change','#agent_id',function(){
-                var id=$(this).val();
-
-
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('agent.details') }}/"+id,
-                    dataType: "json",
-                    success: function(response) {
-                        $('.table-agent').removeClass('d-none');
-                             $('#adetails').html('');
-                             console.log(response);
-                        // $.each(response.agent, function(index, value) {
-                             $('#adetails').html('<tr><td>'+response.agent.agentName+'</td><td>'+response.agent.fName+'</td><td>'+response.agent.NIC+'</td><td>'+response.agent.NIC+'</td><td><form method="POST" id="frmSugest" action="'+response.route+'">@csrf<input type="hidden" name="agent_id" value="'+response.agent_id+'"><input type="hidden" name="company_id" value="'+response.company_id+'"><div class="form-inline"><lable>پشنهادی فایل</lable><input type="file" name="suggestion_file" class="form-control"><input type="submit" value="ثبت" class="btn btn-primary"></div></form></tr>');
-                        //    });
-                        // $("#exampleModal").modal("hide");
-                        // alert('samiullah it was successfuly added ');
-                        // $('#exampleModal').modal('hide');
-                        // $('#exampleModal').css('display', 'none');
-                        // $('[data-dismiss="modal"]').click();
-                        // $('#regForm')[0].reset();
-                    }
-                });
-
-            })
-
-
-
 
         })
 
 
-
-
     </script>
-
-
 @endsection
