@@ -324,13 +324,13 @@ $(function () {
                     "lengthMenu": "نمایش MENU معلومات",
                     "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
                     "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
-                    "search": "جستجو کردن : ",
+                    "search": "پلټل/جستجو: ",
                     "sProcessing": "در حال اضافه نمودن معلومات...",
                     "paginate": {
-                        "first": "اول",
-                        "last": "آخر",
-                        "next": "بعدی",
-                        "previous": "قبلی"
+                        "first": "لومړی",
+                            "last": "آخر",
+                            "next": "وروسته",
+                            "previous": "مخکی",
                     },
                 },
     });

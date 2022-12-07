@@ -28,8 +28,7 @@
 
                             <div id="divprint" style="float: left;" class="card-title">
                                 <button value="{{ $order }}" data-toggle="modal" data-target="#modal-sm"
-                                    style="width: 5rem" class="btn btn-primary btn-sm">تکمیل<i
-                                        class="fa fa-print"></i></button>
+                                    style="width: 5rem" class="btn btn-primary btn-sm">تکمیل</button>
                             </div>
 
 

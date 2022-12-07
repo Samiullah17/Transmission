@@ -32,12 +32,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('add.company') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>د موسسی /شرکت ثبت</p>
-                </a>
-              </li>
+
 
               <li class="nav-item">
                 <a href="{{ route('list.company') }}" class="nav-link">
@@ -45,59 +40,16 @@
                   <p>د موسسو/ شرکتونو لیست</p>
                 </a>
               </li>
-            </ul>
-          </li>
 
-
-
-
-
-
-
-
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                د مخابرو برخه
-                 {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('add.transmittion') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>د نوو مخابرو ثبت </p>
-                </a>
-              </li>
 
               <li class="nav-item">
                 <a href="{{ route('list.transmission') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>د موجوده مخابرو لیست</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{ route('programe.transmission') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>د مخابرو د پروګرام برخه</p>
+                  <p>د غوښتنو/آرډرونو لیست</p>
                 </a>
               </li>
             </ul>
           </li>
-
-
-
-
-
-
-
-
-
-
-
-
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>

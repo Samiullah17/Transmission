@@ -104,18 +104,8 @@
                                     <td>{{ $company->companyAddress }}</td>
                                     <td>{{ $company->latitude }}</td>
                                     <td>{{ $company->longtitude }}</td>
-                                    {{-- <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i
-                                                class="far fa-file-contract"></i></button></td> --}}
-
-
                                 </tbody>
                             </table>
-
-
-
-
-
-
 
 
                             <div class="modal fade" id="modal-xl">
@@ -219,89 +209,116 @@
 
 
                     <div class="d-none card mt-5 agentCard">
-                        <div class="card-title">
-                            <button type="button" style="float: left" class="btn btn-primary abutton btn-sm" data-toggle="modal"
-                            data-target="#modal-xl1">د
-                            نوی نماینده ثبت کول</button>
+                        <div class="card-header">
+                            د {{ $company->companyName }}د بنسټ/کمپنی د نمایندګانو لیست
                         </div>
-                        <table class="table table-bordred table-striped agentsTable">
+                        <div class="card-title">
+                            <button type="button" style="float: left" class="btn btn-primary abutton btn-sm mt-2 ml-2"
+                                data-toggle="modal" data-target="#modal-xl1">د
+                                نوی نماینده ثبت کول</button>
+                        </div>
+                        <div class="card-body">
 
-                            <thead>
-                                <th style="text-align: start">د نماینده نوم</th>
-                                <th style="text-align: start">د پلار نوم</th>
-                                <th style="text-align: start">د تلفون شمیره</th>
-                                <th style="text-align: start">ایمیل</th>
-                                <th style="text-align: start"></th>
-                            </thead>
+                            <table class="table table-bordred table-striped agentsTable">
 
-                            <tbody>
+                                <thead>
+                                    <th style="text-align: start">د نماینده نوم</th>
+                                    <th style="text-align: start">د پلار نوم</th>
+                                    <th style="text-align: start">د تلفون شمیره</th>
+                                    <th style="text-align: start">ایمیل</th>
+                                    <th style="text-align: start"></th>
+                                </thead>
 
-                            </tbody>
+                                <tbody>
 
-                        </table>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
                     </div>
 
 
-                    <div class="d-none card mt-5 orderCard">
-                        <table class="table table-bordred table-striped OrdersTable">
+                    <div class="card mt-5 orderCard">
 
-                            <thead>
-                                <th style="text-align: start">د کمپنی نوم</th>
-                                <th style="text-align: start">د نماینده نوم</th>
-                                <th style="text-align: start">د غوښتنی د مراجعی نیټه</th>
-                                <th style="text-align: start">حالت</th>
-                                <th style="text-align: start"></th>
+                        <div class="card-header">
+                            د {{ $company->companyName }} بنسټ/کمپنی د غوښتنو/آرډرونو لیست
+                        </div>
 
-                            </thead>
+                        <div class="card-title">
 
-                            <tbody style="text-align: start">
+                            <button type="button" style="float: left" class="btn btn-primary abutton btn-sm mt-2 ml-2">د
+                            نوی غوښتنه/آرډر ثبت کول</button>
 
-                            </tbody>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordred table-striped OrdersTable">
 
-                        </table>
+                                <thead>
+                                    <th style="text-align: start">د کمپنی نوم</th>
+                                    <th style="text-align: start">د نماینده نوم</th>
+                                    <th style="text-align: start">د غوښتنی د مراجعی نیټه</th>
+                                    <th style="text-align: start">حالت</th>
+                                    <th style="text-align: start"></th>
+
+                                </thead>
+
+                                <tbody style="text-align: start">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+
                     </div>
 
                     <div class="card d-none licenseCard mt-5">
 
-                        <div class="card-title">
-
-                            <button type="button" style="float: left" class="btn btn-primary addLicense btn-sm" data-toggle="modal"
-                            data-target="#modal-lg-add-license">د جواز اضافه کول</button>
+                        <div class="card-header">
+                            د {{ $company->companyName }} بنسټ/کمپنی د جوازونه
                         </div>
 
+                        <div class="card-title">
 
-                        <table class="table table-striped table-bordered table-hover">
+                            <button type="button" style="float: left" class="btn btn-primary addLicense btn-sm mt-2 ml-2"
+                                data-toggle="modal" data-target="#modal-lg-add-license">د جواز اضافه کول</button>
+                        </div>
 
-                            <thead>
-                                <th style="text-align: start">د جواز نمبر</th>
-                                <th style="text-align: start">د جواز مرجع</th>
-                                <th style="text-align: start">د جواز د صدرو تاریخ</th>
-                                <th style="text-align: start">عکس</th>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered table-hover">
 
-                            </thead>
-                            <tbody id="licenseTbody">
+                                <thead>
+                                    <th style="text-align: start">د جواز نمبر</th>
+                                    <th style="text-align: start">د جواز مرجع</th>
+                                    <th style="text-align: start">د جواز د صدرو تاریخ</th>
+                                    <th style="text-align: start">فایل</th>
+
+                                </thead>
+                                <tbody id="licenseTbody">
 
 
-                                @foreach ($companylicense as $item)
-                                    <tr>
-                                        <td id="lNumber{{ $item->id }}">{{ $item->licenseNumber }}</td>
-                                        <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
-                                        <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
-                                        <td><img height="80px" width="100px" src="{{ Storage::url($item->files) }}"
-                                                alt=""></td>
-                                        <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
-                                                class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i
-                                                    class="fas fa-edit"></i></button>
-                                            <button type="button" id="licenseDelete" value="{{ $item->id }}"
-                                                class="btn btn-danger" data-toggle="modal"
-                                                data-target="#modal-danger-license"><i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </td>
+                                    @foreach ($companylicense as $item)
+                                        <tr>
+                                            <td id="lNumber{{ $item->id }}">{{ $item->licenseNumber }}</td>
+                                            <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
+                                            <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
+                                            <td><img height="80px" width="100px" src="{{ Storage::url($item->files) }}"
+                                                    alt=""></td>
+                                            <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
+                                                    class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i
+                                                        class="fas fa-edit"></i></button>
+                                                <button type="button" id="licenseDelete" value="{{ $item->id }}"
+                                                    class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#modal-danger-license"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </td>
 
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                     <!-- /.card-body -->
@@ -646,6 +663,52 @@
 @endsection
 @section('script')
     <script>
+        $(document).ready(function() {
+            $(function() {
+                var id = $('#thisid').val();
+
+                var table = $('.OrdersTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('company.orders') }}/" + id,
+                    columns: [{
+                            data: 'cname'
+                        },
+                        {
+                            data: 'aname'
+                        },
+                        {
+                            data: 'created_at'
+                        },
+                        {
+                            data: 'status'
+                        },
+                        {
+                            data: 'action'
+
+                        },
+
+                        // {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+                    language: {
+                        "emptyTable":"غوښتنه/آرډر نلری",
+                        "lengthMenu": "نمایش MENU معلومات",
+                        "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                        "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                        "search": "پلټل/جستجو:",
+                        "sProcessing":"د معلوماتو غوښتنو د معلوماتو د اضافه کول...",
+                        "paginate": {
+                            "first": "لومړی",
+                            "last": "آخر",
+                            "next": "وروسته",
+                            "previous": "مخکی",
+                        },
+                    },
+                });
+
+                // $('.agentsTable').removeClass('agentsTable').addClass('showCOrder');
+            });
+        })
         $(document).on('click', '.showAgents', function(e) {
             e.preventDefault();
             $('.orderCard').addClass('d-none');
@@ -672,7 +735,7 @@
                             data: 'email'
                         },
                         {
-                            data:'action'
+                            data: 'action'
                         },
 
 
@@ -683,13 +746,13 @@
                         "lengthMenu": "نمایش MENU معلومات",
                         "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
                         "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
-                        "search": "جستجو کردن : ",
+                        "search": "پلټل/جستجو: ",
                         "sProcessing": "در حال اضافه نمودن معلومات...",
                         "paginate": {
-                            "first": "اول",
+                            "first": "لومړی",
                             "last": "آخر",
-                            "next": "بعدی",
-                            "previous": "قبلی"
+                            "next": "وروسته",
+                            "previous": "مخکی",
                         },
                     },
                 });
@@ -700,7 +763,7 @@
 
         })
 
-        $(document).on('click','.agents',function(e){
+        $(document).on('click', '.agents', function(e) {
             e.preventDefault();
             $('.orderCard').addClass('d-none');
             $('.agentCard').removeClass('d-none');
@@ -716,60 +779,11 @@
             $('.agentCard').addClass('d-none');
             $('.orderCard').removeClass('d-none');
             $('.licenseCard').addClass('d-none');
-
-
             $(this).removeClass('showOrder').addClass('order');
-            var id = $(this).val();
-
-
-            $(function() {
-
-                var table = $('.OrdersTable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('company.orders') }}/"+id,
-                    columns: [{
-                            data: 'cname'
-                        },
-                        {
-                            data: 'aname'
-                        },
-                        {
-                            data: 'created_at'
-                        },
-                        {
-                            data: 'status'
-                        },
-                        {
-                            data:'action'
-
-                        },
-
-                        // {data: 'action', name: 'action', orderable: false, searchable: false},
-                    ],
-                    language: {
-                        "emptyTable": "دیتا موجود نیست .",
-                        "lengthMenu": "نمایش MENU معلومات",
-                        "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
-                        "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
-                        "search": "جستجو کردن : ",
-                        "sProcessing": "در حال اضافه نمودن معلومات...",
-                        "paginate": {
-                            "first": "اول",
-                            "last": "آخر",
-                            "next": "بعدی",
-                            "previous": "قبلی"
-                        },
-                    },
-                });
-
-                // $('.agentsTable').removeClass('agentsTable').addClass('showCOrder');
-            });
-
         })
 
 
-        $(document).on('click','.order',function(e){
+        $(document).on('click', '.order', function(e) {
             e.preventDefault();
             $('.agentCard').addClass('d-none');
             $('.orderCard').removeClass('d-none');
@@ -778,7 +792,7 @@
         })
 
 
-        $(document).on('click','.jawaz',function(e){
+        $(document).on('click', '.jawaz', function(e) {
             e.preventDefault();
             $('.licenseCard').removeClass('d-none');
             $('.agentCard').addClass('d-none');
@@ -815,7 +829,9 @@
                             $('#agentTbody').append('<tr><td>' + value.agentName + '</td><td>' +
                                 value.fName + '</td><td>' + value.phone + '</td><td>' +
                                 value.email +
-                                '</td><td> <img height="80px" width="100px"  src="http://localhost:8000/storage/' +value.photo.replace('public/', '') +'" /></td><td><a href="{{ route('agent.cdetails') }}/' +
+                                '</td><td> <img height="80px" width="100px"  src="http://localhost:8000/storage/' +
+                                value.photo.replace('public/', '') +
+                                '" /></td><td><a href="{{ route('agent.cdetails') }}/' +
                                 value
                                 .id + '"  class="btn btn-primary">معلومات</a></td></tr>');
 
@@ -963,8 +979,6 @@
                             }
 
                         });
-
-
 
                     }
                 });

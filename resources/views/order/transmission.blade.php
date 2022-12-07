@@ -24,7 +24,7 @@
 
 
 
-                                <button type="button" id="printBill" value="{{ $order }}" class="btn btn-primary btn-sm">بیل چاپ کول</button>
+                                <button type="button" id="printBill" value="{{ $order }}" class="btn btn-primary btn-sm d-none">بیل چاپ کول</button>
 
 
 
@@ -293,9 +293,10 @@
             if(tr>0){
                 $('.programOrder').removeClass('d-none');
                 $('#addNewTransmission').removeClass('d-none');
-                $('#printBill').addClass('d-none');
+
             }
             else{
+                $('#printBill').removeClass('d-none');
 
             }
         }
