@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('transmission_types', function (Blueprint $table) {
             $table->id();
             $table->string('transmissionTypeName');
+            $table->integer('rate');
             $table->timestamps();
         });
     }

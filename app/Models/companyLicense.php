@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class companyLicense extends Model
 {
     use HasFactory;
+    const IMAGE_PATH = 'public/license/images';
 }

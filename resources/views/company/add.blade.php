@@ -31,12 +31,12 @@
                             <!-- general form elements -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>د موسساتو او شرکتونو د ثبت برخه</h4>
+                                    <h4 style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.3rem; color:white">د موسساتو او شرکتونو د ثبت برخه</h4>
                                 </div>
 
                                 <!-- /.card-header -->
                                 <!-- form start -->
-                                <form role="form" method="POST" action="{{ route('save.company') }}" id="regForm"
+                                <form role="form" method="POST" action="{{ route('save.company1') }}" id="regForm"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body">
@@ -44,7 +44,7 @@
 
 
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="">د موسسی/ بنسټ نوم</label>
                                                     <input type="text" class="form-control" name="companyName"
@@ -63,23 +63,7 @@
                                             </div>
 
 
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="">آی ډی نمبر</label>
-                                                    <input type="text" class="form-control" name="compnayID"
-                                                        id="compnayID" placeholder="د موسسی یا شرکت ای دی نمبر">
-                                                    <span class="text text-danger" role="alert">
-                                                        @error('compnayID')
-                                                            {{ $message }}
-                                                        @enderror
-                                                    </span>
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="text">د بنست ډول</label>
                                                     <select name="company_type_id" id="company_type_id"
@@ -104,7 +88,7 @@
 
 
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="">د فعالیت ډول</label>
                                                     <select name="company_active_type_id" id="company_active_type_id"
@@ -130,70 +114,35 @@
 
                                         </div>
 
+                                        <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د موسسی/بنسټ د آدرس برخه</p>
                                         <div class="row">
-
-
-
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="">د جواز نمبر</label>
-                                                    <input type="text" class="form-control" name="licenseNumber"
-                                                        id="licenseNumber" placeholder="د جواز نمبر داخل کړی">
-                                                    <span class="text text-danger" role="alert">
-                                                        @error('licenseNumber')
-                                                            {{ $message }}
-                                                        @enderror
-                                                    </span>
-                                                </div>
-                                            </div>
-
-
-
-
-
-
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label>د فریکونسی تعداد</label>
-                                                    <input type="text" id="freQuantity" name="freQuantity"
-                                                        placeholder="د فریکونسی تعداد ولیکی" class="form-control">
-                                                        <span class="text text-danger" role="alert">
-                                                            @error('freQuantity')
-                                                                {{ $message }}
-                                                            @enderror
-                                                        </span>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>د بنسټ/کمپنی آدرس</label>
                                                     <input type="text" placeholder="د کمپنی آدرس ولیکی" name="companyAddress" class="form-control">
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-2">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>لیتیتود</label>
                                                     <input type="text" placeholder="لیتیتود داخل کړی" name="letitude" class="form-control">
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-2">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>لونګ تیتود</label>
                                                     <input type="text" placeholder="لونګ تیتود داخل کړی" name="longtutude" class="form-control">
                                                 </div>
                                             </div>
-
-
-
                                         </div>
+
+                                        <p  style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د موسسی/بنسټ د ریس معلومات</p>
 
                                         <div class="row" id="row3">
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="text">د بنست د ریس نوم</label>
                                                     <input type="text" class="form-control" name="companyManagerName"
@@ -208,7 +157,7 @@
 
 
 
-                                            <div class="col-md-2">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="text">د بنست د ریس تابعیت</label>
                                                     <select name="citizenship_id" id="citizenship_id" class="form-control">
@@ -229,11 +178,38 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3 country">
+                                            <div class="col-md-4 country">
 
                                             </div>
 
 
+
+                                        </div>
+
+
+                                        <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د موسسی/بنسټ د جوازونو برخه</p>
+                                        <div class="row license">
+
+
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="">د جواز نمبر</label>
+                                                     <select name="license_type_id" id="license_type_id" class="form-control">
+                                                        <option selected disabled>د جواز مرجع انتخاب کړی</option>
+                                                        @foreach ($licenseType as $item)
+
+                                                        <option value="{{ $item->id }}">{{ $item->licenseTypeName }}</option>
+
+                                                        @endforeach
+                                                     </select>
+                                                    <span class="text text-danger" role="alert">
+                                                        @error('licenseNumber')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
 
                                         </div>
 
@@ -242,7 +218,7 @@
                                         </div> --}}
 
 
-                                        <h6>د بنست/کمپنی د رسمی نماینده معلومات</h6>
+                                        <h4 style="background-color:#6b6865; width: 40%;border-radius: 4px 4px;padding: 0.3rem; color:white">د بنست/کمپنی د رسمی نماینده معلومات</h4>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -333,7 +309,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <h5>د رسمی نماینده اصلی استوګنځی</h5>
+                                        <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">د رسمی نماینده اصلی استوګنځی</p>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -398,7 +374,7 @@
 
                                         </div>
 
-                                        <h5>فعلی استوګنځی</h5>
+                                        <p style="background-color:#6b6865; width: 30%;border-radius: 4px 4px;padding: 0.2rem; color:white">فعلی استوګنځی</p>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -455,53 +431,8 @@
 
                                         </div>
 
-                                        <h5>د مخابرو د ثبت برخه</h5>
-
-                                        <div class="row">
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>واکی ټاکی</label>
-                                                    <input type="checkbox" name="wakitaki">
-                                                    <input type="number" name="wakiTaki" id="wakiTaki"
-                                                        placeholder="د واکی ټاکی تعداد" class="form-control d-none">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>بیس ستیشن</label>
-                                                    <input type="checkbox" name="wakitaki">
-                                                    <input type="number" name="baseStation" id="baseStation"
-                                                        class="form-control d-none" placeholder="د بیس ستیشن تعداد ">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label>کودان</label>
-                                                    <input type="checkbox" name="wakitaki">
-                                                    <input type="number" name="codeOn" id="codeOn"
-                                                        class="form-control d-none" placeholder="د کودان تعداد">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label>رپیتر</label>
-                                                    <input type="checkbox" name="wakitaki">
-                                                    <input type="number" name="repeter" id="repeter"
-                                                        class="form-control d-none" placeholder="د رپیتر تعداد">
-                                                </div>
-                                            </div>
 
 
-                                            <div class="col-md-2">
-                                                <button class="btn btn-primary addTransmittion">اضافه کول</button>
-                                            </div>
-
-
-                                        </div>
 
                                         <h6 class="d d-none">د فریکونسی نمبر/نمبرونه داخل کړی</h6>
 
@@ -562,273 +493,14 @@
 
                 // });
 
-                $(document).on('change', '[name="wakitaki"]', function(e) {
-                    e.preventDefault();
 
-                    $(this).next().toggleClass('d-none');
-                });
 
 
-                // $('#regForm').on('submit', function(e) {
 
-                //     e.preventDefault();
-                //     $.ajax({
-                //         type: "POST",
-                //         url: "{{ route('save.company') }}",
-                //         data: $(this).serialize(),
-                //         dataType: "json",
-                //         success: function(response) {
-                //             console.log(response);
 
-                //             alert('successfuly added company ');
 
-                //         }
-                //     });
-                // })
 
 
-
-
-
-            $(document).on('click','.addTransmittion',function(e){
-                e.preventDefault();
-                var w=Number($('#wakiTaki').val());
-                var b=Number($('#baseStation').val());
-                var c=Number($('#codeOn').val());
-                var r=Number($('#repeter').val());
-                var f=Number($('#freQuantity').val());
-                $('#row2').removeClass('d-none');
-                $('.d').removeClass('d-none');
-
-                var sum=w+b+c+r;
-
-                var wakiTaki=` <div class="form-group col-md-3">
-                                  <label for="">د دستګاه ډول</label>
-                                  <select name="transmission_type_id[]" id="" class="form-control">
-
-                                    @foreach ($transmissionType as $item)
-
-                                    <option  value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
-                                    @endforeach
-                                  </select>
-                                </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">د واکی ټاکی ماډل</label>
-                                <select name="transmission_model_id[]" id="" class="form-control">
-                                    <option disabled selected>د واکی تاکی ماډل انتخاب کړی</option>
-                                    @foreach ($transmissionModel as $item)
-                                    <option value="{{ $item->id }}">{{ $item->transmissionModelName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">ولایت</label>
-                                <select name="provence_id[]" id="pro" class="form-control">
-                                    <option selected disabled>ولایت انتخاب کړی</option>
-                                    @foreach ($provence as $item)
-                                    <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label>سریال نمبر</label>
-                                <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
-                            </div>`;
-
-                var base=` <div class="form-group col-md-3">
-                                <label for="">د دستګاه ډول</label>
-                                <select name="transmission_type_id[]" id="" class="form-control">
-
-                                    @foreach ($transmissionType as $item)
-
-
-                                    <option value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
-
-
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">د بیس ستیشن ماډل</label>
-                                <select name="transmission_model_id[]" id="" class="form-control">
-
-                                    @foreach ($transmissionModel as $item)
-                                    <option value="{{ $item->id }}">{{ $item->transmissionModelName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">ولایت</label>
-                                <select name="provence_id[]" id="provence_id[]" class="form-control">
-                                    <option selected disabled>ولایت انتخاب کړی</option>
-                                    @foreach ($provence as $item)
-                                    <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label>سریال نمبر</label>
-                                <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
-                            </div>`;
-
-                var code=` <div class="form-group col-md-3">
-                                <label for="">د دستګاه ډول</label>
-                                <select name="transmission_type_id[]" id="" class="form-control">
-                                    @foreach ($transmissionType as $item)
-                                     <option value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">د کودان ماډل</label>
-                                <select name="transmission_model_id[]" id="" class="form-control">
-                                    <option disabled selected>د کودان ماډل انتخاب کړی</option>
-                                    @foreach ($transmissionModel as $item)
-                                    <option value="{{ $item->id }}">{{ $item->transmissionModelName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">ولایت</label>
-                                <select name="provence_id[]" id="pro" class="form-control">
-                                    <option selected disabled>ولایت انتخاب کړی</option>
-                                    @foreach ($provence as $item)
-                                    <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label>سریال نمبر</label>
-                                <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
-                            </div>`;
-
-                var rep=` <div class="form-group col-md-3">
-                                <label for="">د دستګاه ډول</label>
-                                <select name="transmission_type_id[]" id="" class="form-control">
-
-                                    @foreach ($transmissionType as $item)
-
-
-                                    <option value="{{ $item->id }}">{{ $item->transmissionTypeName }}</option>
-
-
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">د رپیټر ماډل</label>
-                                <select name="transmission_model_id[]" id="" class="form-control">
-                                    <option disabled selected>د رپیتر ماډل انتخاب کړی</option>
-                                    @foreach ($transmissionModel as $item)
-                                    <option value="{{ $item->id }}">{{ $item->transmissionModelName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label for="">ولایت</label>
-                                <select name="provence_id[]" id="pro" class="form-control">
-                                    <option selected disabled>ولایت انتخاب کړی</option>
-                                    @foreach ($provence as $item)
-                                    <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group col-md-3">
-                                <label>سریال نمبر</label>
-                                <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
-                            </div>`;
-
-                var freQuantity=`<div class="col-md-3"><div class="form-group">
-
-                    <label>د فریکونسی نمبر</lable>
-                    <input type="text" name="frqNo[]" placeholder="د فرکونسی نمبر" class="form-control">
-                    <select name="provenceid" id="provenceid" class="form-control">
-
-                        <option disabled selected>ولایت انتخاب کړی</option>
-                        @foreach($provence as $item)
-
-                        <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
-
-
-                        @endforeach
-
-                    </select>
-                    </div>
-                    </div>
-                    `;
-
-                for(let i=0; i<f; i++){
-
-                    $('#row1').append(freQuantity);
-
-                }
-
-                for(var i=0; i<w; i++){
-
-                    $('#row2').append(wakiTaki)
-
-                }
-
-                for(var i=0; i<b; i++){
-                    $('#row2').append(base);
-                }
-
-                for(i=0;i<c; i++){
-                    $('#row2').append(code);
-                }
-
-                for(i=0; i<r; i++){
-                    $('#row2').append(rep);
-                }
-
-
-
-
-
-
-
-
-
-            })
 
 
             $(document).on('change','#citizenship_id',function(){
@@ -859,9 +531,65 @@
 
 
 
+     $(document).on('change','#license_type_id',function(){
+
+        var id = $(this).val();
+        var economical=`<div class="form-group col-md-3" id="div`+id+`">
+        <button type="button" class="btn btn-sm btn-danger" onclick="$('#div`+id+`').remove()">Colse</button>
+        <label>د اقتصاد وزارت جواز نمبر  </label>
+        <input type="hidden" name="licenseTypeId[]" id="economical" value="`+id+`" class="form-control">
+        <input type="date" name="issueDate[]" id="issueDate" class="form-control">
+        <input type="text"  placeholder="د اقتصاد وزارت جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
+        <input type="file" name="licenseFile[]" id="economicalId" class="form-control">
+        </div>
+        `;
+
+        $('.license').append(economical);
+        // $('#license_type_id').attr('disabled',true);
+        // var mani=`<div class="form-group col-md-3">
+        // <label>د شاروالی جواز نمبر  </label>
+        // <input type="text" name="mani[]" id="mani" class="form-control">
+        // <input type="text" placeholder="د شاروالی جواز نمبر ولیکی"  name="mani[]" class="form-control">
+        // <input type="file" name="mani[]" id="maniId" class="form-control">
+        //  </div>
+        // `;
+
+
+        // var bank=`<div class="form-group col-md-3">
+        // <label>د بانک جواز نمبر  </label>
+        // <input type="text" name="bank[]" id="bank" class="form-control">
+        // <input type="text" placeholder="د افغانتسان بانک جواز نمبر ولیکی"  name="bank[]" class="form-control">
+        // <input type="file" name="bank[]" id="bankId" class="form-control">
+        //  </div>
+        // `;
+        // if($('#license_type_id').val()==1){
+
+        //     $('.license').append(economical);
+        //     $('#economical').val($('#license_type_id').val());
+
+        // }
+
+        // if($('#license_type_id').val()==2){
+
+        //     $('.license').append(mani);
+        //     $('#mani').val($('#license_type_id').val());
+        // }
+        // if($('#license_type_id').val()==3){
+        //     $('.license').append(bank);
+        //     $('#bank').val($('#license_type_id').val());
+        // }
 
 
 
-        });
-        </script>
-    @endsection
+
+
+      });
+
+
+
+
+
+
+      });
+    </script>
+  @endsection

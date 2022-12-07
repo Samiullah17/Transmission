@@ -12,11 +12,20 @@
     {{-- <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"> --}}
     {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"> --}}
     {{-- <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
+<<<<<<< HEAD
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{asset('persiandtpicker/bootstrap-datepicker.min.css')}}">
+=======
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> --}}
+
+>>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
     <link rel="stylesheet" href="{{ asset('alert/bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('alert/toastr.min.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" /> --}}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> --}}
     <!-- Styles -->
     <style>
         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -330,6 +339,11 @@
         body {
             font-family: 'Nunito', sans-serif;
         }
+
+        label.error {
+         color: #dc3545;
+         font-size: 14px;
+    }
     </style>
     <!-- Font Awesome Icons -->
     <!-- Font Awesome Icons -->
@@ -339,10 +353,14 @@
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/bootstrap-4-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<<<<<<< HEAD
     <!-- Google Font: Source Sans Pro -->
     {{-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> --}}
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"> --}}
 
+=======
+    @yield('style')
+>>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -354,8 +372,10 @@
 
         @include('layouts.footer')
 
+
     </div>
 
+<<<<<<< HEAD
     @yield('script')
 
 {{-- <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script> --}}
@@ -366,12 +386,42 @@
 {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 <script src="{{ asset('persiandtpicker/bootstrap-datepicker.fa.min.js') }}"></script>
 <script src="{{ asset('persiandtpicker/bootstrap-datepicker.js') }}"></script>
+=======
+</body>
+
+
+{{-- <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script> --}}
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> --}}
+{{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+
+<script src="file:///D:/AdminLTE-3-RTL-master/plugins/jquery/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script> --}}
+<script src="register.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+>>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
 <script src="{{ asset('alert/sweetalert2.min.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('alert/toastr.min.js') }}"></script>
+<<<<<<< HEAD
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 </body>
+=======
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
+
+@include('sweetalert::alert')
+
+@yield('script')
+>>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
 
 
 </html>

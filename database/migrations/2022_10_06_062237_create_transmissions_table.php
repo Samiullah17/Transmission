@@ -26,6 +26,7 @@ return new class extends Migration
             $table->tinyInteger('status');
             $table->foreignIdFor(provence::class)->constrained();
             $table->foreignIdFor(order::class)->constrained();
+            $table->integer('rate')->default(0);
             $table->timestamps();
         });
     }

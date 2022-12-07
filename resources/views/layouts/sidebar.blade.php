@@ -77,6 +77,13 @@
                   <p>د موجوده مخابرو لیست</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="{{ route('programe.transmission') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>د مخابرو د پروګرام برخه</p>
+                </a>
+              </li>
             </ul>
           </li>
 

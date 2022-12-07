@@ -11,46 +11,28 @@
 
                             <div class="card-tools">
 
-                                <div class="input-group input-group-sm" style="width: 150px;">
-
-                                    <input type="text" name="table_search" class="form-control float-right"
-                                        placeholder="Search">
-
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default"><i
-                                                class="fas fa-search"></i></button>
-                                    </div>
-
-                                </div>
-
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <select name="provence_id" id="company_id" class="form-control">
-                                <option selected disabled>د کمپنی یا بنسټ نوم انتخاب کړی</option>
-                                @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->companyName }}</option>
-                                @endforeach
-                            </select>
+                        <div class="card-body table-responsive">
 
 
+                            <table class="table table-striped table-hover ordersTable">
+                                <thead>
+                                    <th style="text-align: start">د کمپنی نوم</th>
+                                    <th style="text-align: start">د نماینده نوم</th>
+                                    <th style="text-align: start">د غوښتنی د مراجعی نیټه</th>
+                                    <th style="text-align: start">حالت</th>
+                                    <th style="text-align: start"></th>
+                                    <th style="text-align: start"></th>
+                                </thead>
+                                <tbody>
 
-                           <table id="table" class="table table-striped table-hover table-border d-none">
-                           <thead>
-                            <tr>
-                                <th>د مخابری ډول</th>
-                                <th>د مخابری ماډل</th>
-                                <th>ولایت</th>
-                                <th>سریال نمبر</th>
-                            </tr>
-                           </thead>
+                                </tbody>
 
-                           <tbody id="tbody">
+                            </table>
 
-                           </tbody>
 
-                           </table>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -61,47 +43,54 @@
     </div>
 @endsection
 @section('script')
-
     <script>
-        $(document).ready(function(){
-            $('#company_id').select2();
-        });
-        $(document).on('change', '#company_id', function() {
+        $(document).ready(function() {
+            $(function() {
 
-            var cid = $('#company_id').val();
-            // $('#companyId').val(cid);
+                var table = $('.ordersTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('companies.orders') }}",
+                    columns: [{
+                            data: 'cname'
+                        },
+                        {
+                            data: 'aname'
+                        },
+                        {
+                            data: 'created_at'
+                        },
+                        {
+                            data: 'status'
+                        },
+                        {
+                            data: 'action'
 
-
-
-
-
-            $.ajax({
-                type: "get",
-                url: "{{ route('company.transmission') }}/" + cid,
-                dataType: "json",
-                success: function(response) {
-                    // $('#agent_id option').remove();
-                    // $('#tbody td').remove();
-                    // $('#thead th').remove();
-                    // $('#agent_id').append('<option disabled selected>نماینده انتخاب کړی</option>');
-                    // $.each(response.agent, function(index, value) {
-                    //     $('#agent_id').append('<option value="' + value.id + '">' + value
-                    //         .agentName + '</option>');
-                    // });
+                        },
 
 
-                    $('#table').removeClass('d-none');
-                     $('#tbody td').remove();
-                    console.log(response.order);
-                    $.each(response.order, function(index, value) {
-                             $('#tbody').append('<tr><td>'+value.tname+'</td><td>'+value.mname+'</td><td>'+value.pname+'</td><td>'+value.sname+'</td></tr>');
-                    });
+                    ],
+                    orderable: true,
+                    searchable: true,
+                    language: {
+                        "emptyTable": "دیتا موجود نیست .",
+                        "lengthMenu": "نمایش MENU معلومات",
+                        "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                        "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                        "search": "جستجو کردن : ",
+                        "sProcessing": "در حال اضافه نمودن معلومات...",
+                        "paginate": {
+                            "first": "اول",
+                            "last": "آخر",
+                            "next": "بعدی",
+                            "previous": "قبلی"
+                        },
+                    },
+                });
 
-
-
-                }
+                // $('.agentsTable').removeClass('agentsTable').addClass('showCOrder');
             });
 
-        });
+        })
     </script>
 @endsection
