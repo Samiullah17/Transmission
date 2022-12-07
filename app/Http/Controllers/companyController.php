@@ -22,6 +22,7 @@ use App\Models\transmissionModel;
 use App\Models\transmissionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 
 class companyController extends Controller
@@ -53,6 +54,44 @@ class companyController extends Controller
 
         return view('company.list',compact('licenseType','countires','companyType','companyActiveType','citizenships','provence','district','companies'));
 
+    }
+    public function index1(Request $request){
+        if ($request->ajax()) {
+            $data = Company::join('company_active_types', 'companies.company_active_type_id', 'company_active_types.id')
+                ->join('company_types', 'companies.company_type_id', 'company_types.id')
+                ->select(
+                    'company_active_types.companyName as aname',
+                    'company_types.companyTypeName as tname',
+                    'companies.*'
+                )->get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                // $btn = '<a href="' . route('details.company', ['id' => $data->id]) . '" class="btn btn-primary btn-sm">View</a>';
+                  $btn=' <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <button type="button" class="btn btn-primary dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                    معلومات
+                                                </button>
+                                                <ul class="dropdown-menu"> 
+                                                    
+                                                    <li class="dropdown-item"><a href="'. route('details.company',['id'=>$data->id]).'">تاریخچه</a></li>
+                                                    <li class="dropdown-item"><a href="'. route('saveRight.company',['id'=>$data->id]).'">حق ثبت</a></li>
+                                                    <li class="dropdown-item"><a href="'. route('licence.company',['id'=>$data->id]).'">تمدید</a></li>
+                                                    <li class="dropdown-item"><a href="'. route('fine.company',['id'=>$data->id]).'">جریمه</a></li>
+                                                    <li class="dropdown-divider"></li>
+                                                </ul>
+                                            </div>
+                                            <!-- /btn-group -->
+                                        </div>';
+                    // $btn='<div class="input-group input-group-sm mb-3"><div class="input-group-prepend"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">معلومات</button><ul class="dropdown-menu"><li class="dropdown-item"><a href="' . route('details.company', ['id' => $data->id]) . '">تاریخچه</a></li><li class="ropdown-item"><button type="button" class="btn btn-primary">click here</button></li></ul></div></div>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('company.list');
     }
 
     public function addCompany(){

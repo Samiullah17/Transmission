@@ -41,6 +41,7 @@
                                     <tr style="text-align:center">
                                         <th>کمپنی</th>
                                         <th>کال</th>
+                                        <th>انقضاه نیټه</th>
                                         <th>د مالی ریاست د مکتوب ګڼه</th>
                                         <th>د مالی ریاست د مکتوب نیټه</th>
                                         <th>د آویز نمبر</th>
@@ -63,6 +64,7 @@
                                         <tr style="text-align:center">
                                             <td>{{ $item->cname }}</td>
                                             <td>{{ $item->reg_year }}</td>
+                                            <td>{{ $item->ExpireREg_Year }}</td>
                                             <td>{{ $item->finance_number }}</td>
                                             <td>{{ $item->finance_date }}</td>
                                             <td>{{ $item->bill_number }}</td>

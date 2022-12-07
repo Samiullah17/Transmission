@@ -19,20 +19,22 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-head-fixed table-hover table-striped">
+                        <div class="card-body table-responsive ">
+                            <table class="table  table-hover  user_datatable ">
                                 <thead> 
                                     <tr>
-                                        <th>د کمپنی نوم</th>
-                                        <th>د فعالیت ډول</th>
-                                        <th>د موسسی/بنست ډول</th>
-                                        <th>د ریس نوم</th>
+                                        <th class="col-md-3" style="text-align: start">د کمپنی نوم</th>
+                                        <th class="col-md-3" style="text-align:  start">د فعالیت ډول</th>
+                                        <th class="col-md-2" style="text-align:  start">د موسسی/بنست ډول</th>
+                                        <th  class="col-md-2" style="text-align:  start">د ریس نوم</th>
+                                        <th class="col-md-2" style="text-align:  start">معلومات</th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
 
 
-                                    @foreach ($companies as $company)
+                                    {{-- @foreach ($companies as $company)
 
                                     <tr>
                                         <td>{{ $company->companyName }}</td>
@@ -45,9 +47,9 @@
                                                     data-toggle="dropdown">
                                                     معلومات
                                                 </button>
-                                                <ul class="dropdown-menu">
-                                                    {{-- <li class="dropdown-item"><a href="#"><i
-                                                                class="bi bi-archive"></i>ویرایش</a></li> --}}
+                                                <ul class="dropdown-menu"> 
+                                                    <li class="dropdown-item"><a href="#"><i
+                                                                class="bi bi-archive"></i>ویرایش</a></li>
                                                     <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
                                                     <li class="dropdown-item"><a href="{{ route('saveRight.company',$company->id) }}">حق ثبت</a></li>
                                                     <li class="dropdown-item"><a href="{{ route('licence.company',$company->id) }}">تمدید</a></li>
@@ -58,14 +60,14 @@
                                                             class="text text-danger">حذف</a></li>
                                                     <li class="dropdown-divider"></li>
                                                 </ul>
-                                            </div>
+                                            </div> --}}
                                             <!-- /btn-group -->
-                                        </div></td>
+                                        {{-- </div></td>
 
                                     </tr>
 
                                     @endforeach
-
+ --}}
 
 
                                 </tbody>
@@ -454,6 +456,37 @@
 @endsection
 @section('script')
     <script>
+
+$(function () {
+    var table = $('.user_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('users.index') }}",
+        columns: [
+            {data:'companyName'},
+            {data: 'aname'},
+            {data: 'tname'},
+            {data: 'companyManagerName'},
+            {data: 'action'},
+            // {data: 'action', name: 'action', orderable: false, searchable: false},
+        ],
+        language: {
+                    "emptyTable": "دیتا موجود نیست .",
+                    "lengthMenu": "نمایش MENU معلومات",
+                    "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                    "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                    "search": "جستجو کردن : ",
+                    "sProcessing": "در حال اضافه نمودن معلومات...",
+                    "paginate": {
+                        "first": "اول",
+                        "last": "آخر",
+                        "next": "بعدی",
+                        "previous": "قبلی"
+                    },
+                },
+    });
+  });
+
 
         $(document).ready(function() {
 

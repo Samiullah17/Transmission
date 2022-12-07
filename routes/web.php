@@ -46,6 +46,7 @@ Route::get('company/agent/{id?}',[companyController::class,'companyAgent'])->nam
 // Route::get('agent/details/{id?}',[agentController::class,'cagent'])->name('agent.details');
 
 Route::get('list/company',[companyController::class,'index'])->name('list.company');
+Route::get('users/index',[companyController::class,'index1'])->name('users.index');
 Route::get('details/company/{id}',[companyController::class,'details'])->name('details.company');
 Route::get('saveRight/company/{id}',[RegistrationRightController::class,'show'])->name('saveRight.company');
 Route::get('oldRegRight.company/{id}',[RegistrationRightController::class,'OldRight'])->name('oldRegRight.company');
