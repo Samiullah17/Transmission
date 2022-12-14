@@ -20,8 +20,8 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-head-fixed table-hover table-striped">
+                        <div class="card-body table-responsive">
+                            <table class="table table-head-fixed table-hover table-striped findata-table">
                                 <thead>
                                     <tr style="text-align:center">
                                         <th>کمپنی</th>
@@ -38,10 +38,12 @@
                                         <th>د مالی دریاست مکتوب</th>
                                         <th>د مالی دیاست تعرفه</th>
                                         <th>عمل</th>
+                                        <th></th>
+
                                     </tr>
                                 </thead>
-                                <tbody id="tbody">
-                                    @foreach ($companyfines as $item)
+                                <tbody id="tbody" >
+                                    {{-- @foreach ($companyfines as $item)
                                         <tr style="text-align:center">
                                             <td>{{ $item->cname }}</td>
                                             <td>{{ $item->pname }}</td>
@@ -77,7 +79,7 @@
                                             </td>
 
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
 
 
                                 </tbody>
@@ -93,7 +95,7 @@
                 </div>
             </div>
         </div>
-        {{-- starting of modal --}}
+        {{-- starting of fine modal --}}
         <div class="modal fade" id="modal-xl">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -261,7 +263,7 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-        {{-- end of modal --}}
+        {{-- end of fine modal --}}
 
         {{-- starting of FineEditmodal --}}
         <div class="modal fade" id="FineEditModal">
@@ -445,6 +447,49 @@
     {{-- <script src="{{ asset('plugins/persiandtpicker/bootstrap-datepicker.fa.min.js') }}"></script> --}}
     <script src="{{ asset('persiandtpicker/bootstrap-datepicker.js') }}"></script>
     <script>
+
+$(function () {
+    var table = $('.findata-table').DataTable({
+        processing: true,
+        serverSide: true,
+        
+        ajax: "{{ route('fine.show',$id) }}",
+        columns: [
+            {data:'cname'},
+            {data:'pname'},
+            {data:'fine_date'},
+            {data:'number_of_days'},
+            {data:'fine_fee'},
+            {data:'finance_fine_number'},
+            {data:'finace_fine_date'},
+            {data:'fine_bill_number'},
+            
+            {data:'fine_recipt_number'},
+            {data:'fine_recipt_date'},
+            {data:'bank'},
+            {data:'fine_recipt_date'},
+            {data:'fine_recipt_date'},
+            {data:'action'},
+            {data:'a'},
+            // {data: 'action', name: 'action', orderable: false, searchable: false},
+        ],
+        language: {
+                    "emptyTable": "دیتا موجود نیست .",
+                    "lengthMenu": "نمایش MENU معلومات",
+                    "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                    "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                    "search": "جستجو کردن : ",
+                    "sProcessing": "در حال اضافه نمودن معلومات...",
+                    "paginate": {
+                        "first": "اول",
+                        "last": "آخر",
+                        "next": "بعدی",
+                        "previous": "قبلی"
+                    },
+                },
+    });
+  });
+
         $(document).ready(function() {
 
             $.ajaxSetup({

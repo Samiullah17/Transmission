@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('transmission_models', function (Blueprint $table) {
             $table->id();
             $table->string('transmissionModelName');
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

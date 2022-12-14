@@ -89,6 +89,7 @@ class companyController extends Controller
                     // $btn='<div class="input-group input-group-sm mb-3"><div class="input-group-prepend"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">معلومات</button><ul class="dropdown-menu"><li class="dropdown-item"><a href="' . route('details.company', ['id' => $data->id]) . '">تاریخچه</a></li><li class="ropdown-item"><button type="button" class="btn btn-primary">click here</button></li></ul></div></div>';
                     return $btn;
                 })
+                
                 ->rawColumns(['action'])
                 ->make(true);
         }

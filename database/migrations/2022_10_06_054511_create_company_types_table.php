@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('company_types', function (Blueprint $table) {
             $table->id();
             $table->string('companyTypeName');
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

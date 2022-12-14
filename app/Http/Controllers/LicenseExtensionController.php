@@ -9,6 +9,7 @@ use App\Models\LicenseExtension;
 use App\Models\order;
 use App\Models\provence;
 use Illuminate\Http\Request;
+use Morilog\Jalali\Jalalian;
 
 class LicenseExtensionController extends Controller
 {
@@ -17,9 +18,27 @@ class LicenseExtensionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $licenseExtensions = LicenseExtension::Join('frequenceys', 'license_extensions.frequencey_id', 'frequenceys.id')
+            ->Join('orders', 'frequenceys.order_id', 'orders.id')
+            ->join('provences', 'frequenceys.provence_id', 'provences.id')
+            ->join('companies', 'orders.company_id', 'companies.id')
+            ->select(
+                'license_extensions.*',
+
+                'frequenceys.frequenceyNo as frname',
+                'frequenceys.provence_id as pId',
+                'companies.companyName as cname',
+                'provences.provenceName as pname'
+            )
+            ->where('orders.company_id', $id)->whereIn('license_extensions.status', [3])
+            ->get();
+        //$frequencies=LicenseExtension::join('frequenceys','license_extensions.frequencey_id','frequenceys.id');
+        // dd($licenseExtensions);
+
+
+        return view('LicenseExtension.OldExt', compact('licenseExtensions','id'));
     }
 
     /**
@@ -60,20 +79,33 @@ class LicenseExtensionController extends Controller
      */
     public function show($id)
     {
-        // $licensextesions=LicenseExtension::with('frequency','frequency.order')->where('company_id',$id)->get();
-        // dd($licensextesions);
+        
         $companies = Company::join('orders', 'companies.id', 'orders.company_id')
             ->join('frequenceys', 'orders.id', 'frequenceys.order_id')
             ->join('provences', 'provences.id', 'frequenceys.provence_id')
             ->select('provences.*')->where('companies.id', $id)->groupBy('frequenceys.provence_id')->get();
-        // dd($companies);
-        // selectRaw('provences.id provence_id,provences.provenceName province_name,orders.id as order_id')
-        //$provinces = $companies->pluck('provence_id')->toArray();
-       // $orders = $companies->pluck('order_id')->toArray();
-        // dd($orders,$provinces);
 
-       // $frequencies = frequencey::whereIn('provence_id',$provinces)->whereIn('order_id',$orders)->get();
-        //dd($frequencies);
+
+        $licenseExtensionss = LicenseExtension::Join('frequenceys', 'license_extensions.frequencey_id', 'frequenceys.id')
+            ->Join('orders', 'frequenceys.order_id', 'orders.id')
+            ->join('provences', 'frequenceys.provence_id', 'provences.id')
+            ->join('companies', 'orders.company_id', 'companies.id')
+            ->select(
+                'license_extensions.*',
+
+                'frequenceys.frequenceyNo as frname',
+                'frequenceys.provence_id as pId',
+                'companies.companyName as cname',
+                'provences.provenceName as pname'
+            )
+            ->where('orders.company_id', $id)
+            ->get();
+        foreach ($licenseExtensionss as $licenseExtension) {
+            if (($licenseExtension->status == 0 || $licenseExtension->status == 1) && Jalalian::now()->format('Y-m-d') > Jalalian::fromFormat('Y-m-d', $licenseExtension->valid_upto)->format('Y-m-d')) {
+                $licenseExtension->status = 1;
+                $licenseExtension->update();
+            }
+        }
 
 
         $licenseExtensions = LicenseExtension::Join('frequenceys', 'license_extensions.frequencey_id', 'frequenceys.id')
@@ -88,7 +120,7 @@ class LicenseExtensionController extends Controller
                 'companies.companyName as cname',
                 'provences.provenceName as pname'
             )
-            ->where('orders.company_id', $id)
+            ->where('orders.company_id', $id)->whereIn('license_extensions.status', [0, 1, 2])
             ->get();
         //$frequencies=LicenseExtension::join('frequenceys','license_extensions.frequencey_id','frequenceys.id');
         // dd($licenseExtensions);
@@ -105,8 +137,13 @@ class LicenseExtensionController extends Controller
      */
     public function edit($id)
     {
-        $licenseExtensions = LicenseExtension::find($id);
-        return response()->json(['success' => $licenseExtensions]);
+        $licensExtension = LicenseExtension::find($id);
+        $frequencyid = $licensExtension->frequencey_id;
+        $licextenId =$licensExtension->id;
+        $proviceid = LicenseExtension::join('frequenceys', 'license_extensions.frequencey_id', 'frequenceys.id')
+            ->select('frequenceys.provence_id  as PID', 'frequenceys.frequenceyNo as freqNO')->where('license_extensions.frequencey_id', $frequencyid)->get();
+
+        return response()->json(['frequencyID' => $frequencyid, 'provinceID' => $proviceid, 'licextenId' => $licextenId]);
     }
 
     /**
@@ -121,17 +158,32 @@ class LicenseExtensionController extends Controller
         $licExtId = $request->licenseExtId;
 
         $licenseExtensions = LicenseExtension::find($licExtId);
-        $licenseExtensions->frequencey_id = $request->Extfrequency;
-        $licenseExtensions->finance_recipt =  $request->financeNumber;
-        $licenseExtensions->coming_date =  $request->startDate;
-        $licenseExtensions->licence_expiry_date =  $request->frequenceyEndDate;
-        $licenseExtensions->valid_upto =  $request->ExtensionDate;
-        $licenseExtensions->extension_doc_number =  $request->reciptNumber;
-        $licenseExtensions->extension_doc_date =  $request->ExtensionDocDate;
+        $licenseExtensions->status=3;
         $licenseExtensions->update();
+        
+        $licenseExtCreate= new LicenseExtension();
+        $licenseExtCreate->frequencey_id = $request->extEditfrequencyid;
+        $licenseExtCreate->finance_recipt =  $request->reciptNumber;
+        $licenseExtCreate->coming_date =  $request->startDate;
+        $licenseExtCreate->licence_expiry_date =  $request->frequenceyEndDate;
+        $licenseExtCreate->valid_upto =  $request->ExtensionDate;
+        $licenseExtCreate->status=0;
+        $licenseExtCreate->extension_doc_number =  $request->reciptNumber;
+        $licenseExtCreate->extension_doc_date =  $request->ExtensionDocDate;
+        $licenseExtCreate->save();
         return response()->json(['success' => route('licence.company', $id)]);
     }
+    public function Fine($id)
+    {
 
+        $licenseFine = LicenseExtension::find($id);
+        $frequencyid =  $licenseFine->frequencey_id;
+        $licextenId = $licenseFine->id;
+        $proviceid = LicenseExtension::join('frequenceys', 'license_extensions.frequencey_id', 'frequenceys.id')
+            ->select('frequenceys.provence_id  as PID', 'frequenceys.frequenceyNo as freqNO')->where('license_extensions.frequencey_id', $frequencyid)->get();
+
+        return response()->json(['frequencyID' => $frequencyid, 'provinceID' => $proviceid, 'licextenId' => $licextenId]);
+    }
     /**
      * Remove the specified resource from storage.
      *

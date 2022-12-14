@@ -22,11 +22,9 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('companyName');
-<<<<<<< HEAD
+
             $table->uuid(Company::COMPANY_UNIQUE_ID_COLUMN_NAME);
-=======
-            $table->uuid('companyId')->nullable();
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
+
             $table->foreignIdFor(companyType::class)->constrained();
             $table->foreignIdFor(companyActiveType::class)->constrained();
             $table->string('companyManagerName');
@@ -34,7 +32,9 @@ return new class extends Migration
             $table->string('companyAddress');
             $table->float('latitude')->nullable();
             $table->float('longtitude')->nullable();
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

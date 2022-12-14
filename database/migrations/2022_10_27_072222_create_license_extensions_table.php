@@ -23,9 +23,10 @@ class CreateLicenseExtensionsTable extends Migration
             $table->string('valid_upto'); 
             $table->integer('extension_doc_number');
             $table->string('extension_doc_date');
+            $table->integer('status');
+            $table->string('created_at')->nullable();
 
-
-            $table->timestamps();
+            $table->string('updated_at')->nullable();
         });
     }
 

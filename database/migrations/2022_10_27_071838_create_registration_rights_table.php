@@ -29,7 +29,9 @@ class CreateRegistrationRightsTable extends Migration
             $table->string("finance_recipt");
             $table->string("ExpireREg_year");
             $table->tinyinteger("status");
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
             
         });
     }

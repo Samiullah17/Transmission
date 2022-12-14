@@ -80,27 +80,14 @@ class RegistrationRightController extends Controller
     {
 
 
-        //$registrationRights=RegistrationRight::with('Company')->where('company_id',$id)->get();
-        // $registrationRights=RegistrationRight::all();
-        //dd( $registrationRights);
-        // dd(Jalalian::now());
-        // if()
-
-        // $issueDate = "1401-9-5";
-        // dd( Jalalian::now()>$issueDate );
-        //$expiryDate = "1401-10-04";
-        // dd(Jalalian::fromDateTime(Carbon::createFromDate($expiryDate)));
-        // dd(Jalalian::now()->addYears());
-        // dd($expiryDate < Jalalian::now());
-        // Jalalian::fromDateTime();
+     
 
         $registrationRightss = RegistrationRight::Join('companies', 'registration_rights.company_id', 'companies.id')
             ->select('registration_rights.*', 'companies.companyName as cname', 'companies.id as cid')
             ->where('registration_rights.company_id', $id)->latest('id')->first();
-        // dd($registrationRightss);
-        // dd( $registrationRightss->get());
-
-        if ($registrationRightss && $registrationRightss->status == 0 && Jalalian::now()->format('Y-m-d') > Jalalian::fromFormat('Y-m-d', $registrationRightss->ExpireREg_Year)->format('Y-m-d')) {
+        
+      
+        if ($registrationRightss && $registrationRightss->status == 0 && Jalalian::now()->format('Y-m-d') > Jalalian::fromFormat('Y-m-d', $registrationRightss->ExpireREg_year)->format('Y-m-d')) {
             $registrationRightss->status = 1;
             $registrationRightss->update();
         }

@@ -22,7 +22,9 @@ class CreateOrderDetailsTable extends Migration
             $table->foreignIdFor(order::class)->constrained();
             $table->foreignIdFor(transmissionType::class)->constrained();
             $table->integer('transmissionQuantity');
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

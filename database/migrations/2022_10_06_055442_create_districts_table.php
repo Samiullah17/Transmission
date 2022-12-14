@@ -18,7 +18,9 @@ return new class extends Migration
             $table->id();
             $table->string('districtName');
             $table->foreignIdFor(provence::class)->constrained();
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

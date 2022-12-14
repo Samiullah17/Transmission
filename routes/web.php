@@ -63,8 +63,12 @@ Route::delete('delteLicenseExt/company/{id}',[LicenseExtensionController::class,
 Route::post('CreatelicenseExtension/company/{id}',[LicenseExtensionController::class,'store'])->name('CreatelicenseExtension.company');
 Route::get('giveFrequency/{provinceId}/{companyId}',[LicenseExtensionController::class,'frequencySearch'])->name('giveFrequency');
 Route::get('licenseExtEdit/company/{id}',[LicenseExtensionController::class,'edit'])->name('licenseExtEdit.company');
+Route::get('FineExt.company/company/{id}',[LicenseExtensionController::class,'Fine'])->name('FineExt.company');
 Route::get('EditlicenseExtension/company/{id}',[LicenseExtensionController::class,'update'])->name('EditlicenseExtension.company');
+Route::get('oldlicenseExt/company/{id}',[LicenseExtensionController::class,'index'])->name('oldlicenseExt.company');
+
 Route::get('fine/company/{id}',[CompanyFineController::class,'show'])->name('fine.company');
+Route::get('fine/show/{id}',[CompanyFineController::class,'show1'])->name('fine.show');
 Route::delete('delteFine/company/{id}',[CompanyFineController::class,'destroy'])->name('delteFine.company');
 Route::PUT('UpdateFine/company/{id}',[CompanyFineController::class,'update'])->name('UpdateFine.company');
 Route::get('EditFine/company/{id}',[CompanyFineController::class,'edit'])->name('EditFine.company');

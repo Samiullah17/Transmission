@@ -11,16 +11,11 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-<<<<<<< HEAD
         "laravel/ui": "^3.4",
         "morilog/jalali": "3.*",
         "mpdf/mpdf": "^8.1",
         "nesbot/carbon": "^2.63",
         "yajra/laravel-datatables": "1.5"
-=======
-        "realrashid/sweet-alert": "^5.1",
-        "yajra/laravel-datatables-oracle": "~9.0"
->>>>>>> 096f0160b1b9ab0bc1e3b62c7b5831ad133969e1
     },
     "require-dev": {
         "facade/ignition": "^2.5",

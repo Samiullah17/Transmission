@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\companyFineReqeuest;
 use App\Models\Company;
 use App\Models\CompanyFine;
+use App\Models\LicenseExtension;
 use Illuminate\Http\Request;
-
+use Yajra\DataTables\Facades\DataTables;
 class CompanyFineController extends Controller
 {
     /**
@@ -37,11 +38,15 @@ class CompanyFineController extends Controller
      */
     public function store(companyFineReqeuest $request,$id)
     {
+        $extid=$request->licenseextid;
+        $licext=LicenseExtension::find($extid);
+        $licext->status=2;
+        $licext->update();
         $filePathFinanceDoc = $request->file('finacncefile')->store(Company::COMPANY_FILE_STORAGE_LOCATION);
         $filePathFinaceRecipt = $request->file('finacnceReciptfile')->store(Company::COMPANY_FILE_STORAGE_LOCATION);
         $fines=new CompanyFine();
-        $fines->frequencey_id =$request->frequency;
-        $fines->fine_date=$request->startDate;
+        $fines->frequencey_id =$request->frequencyid;
+        $fines->fine_date=$request->finestartDate;
         $fines->number_of_days=$request->FineDays;
         $fines->fine_fee = $request->totalFinefee;
         $fines->finance_fine_number=$request->financeNumber;
@@ -78,7 +83,46 @@ class CompanyFineController extends Controller
         ->where('orders.company_id',$id)->get();
         return view('Fine.show',compact('companyfines','companies','id'));
     }
+    public function show1(Request $request,$id)
+    {
+        if ($request->ajax()) {
+            $data = $companyfines=CompanyFine::Join('frequenceys','company_fines.frequencey_id','frequenceys.id')
+            ->Join('orders','frequenceys.order_id','orders.id')
+            ->join('provences','frequenceys.provence_id','provences.id')
+            ->join('companies','orders.company_id','companies.id')
+            ->select('company_fines.*','companies.companyName as cname','provences.provenceName as pname')
+            ->where('orders.company_id',$id)->get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                // $btn = '<a href="' . route('details.company', ['id' => $data->id]) . '" class="btn btn-primary btn-sm">View</a>';
+                  $btn='
+                  <a class="btn " id="FineEdit"
+                      href="'. route('EditFine.company',['id'=>$data->id]).'" data-toggle="modal" data-target="#FineEditModal">
+                      <i class="fas fa-edit text-blue"></i>
+                  </a>
+              ';
+                    // $btn='<div class="input-group input-group-sm mb-3"><div class="input-group-prepend"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">معلومات</button><ul class="dropdown-menu"><li class="dropdown-item"><a href="' . route('details.company', ['id' => $data->id]) . '">تاریخچه</a></li><li class="ropdown-item"><button type="button" class="btn btn-primary">click here</button></li></ul></div></div>';
+                    return $btn;
+                })
+                ->addColumn('a', function ($data) {
+                    // $btn = '<a href="' . route('details.company', ['id' => $data->id]) . '" class="btn btn-primary btn-sm">View</a>';
+                      $btn='
+                      <a class="btn " id="deleteFine"
+                          href="'. route('delteFine.company',['id'=>$data->id]) .'">
+                          <i class="fas fa-trash text-danger"></i>
+                      </a>
+    
+                  ';
+                        // $btn='<div class="input-group input-group-sm mb-3"><div class="input-group-prepend"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">معلومات</button><ul class="dropdown-menu"><li class="dropdown-item"><a href="' . route('details.company', ['id' => $data->id]) . '">تاریخچه</a></li><li class="ropdown-item"><button type="button" class="btn btn-primary">click here</button></li></ul></div></div>';
+                        return $btn;
+                    })
+                
+                ->rawColumns(['action','a'])
+                ->make(true);
+        }
 
+        return view('Fine.show');
+    }
     /**
      * Show the form for editing the specified resource.
      *

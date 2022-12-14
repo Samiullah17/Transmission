@@ -64,7 +64,7 @@
                                         <tr style="text-align:center">
                                             <td>{{ $item->cname }}</td>
                                             <td>{{ $item->reg_year }}</td>
-                                            <td>{{ $item->ExpireREg_Year }}</td>
+                                            <td>{{ $item->ExpireREg_year }}</td>
                                             <td>{{ $item->finance_number }}</td>
                                             <td>{{ $item->finance_date }}</td>
                                             <td>{{ $item->bill_number }}</td>
@@ -343,7 +343,7 @@
                                 <div class="col-lg-3 col-6">
                                     <div class="form-group">
                                         <label for="startDate">د تعرفه نیټه : </label>
-                                        <input type="text" class="form-control date" id="reciptDate"
+                                        <input type="text" class="form-scontrol date" id="reciptDate"
                                             name="recipttDate">
                                         <span id="1recipttDate" name="recipttDate" class="text-danger mdl"></span>
                                     </div>
@@ -480,7 +480,7 @@
                     success: function(response) {
                         $('#regRightid').val(response.success.id);
                         $('#yearDate').val(response.success.reg_year);
-                        $('#EExpireDate').val(response.success.ExpireREg_Year);
+                        $('#EExpireDate').val(response.success.ExpireREg_year);
                         $('#finance').val(response.success.finance_number);
                         $('#financetDate').val(response.success.finance_date);
                         $('#billnum').val(response.success.bill_number);

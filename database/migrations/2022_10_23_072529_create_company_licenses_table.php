@@ -22,7 +22,9 @@ class CreateCompanyLicensesTable extends Migration
             $table->string('licenseNumber');
             $table->string('issueDate');
             $table->string('files')->nullable();
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

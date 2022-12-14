@@ -17,7 +17,6 @@ class CreateCompanyFinesTable extends Migration
         Schema::create('company_fines', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(frequencey::class)->constrained();
-            $table->timestamps();
             $table->string('fine_date');
             $table->string('number_of_days');
             $table->integer('fine_fee');
@@ -29,6 +28,8 @@ class CreateCompanyFinesTable extends Migration
             $table->string('bank');
             $table->string("fine_finance_document");
             $table->string("fine_finance_recipt");
+            $table->string('created_at')->nullable();
+            $table->string('updated_at')->nullable();
         });
     }
 

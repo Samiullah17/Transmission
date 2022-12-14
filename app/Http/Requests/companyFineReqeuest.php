@@ -24,7 +24,7 @@ class companyFineReqeuest extends FormRequest
     public function rules()
     {
         return [
-            "startDate"=>['required','date'],
+            "finestartDate"=>['required','date'],
             "financeNumber"=>['required','numeric'],
             "financetDate"=> ['required', 'date'],
             "billNumber"=>['required','numeric'],
@@ -34,8 +34,8 @@ class companyFineReqeuest extends FormRequest
             "bank"=>['required','string'],
             'finacncefile'=>['required', 'max:3000'],
             'finacnceReciptfile'=>['required', 'max:3000'],
-            "frequency"=>['required','exists:frequenceys,id'],
-            "province"=>['required','exists:provences,id'],
+            "frequencyid"=>['required','exists:frequenceys,id'],
+        
         ];
     }
 
@@ -50,11 +50,10 @@ class companyFineReqeuest extends FormRequest
     public function attributes()
     {
         return[
-            'startDate'=>'د ثبت نیټه',
+            'finestartDate'=>'د ثبت نیټه',
           'financeNumber'=>'د مالی ریاست مکتوب ګڼه',
           'financetDate'=>'د مالی ریاست مکتوب نیټه',
-          'province'=>'ولایت',
-          'frequency'=>'فریکونسی',
+          'frequencyid'=>'فریکونسی',
           'billNumber'=>'آویز نمبر',
           'reciptNumber'=>'تعرفه نمبر',
           'recipttDate'=>'تعرفه نیټه',
