@@ -222,7 +222,7 @@
                                
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label for="">بانک</label>
+                                        <label for=""> بانک نوم</label>
                                         <input type="text" class="form-control" name="bank" placeholder="بانک">
                                         <span id="1bank" class="text text-danger mdl" name="bank" role="alert">
 
@@ -367,7 +367,7 @@
 
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label for="">بانک</label>
+                                        <label for="">بانک نوم</label>
                                         <input type="text" class="form-control" id='bank' name="bank"
                                             placeholder="بانک">
                                         <span id="1bank" class="text text-danger mdl" name="bank" role="alert">

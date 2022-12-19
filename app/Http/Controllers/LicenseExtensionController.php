@@ -59,6 +59,7 @@ class LicenseExtensionController extends Controller
      */
     public function store(LicenseExtensionRequest $request, $id)
     {
+        
         $licenseExt = new LicenseExtension();
         $licenseExt->frequencey_id = $request->frequency;
         $licenseExt->finance_recipt = $request->reciptNumber;
