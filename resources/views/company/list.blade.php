@@ -467,12 +467,16 @@ $(function () {
             {data: 'aname'},
             {data: 'tname'},
             {data: 'companyManagerName'},
-            {data: 'action'},
+            {data: 'action',
+            //   name:'action'
+            //   orderable:true,
+            //   searchable:true
+        },
             // {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         language: {
                     "emptyTable": "دیتا موجود نیست .",
-                    "lengthMenu": "نمایش MENU معلومات",
+                   "lengthMenu": "نمایش _MENU_ معلومات",
                     "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
                     "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
                     "search": "جستجو کردن : ",

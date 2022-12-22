@@ -87,8 +87,7 @@
                                             @if ($item->status == 1)
                                                 <td>
                                                     <span class="badge badge-danger" style="height: 30px">غیر فعال</span>
-                                                </td>
-                                                <td class="d-flex justify-content-between">
+                                                </td>`="d-flex justify-content-between">
                                                     {{-- data-mdb-ripple-color="dark"
                                                         data-toggle="modal" data-target="#modal-x2" --}}
                                                     <a class="btn btn-primary" id="RegRightEdit"

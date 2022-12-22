@@ -5,8 +5,9 @@ use App\Http\Controllers\classController;
 use App\Http\Controllers\companyController;
 use App\Http\Controllers\CompanyFineController;
 use App\Http\Controllers\LicenseExtensionController;
+use App\Http\Controllers\permissionController;
 use App\Http\Controllers\RegistrationRightController;
-
+use App\Http\Controllers\roleController;
 use App\Models\RegistrationRight;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Finder;
@@ -21,14 +22,18 @@ use Symfony\Component\Finder\Finder;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return view('test');
+});
 
+Route::get('/dashboard', function () {
+    return view('welcome');
+})->middleware(['auth'])->name('dashboard');
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('dashboard');
-    Route::get('add/company', [companyController::class, 'addCompany'])->name('add.company');
+   
+    Route::get('add/company', [companyController::class, 'addCompany'])->name('add.company')->middleware('role:admin');
     Route::post('save/company', [companyController::class, 'saveCompnay'])->name('save.company');
     Route::post('save/company1', [companyController::class, 'saveCompany1'])->name('save.company1');
 
@@ -110,4 +115,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('show/orders/{id?}', [orderController::class, 'getOrder'])->name('company.orders');
     Route::get('orders/program/{id?}', [orderController::class, 'program'])->name('order.program');
+    Route::middleware('role:admin')->group(function(){
+        Route::get('role/index',[roleController::class,'index'])->name('role.index');
+        Route::get('permission/index',[permissionController::class,'index'])->name('permission.index');
+    });
+    
+
+   
 });

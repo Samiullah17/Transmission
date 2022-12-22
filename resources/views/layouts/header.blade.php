@@ -116,6 +116,20 @@
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
             class="fas fa-th-large"></i></a>
       </li>
+      <li class="nav-item">
+       
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+  
+          <x-dropdown-link :href="route('logout')"
+                  onclick="event.preventDefault();
+                              this.closest('form').submit();">
+          <i class="bi bi-door-closed"></i>
+          </x-dropdown-link>
+      </form>
+    
+      </li>
+      
     </ul>
   </nav>
 

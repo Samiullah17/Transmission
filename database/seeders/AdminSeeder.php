@@ -15,13 +15,22 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $user=User::create(   [
-            'name' =>'admin',
-            'email' => 'admin@gmail.com',
-            'email_verified_at' =>now(),
-            'password' =>Hash::make('password')
+//         $user=User::create(   [
+//             'name' =>'admin',
+//             'email' => 'admin@gmail.com',
+//             'email_verified_at' =>now(),
+//             'password' =>Hash::make('password')
             
-   ]);
-   $user->assignRole('writer','admin');
+//    ]);
+//    $user->assignRole('writer','admin');
+
+
+   $user=User::create(   [
+    'name' =>'test',
+    'email' => 'test@gmail.com',
+    'email_verified_at' =>now(),
+    'password' =>Hash::make('password')
+    
+]);
     }
 }
