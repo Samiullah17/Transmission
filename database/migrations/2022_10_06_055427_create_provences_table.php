@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('provences', function (Blueprint $table) {
             $table->id();
             $table->string('provenceName');
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

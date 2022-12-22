@@ -20,9 +20,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Company::class)->constrained();
             $table->foreignIdFor(companyAgent::class)->constrained();
-            $table->string('suggestion_file');
+            $table->string('suggestion_file')->nullable();
             $table->tinyInteger('status')->default(0);
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+            $table->string('updated_at')->nullable();
         });
     }
 

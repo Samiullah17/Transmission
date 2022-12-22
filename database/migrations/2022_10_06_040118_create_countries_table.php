@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('contryName');
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

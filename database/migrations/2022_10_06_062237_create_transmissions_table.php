@@ -27,7 +27,9 @@ return new class extends Migration
             $table->foreignIdFor(provence::class)->constrained();
             $table->foreignIdFor(order::class)->constrained();
             $table->integer('rate')->default(0);
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

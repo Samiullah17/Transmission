@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('transmissionTypeName');
             $table->integer('rate');
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

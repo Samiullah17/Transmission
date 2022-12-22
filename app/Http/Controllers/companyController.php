@@ -21,12 +21,10 @@ use App\Models\transmission;
 use App\Models\transmissionModel;
 use App\Models\transmissionType;
 use App\View\Components\companySearchComponent;
-use Illuminate\Database\Schema\ForeignKeyDefinition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
-use Yajra\DataTables\Facades\DataTables;
 
 class companyController extends Controller
 {
@@ -88,21 +86,20 @@ class companyController extends Controller
         return view('company.list', compact('companys'));
     }
 
-    public function addCompany()
-    {
+    public function addCompany(){
 
-        $transmissionModel = transmissionModel::all();
-        $transmissionType = transmissionType::all();
-        $provence = provence::all();
-        $district = district::all();
-        $companyType = companyType::all();
-        $companyActiveType = companyActiveType::all();
-        $citizenships = citizenship::all();
-        $countires = country::all();
-        $licenseType = licenseType::all();
+        $transmissionModel=transmissionModel::all();
+        $transmissionType=transmissionType::all();
+        $provence=provence::all();
+        $district=district::all();
+        $companyType=companyType::all();
+        $companyActiveType=companyActiveType::all();
+        $citizenships=citizenship::all();
+        $countires=country::all();
+        $licenseType=licenseType::all();
 
 
-        return view('company.add', compact('licenseType', 'countires', 'companyType', 'companyActiveType', 'citizenships', 'provence', 'district', 'transmissionModel', 'transmissionType'));
+        return view('company.add',compact('licenseType','countires','companyType','companyActiveType','citizenships','provence','district','transmissionModel','transmissionType'));
     }
 
 
@@ -116,94 +113,93 @@ class companyController extends Controller
         $company->company_type_id = $request->company_type_id;
         $company->company_active_type_id = $request->company_active_type_id;
         $company->companyManagerName = $request->companyManagerName;
-        if ($request->citizenship_id == 1 || $request->citizenship_id == 3) {
-            $company->country_id = 3;
-        } else {
-            $company->country_id = $request->country;
+        if($request->citizenship_id==1 || $request->citizenship_id==3){
+            $company->country_id =1;
         }
-        $company->companyAddress = $request->companyAddress;
-        $company->latitude = $request->letitude;
-        $company->longtitude = $request->longtutude;
+        else{
+            $company->country_id=$request->country;
+        }
+        $company->companyAddress=$request->companyAddress;
+        $company->latitude=$request->letitude;
+        $company->longtitude=$request->longtutude;
         $company->save();
 
 
-        for ($x = 0; $x < count($request->licenseTypeId); $x++) {
-            $companylicense = new companyLicense();
-            $companylicense->company_id = $company->id;
-            $companylicense->license_type_id = $request->licenseTypeId[$x];
+        for($x=0; $x<count($request->licenseTypeId); $x++){
+            $companylicense=new companyLicense();
+            $companylicense->company_id =$company->id;
+            $companylicense->license_type_id =$request->licenseTypeId[$x];
             $companylicense->licenseNumber = $request->licenseNumber[$x];
             $companylicense->files = $request->licenseFile[$x];
             $companylicense->issueDate = $request->issueDate[$x];
             $companylicense->save();
+
         }
-
-        Session::put('companyCreated', true);
-
-
-
-
 
         return redirect()->back();
+
+
+
+
+        // $agent=new companyAgent();
+        // $agent->agentName=$request->agentName;
+        // $agent->fName=$request->fName;
+        // $agent->gFName=$request->gFName;
+        // $agent->NIC=$request->NIC;
+        // $agent->phone=$request->phone;
+        // $agent->email=$request->email;
+        // $agent->company_id =$company->id;
+        // $agent->odistrict_id=$request->odistrict_id;
+        // $agent->ovillage=$request->ovillage;
+        // $agent->cdistrict_id=$request->cdistrict_id;
+        // $agent->cvillage=$request->cvillage;
+        // $agent->Save();
+
+
+
+        // for($x=0; $x<count($request->frqNo); $x++){
+
+        //  $order=new order();
+        // $order->company_id=$company->id;
+        // $order->company_agent_id =$agent->id;
+        // $order->frqNo=$request->frqNo[$x];
+        // $order->freQuantity=$request->freQuantity;
+        // $order->save();
+
+        // }
+
+
+
+
+
+        // for($i=0;$i<count($request->transmission_type_id);$i++){
+        //     $transmission=new transmission();
+        //     $transmission->transmission_type_id  =$request->transmission_type_id[$i];
+        //     $transmission->transmission_model_id =$request->transmission_model_id[$i];
+        //     $transmission->provence_id= $request->provence_id[$i];
+        //     $transmission->serialNo=$request->serialNo[$i];
+        //     $transmission->order_id = $order->id;
+        //     $transmission->save();
+        //  }
+
+
+
+
+
+
+        // return response()->json([
+        //     'message' => 'company Added Successfuly ',
+        // ]);
+        // return response()->json(['data'=>$request->all()]);
+
+
     }
 
-    public function saveCompany1(Request $request)
-    {
-        $company = new Company();
-        $company->companyName = $request->companyName;
-        $company->company_type_id = $request->company_type_id;
-        $company->company_active_type_id = $request->company_active_type_id;
-        $company->companyManagerName = $request->companyManagerName;
-        if ($request->citizenship_id == 1 || $request->citizenship_id == 3) {
-            $company->country_id = 3;
-        } else {
-            $company->country_id = $request->country;
-        }
-        $company->companyAddress = $request->companyAddress;
-        $company->latitude = $request->letitude;
-        $company->longtitude = $request->longtutude;
-        $company->save();
-
-        for ($x = 0; $x < count($request->licenseTypeId); $x++) {
-            $companylicense = new companyLicense();
-            $companylicense->company_id = $company->id;
-            $companylicense->license_type_id = $request->licenseTypeId[$x];
-            $companylicense->licenseNumber = $request->licenseNumber[$x];
-            $companylicense->files = $request->licenseFile[$x];
-            $companylicense->issueDate = $request->issueDate[$x];
-            $companylicense->save();
-        }
-
-        $agent = new companyAgent();
-        $agent->agentName = $request->agentName;
-        $agent->fName = $request->fName;
-        $agent->gFName = $request->gFName;
-        $agent->NIC = $request->NIC;
-        $agent->phone = $request->phone;
-        $agent->email = $request->email;
-        $agent->odistrict_id = $request->odistrict_id;
-        $agent->ovillage = $request->ovillage;
-        $agent->cdistrict_id = $request->cdistrict_id;
-        $agent->cvillage = $request->cvillage;
-        $agent->Save();
-
-        $order = new order();
-        $order->company_id = $company->id;
-        $order->company_agent_id = $agent->id;
-        $order->save();
-
-        $provence = provence::all();
-        $district = district::all();
-        $transmissionModel = transmissionModel::all();
-        $transmissionType = transmissionType::all();
-        return view('transmittion.add', compact('company', 'agent', 'provence', 'district', 'transmissionModel', 'transmissionType'));
-    }
 
 
-
-    public function details($id)
-    {
-        $provence = provence::all();
-        $district = district::all();
+    public function details($id){
+        $provence=provence::all();
+        $district=district::all();
         // DB::enableQueryLog();
         if ($id != null) {
             if (Company::find($id)) {
@@ -235,32 +231,38 @@ class companyController extends Controller
         }
     }
 
-
-    public function addTransmittion()
-    {
-        $provence = provence::all();
-        $district = district::all();
-        $companies = Company::all();
-        $agent = companyAgent::all();
-        $transmissionModel = transmissionModel::all();
-        $transmissionType = transmissionType::all();
-        return view('transmittion.add1', compact('provence', 'district', 'companies', 'agent', 'transmissionModel', 'transmissionType'));
-    }
-
-    public function addTransmission0(Request $request)
+    public function saveRight($id)
     {
 
-        $agent = companyAgent::find($request->id);
-        $provence = provence::all();
-        $district = district::all();
-        $companies = Company::all();
-        $company = company::find($request->cid);
-        $transmissionModel = transmissionModel::all();
-        $transmissionType = transmissionType::all();
-        return view('transmittion.add', compact('agent', 'provence', 'district', 'companies', 'transmissionModel', 'transmissionType', 'company'));
     }
 
 
+    public function addTransmittion(){
+        $provence=provence::all();
+        $district=district::all();
+        $companies=Company::all();
+        $agent=companyAgent::all();
+        $transmissionModel=transmissionModel::all();
+        $transmissionType=transmissionType::all();
+        return view('transmittion.add',compact('provence','district','companies','agent','transmissionModel','transmissionType'));
+    }
+
+    public function addTransmission0($id){
+
+        $agent=companyAgent::find($id);
+        $provence=provence::all();
+        $district=district::all();
+        $companies=Company::all();
+        $transmissionModel=transmissionModel::all();
+        $transmissionType=transmissionType::all();
+        return view('transmittion.add',compact('agent','provence','district','companies','transmissionModel','transmissionType'));
+
+    }
+
+    public function companyAgent($id){
+         $cagent=companyAgent::where('company_id',$id)->get();
+         return response()->json(['agent'=>$cagent,]);
+    }
 
     public function addTransmission(Request $request)
     {
@@ -368,80 +370,53 @@ class companyController extends Controller
 
 
 
-    public function companyTransmission($id)
-    {
+    // public function companyTransmission($id)
+    // {
 
 
-        $order1 = order::join('companies', 'orders.company_id', 'companies.id')
-            ->select('orders.*', 'companies.companyName as companyName')
-            ->where('companies.id', $id)->where('orders.status', 0)->get();
+    //     $order1 = order::join('companies', 'orders.company_id', 'companies.id')
+    //         ->select('orders.*', 'companies.companyName as companyName')
+    //         ->where('companies.id', $id)->where('orders.status', 0)->get();
 
-        // foreach($order1 as $row){
-        //     $order3[$i++]=orderDetails::join('orders','orders.id','order_details.order_id')
-        // ->where('order_details.order_id',$row->id)
-        // ->select(DB::raw('sum(order_details.transmissionQuantity) as totalT'))
-        // ->get();
-        // }
+    //     // foreach($order1 as $row){
+    //     //     $order3[$i++]=orderDetails::join('orders','orders.id','order_details.order_id')
+    //     // ->where('order_details.order_id',$row->id)
+    //     // ->select(DB::raw('sum(order_details.transmissionQuantity) as totalT'))
+    //     // ->get();
+    //     // }
 
-        $orders = order::join('companies', 'companies.id', 'orders.company_id')
-            ->join('order_details', 'order_details.order_id', 'orders.id')
-            ->join('company_agents', 'orders.company_agent_id', 'company_agents.id')
-            ->selectRaw('company_agents.agentName aname, companies.companyName company,orders.id `order`, orders.created_at created_at, SUM(order_details.transmissionQuantity) total_transmissions')
-            ->where('orders.company_id', $id)->where('orders.status', 0)
-            ->groupByRaw('1,2,3,4')
-            ->get();
-        // $order2=orderDetails::where('order_id',$order1->id)->select(DB::raw('sum(order_details.transmissionQuantity) as totalT'))->get();
-        $order3 = orderDetails::join('orders', 'orders.id', 'order_details.order_id')
-            ->where('order_details.order_id', 1)
-            ->select(DB::raw('sum(order_details.transmissionQuantity) as totalT'))
-            ->get();
+    //     $orders = order::join('companies', 'companies.id', 'orders.company_id')
+    //         ->join('order_details', 'order_details.order_id', 'orders.id')
+    //         ->join('company_agents', 'orders.company_agent_id', 'company_agents.id')
+    //         ->selectRaw('company_agents.agentName aname, companies.companyName company,orders.id `order`, orders.created_at created_at, SUM(order_details.transmissionQuantity) total_transmissions')
+    //         ->where('orders.company_id', $id)->where('orders.status', 0)
+    //         ->groupByRaw('1,2,3,4')
+    //         ->get();
+    //     // $order2=orderDetails::where('order_id',$order1->id)->select(DB::raw('sum(order_details.transmissionQuantity) as totalT'))->get();
+    //     $order3 = orderDetails::join('orders', 'orders.id', 'order_details.order_id')
+    //         ->where('order_details.order_id', 1)
+    //         ->select(DB::raw('sum(order_details.transmissionQuantity) as totalT'))
+    //         ->get();
 
 
-        $order = Company::join('orders', 'companies.id', 'orders.company_id')
-            ->join('transmissions', 'orders.id', 'transmissions.order_id')
-            ->join('transmission_types', 'transmissions.transmission_type_id', 'transmission_types.id')
-            ->join('transmission_models', 'transmissions.transmission_model_id', 'transmission_models.id')
-            ->join('provences', 'transmissions.provence_id', 'provences.id')
-            ->select(
-                'transmission_types.transmissionTypeName as tname',
-                'transmission_types.rate as rate',
-                'transmission_models.transmissionModelName as mname',
-                'provences.provenceName as pname',
-                'transmissions.*'
-            )->where('companies.id', $id)->get();
-
-        return response()->json(['order' => $order, 'orders' => $orders]);
-    }
+    // }
 
 
 
-    public function edit($id)
-    {
 
-        $name = Company::where('id', $id)->first()->companyName;
-        $type = Company::where('id', $id)->first()->company_type_id;
-        $activeType = Company::where('id', $id)->first()->company_active_type_id;
-        $manager = Company::where('id', $id)->first()->companyManagerName;
-        $country = Company::where('id', $id)->first()->country_id;
-        $address = Company::where('id', $id)->first()->companyAddress;
-        $lat = Company::where('id', $id)->first()->latitude;
-        $lan = Company::where('id', $id)->first()->longtitude;
-
-        $companyType = companyType::all();
-        $companyActiveType = companyActiveType::all();
-        $countries = country::all();
-        $citizenships = citizenship::all();
-
-        return response()->json([
-            'name' => $name, 'type' => $type, 'activeType' => $activeType, 'manager' => $manager, 'country' => $country, 'address' => $address, 'lat' => $lat,
-            'lan' => $lan, 'companyType' => $companyType, 'companyActiveType' => $companyActiveType, 'countries' => $countries, 'citizenships' => $citizenships
-        ]);
-    }
+    public function companyTransmission($id){
 
 
-    public function getCountry()
-    {
-        return response()->json(['country' => country::all()]);
+
+        $order=Company::join('orders','companies.id','orders.company_id')
+        ->join('transmissions','orders.id','transmissions.order_id')
+        ->join('transmission_types','transmissions.transmission_type_id','transmission_types.id')
+        ->join('transmission_models','transmissions.transmission_model_id','transmission_models.id')
+        ->join('provences','transmissions.provence_id','provences.id')
+        ->select('transmission_types.transmissionTypeName as tname',
+        'transmission_models.transmissionModelName as mname',
+       'provences.provenceName as pname','transmissions.serialNo as sname')->where('companies.id',$id)->get();
+
     }
 
     public function update(Request $request)

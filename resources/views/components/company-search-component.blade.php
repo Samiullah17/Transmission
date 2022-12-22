@@ -26,6 +26,12 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">معلومات</a></li>
+                            <li class="dropdown-item"><a href="{{ route('saveRight.company',$company->id) }}"> د کمپنی حق الثبت</a></li>
+
+                            <li class="dropdown-item"><a href="{{ route('licence.company',$company->id) }}">د فریکونسیو جواز</a></li>
+
+                            <li class="dropdown-item"><a href="{{ route('fine.company',$company->id) }}">د کمپنی جریمه</a></li>
+
                         </ul>
                     </div>
                     <!-- /btn-group -->

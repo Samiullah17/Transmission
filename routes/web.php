@@ -3,12 +3,14 @@
 use App\Http\Controllers\agentController;
 use App\Http\Controllers\classController;
 use App\Http\Controllers\companyController;
+use App\Http\Controllers\CompanyFineController;
+use App\Http\Controllers\LicenseExtensionController;
+use App\Http\Controllers\RegistrationRightController;
 use App\Http\Controllers\orderController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\subjectController;
-use App\Http\Controllers\teacherController;
-use App\Http\Controllers\transmissionController;
+use App\Models\RegistrationRight;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Finder\Finder;
+use App\Http\Controllers\transmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,16 +49,42 @@ Route::middleware(['auth'])->group(function(){
     Route::get('ad/trasmission/{id?}/{cid?}', [companyController::class, 'addTransmission0'])->name('add.transmittion0');
 
     Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
+    Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
 
-    Route::get('comopanies/orders', [transmissionController::class, 'listTransmission'])->name('companies.orders');
-    Route::get('list/transmission', function () {
-        return view('transmittion.list');
-    })->name('list.transmission');
-    Route::get('company/transmission/{id?}', [companyController::class, 'companyTransmission'])->name('company.transmission');
+        Route::get('comopanies/orders',  [transmissionController::class,  'listTransmission'])->name('companies.orders');
+        Route::get('list/transmission',  function  ()  {
+            return view('transmittion.list');
+        })->name('list.transmission');
+        Route::get('company/transmission/{id?}',  [companyController::class,  'companyTransmission'])->name('company.transmission');
     Route::get('company/search',[companyController::class,'Search'])->name('company.search');
 
     Route::get('company/agent/{id?}', [agentController::class, 'companyAgent'])->name('company.agent');
     Route::get('agent/details/{id?}', [agentController::class, 'cagent'])->name('agent.details');
+
+    Route::get('list/company', [companyController::class, 'index'])->name('list.company');
+    Route::get('users/index', [companyController::class, 'index1'])->name('users.index');
+    Route::get('details/company/{id}', [companyController::class, 'details'])->name('details.company');
+    Route::get('saveRight/company/{id}', [RegistrationRightController::class, 'show'])->name('saveRight.company');
+    Route::get('oldRegRight.company/{id}', [RegistrationRightController::class, 'OldRight'])->name('oldRegRight.company');
+    Route::post('createsaveRight/company/{id}', [RegistrationRightController::class, 'store'])->name('createsaveRight.company');
+    route::get('EditRegRight/company/{id}', [RegistrationRightController::class, 'edit'])->name('EditRegRight.company');
+    Route::put('updatesaveRight/company/{id}', [RegistrationRightController::class, 'update'])->name('updatesaveRight.company');
+    Route::post('createFine/company/{id}', [CompanyFineController::class, 'store'])->name('createFine.company');
+    Route::get('licence/company/{id}', [LicenseExtensionController::class, 'show'])->name('licence.company');
+    Route::delete('delteLicenseExt/company/{id}', [LicenseExtensionController::class, 'destroy'])->name('delteLicenseExt.company');
+    Route::post('CreatelicenseExtension/company/{id}', [LicenseExtensionController::class, 'store'])->name('CreatelicenseExtension.company');
+    Route::get('giveFrequency/{provinceId}/{companyId}', [LicenseExtensionController::class, 'frequencySearch'])->name('giveFrequency');
+    Route::get('licenseExtEdit/company/{id}', [LicenseExtensionController::class, 'edit'])->name('licenseExtEdit.company');
+    Route::get('FineExt.company/company/{id}', [LicenseExtensionController::class, 'Fine'])->name('FineExt.company');
+    Route::get('EditlicenseExtension/company/{id}', [LicenseExtensionController::class, 'update'])->name('EditlicenseExtension.company');
+    Route::get('oldlicenseExt/company/{id}', [LicenseExtensionController::class, 'index'])->name('oldlicenseExt.company');
+
+        Route::get('fine/company/{id}', [CompanyFineController::class, 'show'])->name('fine.company');
+    Route::get('fine/show/{id}',  [CompanyFineController::class,  'show1'])->name('fine.show');
+    Route::delete('delteFine/company/{id}', [CompanyFineController::class, 'destroy'])->name('delteFine.company');
+    Route::PUT('UpdateFine/company/{id}', [CompanyFineController::class, 'update'])->name('UpdateFine.company');
+       Route::get('EditFine/company/{id}',  [CompanyFineController::class,  'edit'])->name('EditFine.company');
+    Route::get('edit/company{id}', [companyController::class, 'edit'])->name('edit.company');
 
     Route::get('list/company', [companyController::class, 'index'])->name('list.company');
     Route::get('details/company/{id}', [companyController::class, 'details'])->name('details.company');

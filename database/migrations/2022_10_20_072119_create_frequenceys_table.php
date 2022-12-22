@@ -22,7 +22,9 @@ class CreateFrequenceysTable extends Migration
             $table->foreignIdFor(order::class)->constrained();
             $table->string('autraLicenceNo');
             $table->foreignIdFor(provence::class)->constrained();
-             $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 

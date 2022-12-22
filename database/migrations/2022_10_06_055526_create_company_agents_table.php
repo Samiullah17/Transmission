@@ -29,7 +29,9 @@ return new class extends Migration
             $table->string('cvillage');
             $table->string('photo')->nullable();
             $table->foreignIdFor(Company::class)->constrained();
-            $table->timestamps();
+            $table->string('created_at')->nullable();
+
+            $table->string('updated_at')->nullable();
         });
     }
 
