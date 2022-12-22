@@ -1,66 +1,94 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('content')
+<style>
+    .error{
+        color:red;
+        font-size: 12px;
+    }
+</style>
     <div class="content-wrapper">
 
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <div class="card-tools">
-                                اضافی معلومات
-                            </div>
-                            <div class="card-title">
-                                <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
-                                    data-toggle="modal" data-target="#modal-xl">د نوی کمپنی اضافه کول</button>
-                                {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
-                            </div>
+                        <div class="card-title">
+                            <button type="button" style="float: left" class="btn btn-primary" data-mdb-ripple-color="dark"
+                            data-toggle="modal" data-target="#modal-xl">د نوی کمپنی اضافه کول</button>
+
                         </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+
+                                <form  id="frmSearch">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="">د کمپنی نوم</label>
+                                                <input type="text" name="company_name" placeholder="د کمپنی نوم" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>د فعالیت ډول</label>
+                                                <select name="company_active_type_id" id="company_type_id" class="form-control">
+                                                    <option selected >د کمپنی د فعالیت ډول انتخاب کړی</option>
+                                                    @foreach ($companyActiveType as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->companyName }}</option>
+
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>د بنسټ ډول</label>
+                                                <select name="company_type_id" id="company_type_id" class="form-control">
+                                                    <option selected >د کمپنی نوعه انتخاب کړی</option>
+                                                    @foreach ($companyType as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->companyTypeName }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>د ریس نوم</label>
+                                                <input type="text" name="ManagerName" placeholder="د ریس نوم ولیکی" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1">
+
+                                             <a href="{{ route('company.search') }}" id='searchcom' class="btn btn-success mt-4">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </form>
+
+
+
+
+
+                        </div>
+
+
                         <!-- /.card-header -->
                         <div class="card-body table-responsive">
-                            {{-- <table class="table table-head-fixed table-hover table-striped d-none">
-                                <thead>
-                                    <tr>
-                                        <th>د کمپنی نوم</th>
-                                        <th>د فعالیت ډول</th>
-                                        <th>د موسسی/بنست ډول</th>
-                                        <th>د ریس نوم</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-
-
-                                    @foreach ($companies as $company)
-
-                                    <tr>
-                                        <td>{{ $company->companyName }}</td>
-                                        <td>{{ $company->aname }}</td>
-                                        <td>{{ $company->tname }}</td>
-                                        <td>{{ $company->companyManagerName }}</td>
-                                        <td> <div class="input-group input-group-sm mb-3">
-                                            <div class="input-group-prepend">
-                                                <button type="button" class="btn btn-primary dropdown-toggle"
-                                                    data-toggle="dropdown">
-                                                    معلومات
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
-                                                    <li class="dropdown-item"><button id="companyId" value="{{ $company->id }}" data-mdb-ripple-color="dark" data-toggle="modal"data-target="#modal-xl1" class="text-primary">د مخابرو ثبت</button></li>
-
-                                                </ul>
-                                            </div>
-                                            <!-- /btn-group -->
-                                        </div></td>
-
-                                    </tr>
-
-                                    @endforeach
-                                </tbody>
-                            </table> --}}
-
-                            <table class="table table-hover user_datatable">
+                            <table class="table table-sm table-border table-striped ctable">
 
                                 <thead >
 
@@ -69,15 +97,13 @@
                                         <th style="text-align: start">د فعالیت ډول</th>
                                         <th style="text-align: start">د موسسی/بنست ډول</th>
                                         <th style="text-align: start">د ریس نوم</th>
-                                        <th style="text-align: start">معلومات</th>
-                                        <th></th>
+                                        <th>حالت</th>
+                                         <th></th>
                                         {{-- <th></th> --}}
                                     </tr>
-
                                 </thead>
-
-                                <tbody>
-
+                                <tbody id="tbody1">
+                                      <x-company-search-component :companys="$companys"></x-company-search-component>
                                 </tbody>
 
                             </table>
@@ -304,88 +330,9 @@
 @section('script')
 
     <script>
-
-
-$(function () {
-    var table = $('.user_datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('users.index') }}",
-        columns: [
-            {data:'companyName'},
-            {data: 'aname'},
-            {data: 'tname'},
-            {data: 'companyManagerName'},
-            {data: 'action'},
-            // {data: 'action', name: 'action', orderable: false, searchable: false},
-        ],
-        language: {
-                    "emptyTable": "دیتا موجود نیست .",
-                    "lengthMenu": "نمایش MENU معلومات",
-                    "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
-                    "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
-                    "search": "پلټل/جستجو: ",
-                    "sProcessing": "در حال اضافه نمودن معلومات...",
-                    "paginate": {
-                        "first": "لومړی",
-                            "last": "آخر",
-                            "next": "وروسته",
-                            "previous": "مخکی",
-                    },
-                },
-    });
-  });
-
-
-
-
-
+        var liArr = [];
         $(document).ready(function() {
 
-
-            $("#agentSave").validate({
-                rules: {
-                    agentName: "required",
-                    fName: "required",
-                    gFName: "required",
-                    NIC: "required",
-                    phone: {
-                        required: true,
-                        number: true,
-                        minlength: 10,
-                        maxlength: 10,
-                    },
-                    provence: "required",
-                    cprovence: "required",
-                    odistrict_id: "required",
-                    cdistrict_id: "required",
-                    ovillage: "required",
-                    cvillage: "required",
-                    photo: "required",
-                    suggestion_file: "required",
-                },
-
-                messages: {
-                    agentName: "د نماینده نوم ضروری ده",
-                    fName: "د نماینده د پلار نوم ضروری ده",
-                    gFName: "د نماینده د نیکه نوم ضروری ده",
-                    NIC: "د تذکری شمیره ضروری ده",
-                    phone:{
-                        required: "د تلفون شمره ضروری ده",
-                        maxlength: "د تلفون شمیره باید له لسو عددونو زیاته نوی",
-                        minlength: "د تلفون شمیره باید له لسو عددونو څخه کمه نوی",
-                        number: "د تلفون شمیره کی یوازی اعداد باید داخل شی"
-                    },
-                    provence: "په مهربانی سره اصلی ولایت انتخاب کړی",
-                    cprovence: "په مهربانی سره اوسنی ولایت انتخاب کړی",
-                    odistrict_id: "اصلی ولسوالی ضروری ده",
-                    cdistrict_id: "فعلی ولسوالی ضروری ده",
-                    ovillage: "اصلی کلی داخل کړی",
-                    cvillage: "د اوسنی کلی نوم داخل کړی",
-                    photo: "د نماینده عکس داخل کړی",
-                    suggestion_file: "پشنهادی فایل ضروری ده",
-                }
-            });
 
             $('#companySave').validate({
                 rules:{
@@ -407,70 +354,6 @@ $(function () {
                     license_type_id:"لیګ تر لیګه د یوه د جواز مرجع انتخاب کړی",
                 }
             })
-
-
-            function loadData(){
-
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('list.company') }}",
-                    dataType: "json",
-                    success: function(response) {
-                        console.log(response);
-                        // $("#exampleModal").modal("hide");
-                        // alert('samiullah it was successfuly added ');
-                        // $('#exampleModal').modal('hide');
-                        // $('#exampleModal').css('display', 'none');
-                        // $('[data-dismiss="modal"]').click();
-                        // $('#regForm')[0].reset();
-                    }
-                });
-
-            }
-
-
-            // $('#regForm').on('submit', function(e) {
-            //     e.preventDefault();
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "{{ route('save.company') }}",
-            //         data: $(this).serialize(),
-            //         dataType: "json",
-            //         success: function(response) {
-            //             // $("#exampleModal").modal("hide");
-            //             // alert('samiullah it was successfuly added ');
-            //             // $('#exampleModal').modal('hide');
-            //             $('#exampleModal').css('display', 'none');
-            //             $('[data-dismiss="modal"]').click();
-            //             $('#regForm')[0].reset();
-            //         }
-            //     });
-            // })
-
-
-
-
-            // $('#agentSave').on('submit', function(e) {
-            //     e.preventDefault();
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "{{ route('save.agent') }}",
-            //         data: $(this).serialize(),
-            //         dataType: "json",
-            //         success: function(response) {
-            //             // $("#exampleModal").modal("hide");
-            //             // alert('samiullah it was successfuly added ');
-            //             // $('#exampleModal').modal('hide');
-            //             $('#exampleModal').css('display', 'none');
-            //             $('[data-dismiss="modal"]').click();
-            //             $('#regForm')[0].reset();
-            //         }
-            //     });
-            // })
-
-
-
-
 
             $(document).on('change','#citizenship_id',function(){
                 let ctId=$('#citizenship_id').val();
@@ -500,11 +383,17 @@ $(function () {
 
 
             $(document).on('change','#license_type_id',function(){
-
                 var id = $(this).val();
-                 var economical=`<div class="form-group col-md-3" id="div`+id+`">
-                    <button type="button" class="btn btn-sm btn-danger" onclick="$('#div`+id+`').remove()">Colse</button>
-                    <label>جواز نمبر</label>
+
+                if(liArr.includes(id)){
+                    swal('.','جواز اضافه شوی دوهم ځل یې نشی اضافه کولی','error');
+
+                }else{
+                    let name=$('#license_type_id :selected').text();
+
+                    var economical=`<div class="form-group col-md-3" id="div`+id+`">
+                    <button type="button" class="btn btn-sm" onclick="deleteLicense(`+id+`)"><i class="fas fa-window-close" style="color:red"></i></button>
+                    <label>د `+name+` جواز نمبر</label>
                     <input type="hidden" name="licenseTypeId[]" id="economical" value="`+id+`" class="form-control">
                     <input type="date" name="issueDate[]" id="issueDate" class="form-control">
                     <input type="text"  placeholder="جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
@@ -513,45 +402,12 @@ $(function () {
                     `;
 
                     $('.license').append(economical);
-                    // $('#license_type_id').attr('disabled',true);
-                    // var mani=`<div class="form-group col-md-3">
-                    // <label>د شاروالی جواز نمبر  </label>
-                    // <input type="text" name="mani[]" id="mani" class="form-control">
-                    // <input type="text" placeholder="د شاروالی جواز نمبر ولیکی"  name="mani[]" class="form-control">
-                    // <input type="file" name="mani[]" id="maniId" class="form-control">
-                    //  </div>
-                    // `;
-
-
-                    // var bank=`<div class="form-group col-md-3">
-                    // <label>د بانک جواز نمبر  </label>
-                    // <input type="text" name="bank[]" id="bank" class="form-control">
-                    // <input type="text" placeholder="د افغانتسان بانک جواز نمبر ولیکی"  name="bank[]" class="form-control">
-                    // <input type="file" name="bank[]" id="bankId" class="form-control">
-                    //  </div>
-                    // `;
-                    // if($('#license_type_id').val()==1){
-
-                    //     $('.license').append(economical);
-                    //     $('#economical').val($('#license_type_id').val());
-
-                    // }
-
-                    // if($('#license_type_id').val()==2){
-
-                    //     $('.license').append(mani);
-                    //     $('#mani').val($('#license_type_id').val());
-                    // }
-                    // if($('#license_type_id').val()==3){
-                    //     $('.license').append(bank);
-                    //     $('#bank').val($('#license_type_id').val());
-                    // }
-
-
-
-
-
+                     liArr.push(id);
+                }
             });
+
+
+
 
 
 
@@ -613,13 +469,31 @@ $(function () {
             })
 
 
+            $(document).on('click','#searchcom, .page-link',function(e){
+                e.preventDefault();
+                let searchformdata=$('#frmSearch').serialize();
+                $.ajax({
+                    url: $(this).attr('href'),
+                    data: searchformdata,
+                    success:function(response){
+                        $('#tbody1').html(response.success)
+
+                    }
+                })
+            })
 
 
-        })
 
 
+        });
 
+        function deleteLicense(id){
+            liArr = $.grep(liArr, function(value) {
+                        return value != id;
+                    });
+              $('#div'+id).remove();
 
+        }
     </script>
 
 

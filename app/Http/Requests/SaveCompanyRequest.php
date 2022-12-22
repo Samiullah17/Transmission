@@ -25,23 +25,11 @@ class SaveCompanyRequest extends FormRequest
     {
         return [
             'companyName'=>'required',
-            'compnayID'=>'required',
-            'licenseNumber'=>'required',
+            'license_type_id'=>'required',
             'company_type_id'=>'required',
             'company_active_type_id'=>'required',
             'companyManagerName'=>'required',
             'citizenship_id'=>'required',
-            'freQuantity'=>'required',
-            'agentName'=>'required',
-            'fName'=>'required',
-            'gFName'=>'required',
-            'NIC'=>'required',
-            'odistrict_id'=>'required',
-            'cdistrict_id'=>'required',
-            'cvillage'=>'required',
-            'ovillage'=>'required',
-            'phone'=>'required',
-
         ];
     }
 }

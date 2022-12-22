@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('style')
     <style>
@@ -25,6 +25,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
+                            <p>د {{ $company }} کمپنی/بنسټ د {{ $agent }} نماینده لخوا راوړل شوی غوښتنه/آرډر
+                                پروګرام کول</p>
+                            <input type="hidden" class="orders" value="{{ $order }}">
 
                             <div id="divprint" style="float: left;" class="card-title">
                                 <button value="{{ $order }}" data-toggle="modal" data-target="#modal-sm"
@@ -61,7 +64,7 @@
 
                                 <div class="form-group col-md-4  discountAmount d-none">
                                     <label>د تخفیف اندازه</label>
-                                    <input type="text" id="discountAmount" name="dicount" class="form-control input-sm"
+                                    <input type="number" id="discountAmount" name="dicount" class="form-control input-sm"
                                         placeholder="د تخفیف مقدار وارد کړی">
                                 </div>
 
@@ -77,8 +80,6 @@
 
 
                         </div>
-
-
 
                     </div>
 
@@ -109,7 +110,7 @@
                                         <td><span id="rateSpan{{ $item->id }}"
                                                 class="rate{{ $item->tid }}">{{ $item->rate }}</span></td>
                                         <td><button type="button" id="btn{{ $item->id }}" value="{{ $item->id }}"
-                                                class="btnpdone badge badge-info">پروګرام</button></td>
+                                                class="btnpdone btnpdone{{ $item->id }} badge badge-info">پروګرام</button></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -152,8 +153,7 @@
         $(document).on('click', '.btnpdone', function(e) {
             e.preventDefault();
             var value = $(this).val();
-            $(this).html('پروګرام شوه').removeClass('btnpdone').addClass('cls').addClass('badge-success')
-                .removeClass('badge-info badge-danger');
+
             // $(this).removeClass('btnpdone');
             // $('#btn'+value).addClass('cls');
             // $(this).addClass('text-primary').removeClass('text-danger');
@@ -161,6 +161,7 @@
             var data = {
                 'id': $(this).val(),
                 'status': 'pdone',
+                'order': $('.orders').val(),
             }
 
             $.ajax({
@@ -169,14 +170,20 @@
                 data: data,
                 dataType: "json",
                 success: function(response) {
-                    fireToastSuccess();
-                    console.log(response);
-                    $('#rateSpan' + value).html(response.rate);
-                    $('#rateSpan' + value).addClass('badge badge-success').removeClass('badge-danger');
+                    if (response.status == true) {
 
-                    // $('#rate' + id1).html(response.rate);
-                    // $('#status' + sid).html('پروګرام شوه');
-                    // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
+                        $('#btn'+value).html(response.message).removeClass('btnpdone badge-info badge-danger')
+                        .addClass('cls badge-success');
+                        fireToastSuccess();
+                        console.log(response);
+                        $('#rateSpan' + value).html(response.rate);
+                        $('#rateSpan' + value).addClass('badge badge-success').removeClass(
+                            'badge-danger');
+
+                    } else {
+                        swal('', response.message, 'error');
+                    }
+
                 }
             });
 
@@ -199,12 +206,10 @@
         $(document).on('click', '.cls', function(e) {
             e.preventDefault();
             var value = $(this).val();
-            $(this).html('ستونزه لری').removeClass('cls').addClass('btnpdone').removeClass(
-                'badge-success').addClass(
-                'badge-danger');
-            var data = {
+             var data = {
                 'id': $(this).val(),
                 'status': 'pnotdone',
+                'order': $('.orders').val(),
             }
 
             $.ajax({
@@ -213,13 +218,16 @@
                 data: data,
                 dataType: "json",
                 success: function(response) {
-                    // $('#rate' + id1).html(response.rate);
-                    $('#rateSpan' + value).html(response.rate);
-                    $('#rateSpan' + value).removeClass('badge-success').addClass('badge-danger');
-                    fireToastError();
+                     if (response.status == true) {
+                        $('#btn'+value).html(response.message).removeClass('cls badge-success').addClass('btnpdone badge-danger');
+                        $('#rateSpan' + value).html(response.rate);
+                        $('#rateSpan' + value).removeClass('badge-success').addClass('badge-danger');
+                        fireToastError();
+                    }
+                    else{
+                        swal('',response.message,'error');
+                    }
 
-                    // $('#status' + sid).html('پروګرام شوه');
-                    // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
                 }
             });
         })
@@ -241,25 +249,40 @@
 
         $(document).on('click', '#srate', function() {
 
+            let d = $('#discountAmount').val();
+            if (d > 0) {
 
-            var data = {
-                'tra': $('#transmission_type_id').val(),
-                'rate': $('#discountAmount').val(),
+                var data = {
+                    'tra': $('#transmission_type_id').val(),
+                    'rate': $('#discountAmount').val(),
+                    'order': $('.orders').val(),
+                }
+
+                let tid = $('#transmission_type_id').val();
+
+
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('transmission.rate') }}",
+                    data: data,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status == true) {
+                            $('.rate' + tid).html(response.rate);
+                            $('#discountAmount').val('');
+                            swal('', response.message, 'success');
+                        } else {
+                            swal('', response.message, 'error');
+                        }
+
+                    }
+                });
+
+            } else {
+                swal('', 'په مهربانی سره یو قیمت ورکړی مخابری ته او بیا کوښښ وکړی', 'error')
             }
 
-            let tid = $('#transmission_type_id').val();
 
-            $.ajax({
-                type: "get",
-                url: "{{ route('transmission.rate') }}",
-                data: data,
-                dataType: "json",
-                success: function(response) {
-                    console.log(response);
-                    $('.rate' + tid).html(response.rate);
-                    $('#discountAmount').val('');
-                }
-            });
 
 
         })
@@ -289,20 +312,27 @@
                 url: "{{ route('order.status') }}/" + id,
                 dataType: "json",
                 success: function(response) {
-                    // $('#rate' + id1).html(response.rate);
-                    console.log(response);
-                    $('.btnpdone').removeClass('btnpdone').addClass('done');
-                    $('.cls').removeClass('cls').addClass('done');
-                    $('.btnprint').removeClass('btnprint').addClass('done');
-                    $('.discount').removeClass('discount').addClass('done');
-                    $('#modal-sm').css('display', 'none');
-                    $('[data-dismiss="modal"]').click();
-                    swal("مسج", "مخابری په بریالیتوب سره پروګرام شوی!!!", "success");
+                     if (response.status == true) {
+                        $('.btnpdone').removeClass('btnpdone').addClass('done');
+                        $('.cls').removeClass('cls').addClass('done');
+                        $('.btnprint').removeClass('btnprint').addClass('done');
+                        $('.discount').removeClass('discount').addClass('done');
+                        $('#modal-sm').css('display', 'none');
+                        $('[data-dismiss="modal"]').click();
+                        swal("", response.message, "success");
+
+                    } else {
+                        swal('', response.message, 'error');
+                    }
+
 
 
 
                     // $('#status' + sid).html('پروګرام شوه');
                     // $('#status' + sid).attr('style', 'color:rgb(25,140,255)');
+                },
+                error: function(e) {
+                    swal('', 'د مخابرو پروګرام برخه کی مشکل موجود ده ', 'error');
                 }
             });
 
@@ -327,6 +357,5 @@
                 title: 'مخابری پرورګرام شوی تغیرات نشی پکی راوړلی!!!',
             })
         };
-
     </script>
 @endsection

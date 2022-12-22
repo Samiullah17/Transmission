@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('content')
     <div class="content-wrapper">
@@ -10,27 +10,28 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                 د {{ $cname }} کمپنی/بنسټ
+                                د {{ $cname }} کمپنی/بنسټ
                             </div>
                             <div class="card-title" id="ctitle">
 
+                                @if ($company->status == 1)
+                                    <a href="{{ route('order.program', $order) }}"
+                                        class="btn btn-primary btn-sm programOrdertow d-none">بیا ځلی پروګرام کول</a>
 
-                                <a href="{{ route('order.program',$order) }}"  class="btn btn-primary btn-sm programOrder d-none">پروګرام کول</a>
-
-
-                                <button type="button" id="addNewTransmission" data-toggle="modal"
-                                    data-target="#addTransmission" class="btn btn-primary btn-sm d-none">د نوی مخابری اضافه
-                                   کول</button>
-
+                                    <a href="{{ route('order.program', $order) }}"
+                                        class="btn btn-primary btn-sm programOrder d-none">پروګرام کول</a>
 
 
-                                <button type="button" id="printBill" value="{{ $order }}" class="btn btn-primary btn-sm d-none">بیل چاپ کول</button>
-
-
-
+                                    <button type="button" id="addNewTransmission" data-toggle="modal"
+                                        data-target="#addTransmission" class="btn btn-primary btn-sm d-none">د نوی مخابری
+                                        اضافه
+                                        کول</button>
 
 
 
+                                    <button type="button" id="printBill" value="{{ $order }}"
+                                        class="btn btn-primary btn-sm d-none">بیل چاپ کول</button>
+                                @endif
 
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
@@ -63,24 +64,25 @@
                                         <td>{{ $item->mname }}</td>
                                         <td>{{ $item->serialNo }}</td>
                                         <td>{{ $item->pname }}</td>
-                                        @if ($item->ostatus == 0)
-                                            <td><button type="button" id="btnEdit" value="{{ $item->id }}"
-                                                    class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"
-                                                    data-toggle="modal" data-target="#modal-xl"><i
-                                                        class="fas fa-edit"></i></button>
-                                                <button type="button" id="btnDelete1" value="{{ $item->id }}"
-                                                    class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button>
-                                            </td>
+                                        @if ($company->status == 1)
+                                            @if ($item->ostatus == 0)
+                                                <td><button type="button" id="btnEdit" value="{{ $item->id }}"
+                                                        class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"
+                                                        data-toggle="modal" data-target="#modal-xl"><i
+                                                            class="fas fa-edit"></i></button>
+                                                    <button type="button" id="btnDelete1" value="{{ $item->id }}"
+                                                        class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#modal-danger"><i
+                                                            class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            @endif
                                         @endif
+
                                         @if ($item->status == 0 && $item->ostatus == 1)
                                             <td><span class="badge badge-danger">ستونزه لری</span></td>
                                         @endif
                                         @if ($item->status == 1 && $item->ostatus == 1)
                                             <td><span class="badge badge-info">پروګرام شوی</span></td>
-                                        @endif
-                                        @if ($item->status == 0 && $item->ostatus == 0)
-                                            <td><span class="badge badge-info">د پروګرام په حال کی</span></td>
                                         @endif
                                     </tr>
                                 @endforeach
@@ -160,7 +162,8 @@
 
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">بندول</button>
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">بندول</button>
                                         <button type="submit" class="btn btn-primary">ذخیره کول</button>
                                         </form>
                                     </div>
@@ -283,20 +286,19 @@
 @endsection
 @section('script')
     <script>
-
-       addTransmission();
-
+        addTransmission();
 
 
-        function addTransmission(){
-            let tr=$('#btnEdit').val();
-            if(tr>0){
+
+        function addTransmission() {
+            let tr = $('#btnEdit').val();
+            if (tr > 0) {
                 $('.programOrder').removeClass('d-none');
                 $('#addNewTransmission').removeClass('d-none');
 
-            }
-            else{
+            } else {
                 $('#printBill').removeClass('d-none');
+                $('.programOrdertow').removeClass('d-none');
 
             }
         }
@@ -422,9 +424,10 @@
                             .mname + '</td><td>' + value.serialNo + '</td><td>' + value
                             .pname + '</td><td><button type="button" id="btnEdit" value="' +
                             value.id +
-                            '" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"  data-toggle="modal" data-target="#modal-xl">تغیر راوستل</button><button type="button" id="btnDelete" value="' +
+                            '" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"  data-toggle="modal" data-target="#modal-xl"><i class="fas fa-edit"></i></button><button type="button" id="btnDelete" value="' +
                             value.id +
-                            '" class="btn btn-danger btn-sm">حذف/پاکول</button></td></tr>');
+                            '" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td></tr>'
+                            );
                     });
 
                     console.log(response);
@@ -445,10 +448,20 @@
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(response) {
-                    $('#modal-xl').css('display', 'none');
-                    $('[data-dismiss="modal"]').click();
-                    $('#traEdit')[0].reset();
-                    show();
+                    console.log(response)
+                    if (response.status == true) {
+                        $('#modal-xl').css('display', 'none');
+                        $('[data-dismiss="modal"]').click();
+                        $('#traEdit')[0].reset();
+
+                        swal('',response.message,'success');
+                        show();
+                    }
+                    if(response.status== false){
+                        swal('',response.message,'error');
+                        show();
+                    }
+
 
                 }
             });
@@ -469,32 +482,33 @@
                         let tra = `<tr><td>` + response.tra.tname + `</td><td>` + response.tra.mname +
                             `</td><td>` + response.tra.serialNo + `</td>
                         <td>` + response.tra.pname +
-                            `</td><td><button type="button" id="btnEdit" value="`+response.tra.id+`"
+                            `</td><td><button type="button" id="btnEdit" value="` + response.tra.id + `"
                                                     class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"
                                                     data-toggle="modal" data-target="#modal-xl"><i
                                                         class="fas fa-edit"></i></button>
-                                                <button type="button" id="btnDelete1" value="`+response.tra.id+`"
+                                                <button type="button" id="btnDelete1" value="` + response.tra.id +
+                            `"
                                                     class="btn btn-danger btn-sm" data-toggle="modal"
                                                     data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button>
                                             </td><td><span class="badge badge-info">د پروګرام په حال کی</span></td></tr>`;
 
-                     $('#tbody').append(tra);
+                        $('#tbody').append(tra);
 
                     }
 
-                    if(response.order==1 && response.status == 0){
+                    if (response.order == 1 && response.status == 0) {
 
 
                         let tra = `<tr><td>` + response.tra.tname + `</td><td>` + response.tra.mname +
                             `</td><td>` + response.tra.serialNo + `</td>
                         <td>` + response.tra.pname +
                             `</td><td><span class="badge badge-danger">ستونزه لری</span></td></tr>`;
-                         $('#tbody').append(tra);
+                        $('#tbody').append(tra);
 
                     }
 
 
-                    if(response.order==1 && response.tra.status==1){
+                    if (response.order == 1 && response.tra.status == 1) {
 
                         let tra = `<tr><td>` + response.tra.tname + `</td><td>` + response.tra.mname +
                             `</td><td>` + response.tra.serialNo + `</td>
@@ -504,7 +518,7 @@
                         $('#tbody').append(tra);
                     }
 
-                    $('#addTransmission').css('display','none');
+                    $('#addTransmission').css('display', 'none');
                     $('[data-dismiss="modal"]').click();
                     $('#traAdd')[0].reset();
                     swal(response.message);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\agentValidation;
 use App\Models\Company;
 use App\Models\companyAgent;
 use App\Models\order;
@@ -21,73 +22,53 @@ class agentController extends Controller
     }
 
 
-    public function saveAgent(Request $request)
+    public function saveAgent(agentValidation $request)
     {
+        if ($request->ajax()) {
+            $agent = new companyAgent();
+            if($agent){
 
-        $agent = new companyAgent();
-        $agent->agentName = $request->agentName;
-        $agent->fName = $request->fName;
-        $agent->gFName = $request->gFName;
-        $agent->NIC = $request->NIC;
-        $agent->phone = $request->phone;
-        $agent->email = $request->email;
-        $agent->odistrict_id = $request->odistrict_id;
-        $agent->ovillage = $request->ovillage;
-        $agent->cdistrict_id = $request->cdistrict_id;
-        $agent->cvillage = $request->cvillage;
-        $agent->photo = $request->file('photo')->store(companyAgent::IMAGE_PATH);
-        $agent->company_id = $request->company_id;
+                $agent->agentName = $request->agentName;
+                $agent->fName = $request->fName;
+                $agent->gFName = $request->gFName;
+                $agent->NIC = $request->NIC;
+                $agent->phone = $request->phone;
+                $agent->email = $request->email;
+                $agent->odistrict_id = $request->odistrict_id;
+                $agent->ovillage = $request->ovillage;
+                $agent->cdistrict_id = $request->cdistrict_id;
+                $agent->cvillage = $request->cvillage;
+                $agent->photo = $request->file('photo')->store(companyAgent::IMAGE_PATH);
+                $agent->company_id = $request->company_id;
+                $agent->Save();
+                $nagent = companyAgent::find($agent->id);
+                return response()->json(['message' => 'د کمپنی نماینده په بریالیتوب سره ثبت شو!', 'nagent' => $nagent]);
+            }else{return response()->json(['message'=>'نماینده ذخیره نشو!']);}
 
-        // $image = ;
-        $agent->Save();
-        // 0789888620
-
-        $nagent=companyAgent::find($agent->id);
-
-
-        // $order=new order();
-        // $order->company_id = $request->company_id;
-        // $order->company_agent_id =$agent->id;
-        // $order->suggestion_file=$request->suggestion_file;
-        // $order->save();
-
-
-
-        $provence = provence::all();
-        $transmissionModel = transmissionModel::all();
-        $transmissionType = transmissionType::all();
-
-        return response()->json(['message' => 'د کمپنی نماینده په بریالیتوب سره ثبت شو!','nagent'=> $nagent]);
-        // return view('transmittion.add',compact('provence','transmissionModel','transmissionType','order'));
-
+        }else{return response()->json(['message'=>'نماینده ذخیره نشو یو ځلی بیا کوشش وکړی']);}
     }
 
 
     public function companyAgent($id)
     {
-        // dd($id);
-        // $agent1=Company::join('orders','companies.id','orders.company_id')
-        // ->join('company_agents','orders.company_agent_id','company_agents.id')->where('companies.id',$id)
-        // ->select('company_agents.*')->groupBy('orders.company_agent_id')->get();
-        // $agent = companyAgent::where('company_id', $id)->get();
-
+        if ($id != null) {
 
             $data =  companyAgent::where('company_id', $id)->get();
-            return Datatables::of($data)->addIndexColumn()
-                ->addColumn('action', function ($data) {
-                    $btn = '<a href="'.route('agent.cdetails',['id'=>$data->id]).'" class="btn btn-primary btn-sm">معلومات</a>';
-                    return $btn;
-                })
+            if ($data != null) {
 
-
-                ->rawColumns(['action'])
-                ->make(true);
-
-
-        return view('company.list');
-
-
-        // return response()->json(['agent' => $agent]);
+                return Datatables::of($data)->addIndexColumn()
+                    ->addColumn('action', function ($data) {
+                        $btn = '<a href="' . route('agent.cdetails', ['id' => $data->id]) . '" class="btn btn-primary btn-sm">معلومات</a>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            } else {
+                return  response()->json(['message' => 'نماینده نه لری!']);
+            }
+        } else {
+            return  response()->json(['message' => 'نماینده نه لری!']);
+        }
     }
 
     // public function details($id){
@@ -101,15 +82,15 @@ class agentController extends Controller
 
     public function cagent($id)
     {
+        if($id!=null){
+            $agent = companyAgent::find($id);
+            $order = companyAgent::where('id', $id)->first()->company_id;
+            if($agent!=null && $order!=null){
+                return response()->json(['agent' => $agent, 'route' => route('add.transmittion.id'), 'agent_id' => $agent->id, 'company_id' => $order,'status'=>true]);
+            }else{return response()->json(['message'=>'ستونز ده','status'=>false]);}
 
-        $agent = companyAgent::find($id);
-        // $order=order::where('company_agent_id',$id)->first()->company_id;
-        $order = companyAgent::where('id', $id)->first()->company_id;
-        return response()->json(['agent' => $agent, 'route' => route('add.transmittion.id'), 'agent_id' => $agent->id, 'company_id' => $order]);
-
-
-        // return response()->json(['agent'=>$agent, 'route'=>route('add.transmittion.id', ['id'=>$agent->id,'oId'=>$order])]);
-    }
+        }else{return response()->json(['message'=>'ستونزه ده','status'=>false]);}
+     }
 
 
 
@@ -124,10 +105,10 @@ class agentController extends Controller
             ->where('company_agents.id', $id)->first();
 
         $aname = companyAgent::find($id);
-        $curentAgent=companyAgent::join('districts as odistricts','company_agents.odistrict_id','odistricts.id')
-        ->join('districts as cdistricts', 'company_agents.cdistrict_id', 'cdistricts.id')
-        ->select('company_agents.*','odistricts.districtName as oname','cdistricts.districtName as cname')
-        ->where('company_agents.id',$id)->first();
+        $curentAgent = companyAgent::join('districts as odistricts', 'company_agents.odistrict_id', 'odistricts.id')
+            ->join('districts as cdistricts', 'company_agents.cdistrict_id', 'cdistricts.id')
+            ->select('company_agents.*', 'odistricts.districtName as oname', 'cdistricts.districtName as cname')
+            ->where('company_agents.id', $id)->first();
         // return $agent;
 
         $cmpId = companyAgent::where('id', $id)->first()->company_id;
@@ -169,7 +150,7 @@ class agentController extends Controller
 
 
 
-        return view('agent.details', compact('agent', 'cagent', 'transmissions', 'company', 'orders', 'aname','curentAgent'));
+        return view('agent.details', compact('agent', 'cagent', 'transmissions', 'company', 'orders', 'aname', 'curentAgent'));
     }
 
     public function traDetails(Request $request)
