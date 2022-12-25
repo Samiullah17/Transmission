@@ -6,9 +6,7 @@ use App\Http\Requests\RegistrationRightRequest;
 use App\Http\Requests\REgRightEditRequest;
 use App\Models\Company;
 use App\Models\RegistrationRight;
-use App\View\Components\RegistrationRightModalComponent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Morilog\Jalali\Jalalian;
 
 class RegistrationRightController extends Controller
@@ -20,7 +18,7 @@ class RegistrationRightController extends Controller
      */
     public function index()
     {
-        
+
     }
     public function OldRight($id)
     {
@@ -29,7 +27,7 @@ class RegistrationRightController extends Controller
           ->where('registration_rights.company_id',$id)->where('registration_rights.status',3)->get();
           return view('Registration.oldright',compact(['regRights','id']));
     }
-  
+
 
     /**
      * Show the form for creating a new resource.
@@ -80,13 +78,13 @@ class RegistrationRightController extends Controller
     {
 
 
-     
+
 
         $registrationRightss = RegistrationRight::Join('companies', 'registration_rights.company_id', 'companies.id')
             ->select('registration_rights.*', 'companies.companyName as cname', 'companies.id as cid')
             ->where('registration_rights.company_id', $id)->latest('id')->first();
-        
-      
+
+
         if ($registrationRightss && $registrationRightss->status == 0 && Jalalian::now()->format('Y-m-d') > Jalalian::fromFormat('Y-m-d', $registrationRightss->ExpireREg_year)->format('Y-m-d')) {
             $registrationRightss->status = 1;
             $registrationRightss->update();

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveCompanyRequest extends FormRequest
+class agentValidation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,17 @@ class SaveCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'companyName'=>'required',
-            'license_type_id'=>'required',
-            'company_type_id'=>'required',
-            'company_active_type_id'=>'required',
-            'companyManagerName'=>'required',
-            'citizenship_id'=>'required',
+            'agentName'=>'required',
+            'fName'=>'required',
+            'gFName'=>'required',
+            'NIC'=>'required',
+            'phone'=>'required',
+            'email'=>'required',
+            'odistrict_id'=>'required',
+            'ovillage'=>'required',
+            'cdistrict_id'=>'required',
+            'cvillage'=>'required',
+            'photo'=>'required',
         ];
     }
 }

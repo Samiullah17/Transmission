@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('content')
     <div class="content-wrapper">
@@ -38,13 +38,13 @@
                                 </thead>
                                 <tbody id="tbody">
                                     @foreach ($licenseExtensions as $item)
-                                       
+
                                         <tr style="text-align:center">
                                             <td>{{ $item->cname }}</td>
                                             <td>{{ $item->coming_date }}</td>
 
                                             <td>{{ $item->pname }}</td>
-                                            
+
                                             <td>{{ $item->frname }}</td>
 
                                             <td>{{ $item->licence_expiry_date }}</td>
@@ -60,33 +60,33 @@
                                                     data-target="#EditModal">
                                                     تمدید
                                                 </a>
-                                              
+
                                             </td>
                                             @endif
                                             @if ($item->status==1)
                                             <td>
                                                 <span class="badge badge-danger" style="height: 30px">غیر فعال</span>
                                             </td>
-                                          
+
                                             <td class="d-flex justify-content-between">
                                                 <a class="btn btn-danger" id="ComFineEXt" href="{{route('FineExt.company',$item->id)}}" data-toggle="modal"
                                                     data-target="#FineModal">
                                                     جریمه
                                                 </a>
-                                              
+
                                             </td>
                                             @endif
                                             @if ($item->status==2)
                                             <td>
                                                 <span class="badge badge-danger" style="height: 30px">غیر فعال جریمه شوی</span>
                                             </td>
-                                          
+
                                             <td class="d-flex justify-content-between">
                                                 <a class="btn btn-primary LicenseExtEdit" id="LicenseExtEdit" href="{{route('licenseExtEdit.company',$item->id)}}" data-toggle="modal"
                                                     data-target="#EditModal">
                                                     تمدید
                                                 </a>
-                                              
+
                                             </td>
                                             @endif
 
@@ -214,7 +214,7 @@
             <!-- /.modal-dialog -->
         </div>
         {{-- End of Company Registration Model --}}
-           
+
         {{-- starting of extension Edit modal --}}
         <div class="modal fade" id="EditModal">
             <div class="modal-dialog modal-xl">
@@ -329,7 +329,7 @@
             <!-- /.modal-dialog -->
         </div>
         {{-- End of Company Registration Edit Model --}}
-        
+
  {{-- starting of fine modal --}}
  <div class="modal fade" id="FineModal">
     <div class="modal-dialog modal-xl">
@@ -366,9 +366,9 @@
                                 <span id="1province" class="text text-danger" name="province" role="alert">
                                 </span>
                             </div>
-                            
-                               
-                           
+
+
+
                         </div>
                         <div class="col-lg-3">
                             {{-- <div class="form-group">
@@ -546,9 +546,9 @@
             $.ajax({
                 method:'Get',
                 url:$(this).attr('href'),
-               
+
                 success: function (response) {
-                    $.each(response.provinceID, function (key,item) { 
+                    $.each(response.provinceID, function (key,item) {
                         selectprovince(item.PID);
                         $('#finefrequency').val(item.freqNO);
                     });
@@ -556,17 +556,17 @@
                     selectFrequency(response.frequencyID);
                      $('#licenseextid').val(response.licextenId);
                     //alert(response.frequencyID);
-                  
+
                 }
             });
-           });  
+           });
            function  selectFrequency(FrequencyID) {
                 $('[name="finefrequency"] option[value="'+FrequencyID+'"]').prop('selected',true);
             }
             function  selectprovince(provinceID) {
                 $('[name="fineprovince"] option[value="'+provinceID+'"]').prop('selected',true);
             }
-           
+
             $(document).on('click', '[name="savelicenseExtension"]', function(e) {
                 e.preventDefault();``
                 licenseExtensionFormData = $("#licenseExtensionForm").serialize();
@@ -671,7 +671,7 @@
             $(document).on('click', '#deleteExt', function(e) {
                 e.preventDefault();
                 let mainThis = this;
-    
+
                 $.ajax({
                     method: "Delete",
                     url: $(this).attr('href'),
@@ -686,21 +686,21 @@
                      method:'Get',
                     url:$(this).attr('href'),
                     success: function (response) {
-                        $.each(response.provinceID, function (key,item) { 
+                        $.each(response.provinceID, function (key,item) {
                          selectExtEditprovince(item.PID);
                         $('#extEditfrequency').val(item.freqNO);
                     });
                        $('#extEditfrequencyid').val(response.frequencyID);
-                     
+
                      $('#licenseextEditid').val(response.licextenId);
                     //alert(response.frequencyID);
 
                     }
                 });
-                
+
             });
 
-            
+
             function  selectExtEditprovince(provinceID) {
                 $('[name="ExtEditprovince"] option[value="'+provinceID+'"]').prop('selected',true);
             }

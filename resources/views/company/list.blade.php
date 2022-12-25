@@ -1,75 +1,109 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('content')
+<style>
+    .error{
+        color:red;
+        font-size: 12px;
+    }
+</style>
     <div class="content-wrapper">
 
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <div class="card-tools">
-                                اضافی معلومات
-                            </div>
-                            <div class="card-title">
-                                <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
-                                    data-toggle="modal" data-target="#modal-xl">د نوی کمپنی اضافه کول</button>
-                                {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
-                            </div>
+                        <div class="card-title">
+                            <button type="button" style="float: left" class="btn btn-primary" data-mdb-ripple-color="dark"
+                            data-toggle="modal" data-target="#modal-xl">د نوی کمپنی اضافه کول</button>
+
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive ">
-                            <table class="table  table-hover  user_datatable ">
-                                <thead> 
-                                    <tr>
-                                        <th class="col-md-3" style="text-align: start">د کمپنی نوم</th>
-                                        <th class="col-md-3" style="text-align:  start">د فعالیت ډول</th>
-                                        <th class="col-md-2" style="text-align:  start">د موسسی/بنست ډول</th>
-                                        <th  class="col-md-2" style="text-align:  start">د ریس نوم</th>
-                                        <th class="col-md-2" style="text-align:  start">معلومات</th>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
 
+                                <form  id="frmSearch">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="">د کمپنی نوم</label>
+                                                <input type="text" name="company_name" placeholder="د کمپنی نوم" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>د فعالیت ډول</label>
+                                                <select name="company_active_type_id" id="company_type_id" class="form-control">
+                                                    <option selected >د کمپنی د فعالیت ډول انتخاب کړی</option>
+                                                    @foreach ($companyActiveType as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->companyName }}</option>
+
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>د بنسټ ډول</label>
+                                                <select name="company_type_id" id="company_type_id" class="form-control">
+                                                    <option selected >د کمپنی نوعه انتخاب کړی</option>
+                                                    @foreach ($companyType as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->companyTypeName }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>د ریس نوم</label>
+                                                <input type="text" name="ManagerName" placeholder="د ریس نوم ولیکی" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1">
+
+                                             <a href="{{ route('company.search') }}" id='searchcom' class="btn btn-success mt-4">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </form>
+
+
+
+
+
+                        </div>
+
+
+                        <!-- /.card-header -->
+                        <div class="card-body table-respone">
+                            <table class="table table-sm table-border table-striped ctable">
+
+                                <thead >
+
+                                    <tr>
+                                        <th style="text-align: start">د کمپنی نوم</th>
+                                        <th style="text-align: start">د فعالیت ډول</th>
+                                        <th style="text-align: start">د موسسی/بنست ډول</th>
+                                        <th style="text-align: start">د ریس نوم</th>
+                                        <th>حالت</th>
+                                         <th></th>
+                                        {{-- <th></th> --}}
                                     </tr>
                                 </thead>
-                                <tbody id="tbody">
-
-
-                                    {{-- @foreach ($companies as $company)
-
-                                    <tr>
-                                        <td>{{ $company->companyName }}</td>
-                                        <td>{{ $company->aname }}</td>
-                                        <td>{{ $company->tname }}</td>
-                                        <td>{{ $company->companyManagerName }}</td>
-                                        <td> <div class="input-group input-group-sm mb-3">
-                                            <div class="input-group-prepend">
-                                                <button type="button" class="btn btn-primary dropdown-toggle"
-                                                    data-toggle="dropdown">
-                                                    معلومات
-                                                </button>
-                                                <ul class="dropdown-menu"> 
-                                                    <li class="dropdown-item"><a href="#"><i
-                                                                class="bi bi-archive"></i>ویرایش</a></li>
-                                                    <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">تاریخچه</a></li>
-                                                    <li class="dropdown-item"><a href="{{ route('saveRight.company',$company->id) }}">حق ثبت</a></li>
-                                                    <li class="dropdown-item"><a href="{{ route('licence.company',$company->id) }}">تمدید</a></li>
-                                                    <li class="dropdown-item"><a href="{{ route('fine.company',$company->id) }}">جریمه</a></li>
-
-
-                                                    <li class="dropdown-item"><a href="#"
-                                                            class="text text-danger">حذف</a></li>
-                                                    <li class="dropdown-divider"></li>
-                                                </ul>
-                                            </div> --}}
-                                            <!-- /btn-group -->
-                                        {{-- </div></td>
-
-                                    </tr>
-
-                                    @endforeach
- --}}
-
-
+                                <tbody id="tbody1">
+                                      <x-company-search-component :companys="$companys"></x-company-search-component>
                                 </tbody>
                             </table>
                         </div>
@@ -456,107 +490,30 @@
 @endsection
 @section('script')
     <script>
-
-$(function () {
-    var table = $('.user_datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('users.index') }}",
-        columns: [
-            {data:'companyName'},
-            {data: 'aname'},
-            {data: 'tname'},
-            {data: 'companyManagerName'},
-            {data: 'action',
-            //   name:'action'
-            //   orderable:true,
-            //   searchable:true
-        },
-            // {data: 'action', name: 'action', orderable: false, searchable: false},
-        ],
-        language: {
-                    "emptyTable": "دیتا موجود نیست .",
-                   "lengthMenu": "نمایش _MENU_ معلومات",
-                    "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
-                    "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
-                    "search": "جستجو کردن : ",
-                    "sProcessing": "در حال اضافه نمودن معلومات...",
-                    "paginate": {
-                        "first": "اول",
-                        "last": "آخر",
-                        "next": "بعدی",
-                        "previous": "قبلی"
-                    },
-                },
-    });
-  });
-
-
+        var liArr = [];
         $(document).ready(function() {
 
 
-            function loadData(){
-
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('list.company') }}",
-                    dataType: "json",
-                    success: function(response) {
-                        console.log(response);
-                        // $("#exampleModal").modal("hide");
-                        // alert('samiullah it was successfuly added ');
-                        // $('#exampleModal').modal('hide');
-                        // $('#exampleModal').css('display', 'none');
-                        // $('[data-dismiss="modal"]').click();
-                        // $('#regForm')[0].reset();
-                    }
-                });
-
-            }
-
-
-            // $('#regForm').on('submit', function(e) {
-            //     e.preventDefault();
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "{{ route('save.company') }}",
-            //         data: $(this).serialize(),
-            //         dataType: "json",
-            //         success: function(response) {
-            //             // $("#exampleModal").modal("hide");
-            //             // alert('samiullah it was successfuly added ');
-            //             // $('#exampleModal').modal('hide');
-            //             $('#exampleModal').css('display', 'none');
-            //             $('[data-dismiss="modal"]').click();
-            //             $('#regForm')[0].reset();
-            //         }
-            //     });
-            // })
-
-
-
-
-            // $('#agentSave').on('submit', function(e) {
-            //     e.preventDefault();
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "{{ route('save.agent') }}",
-            //         data: $(this).serialize(),
-            //         dataType: "json",
-            //         success: function(response) {
-            //             // $("#exampleModal").modal("hide");
-            //             // alert('samiullah it was successfuly added ');
-            //             // $('#exampleModal').modal('hide');
-            //             $('#exampleModal').css('display', 'none');
-            //             $('[data-dismiss="modal"]').click();
-            //             $('#regForm')[0].reset();
-            //         }
-            //     });
-            // })
-
-
-
-
+            $('#companySave').validate({
+                rules:{
+                    companyName:"required",
+                    company_type_id:"required",
+                    company_active_type_id:"required",
+                    companyAddress:"required",
+                    companyManagerName:"required",
+                    citizenship_id:"required",
+                    license_type_id:"required",
+                },
+                messages:{
+                    companyName:"د کمپنی نوم ضروری ده",
+                    company_type_id:"د کمپنی/بنسټ ډول ضروری ده",
+                    company_active_type_id:"د کمپنی/بنسټ د فعالیت ډول انتخاب کړی",
+                    companyAddress:"د کمپنی آدرس ضروری ده",
+                    companyManagerName:"د کمپنی/بنسټ د ریس نوم داخل کړی",
+                    citizenship_id:"د ریس تابعیت انتخاب کړی",
+                    license_type_id:"لیګ تر لیګه د یوه د جواز مرجع انتخاب کړی",
+                }
+            })
 
             $(document).on('change','#citizenship_id',function(){
                 let ctId=$('#citizenship_id').val();
@@ -586,11 +543,17 @@ $(function () {
 
 
             $(document).on('change','#license_type_id',function(){
-
                 var id = $(this).val();
-                 var economical=`<div class="form-group col-md-3" id="div`+id+`">
-                    <button type="button" class="btn btn-sm btn-danger" onclick="$('#div`+id+`').remove()">Colse</button>
-                    <label>د اقتصاد وزارت جواز نمبر  </label>
+
+                if(liArr.includes(id)){
+                    swal('.','جواز اضافه شوی دوهم ځل یې نشی اضافه کولی','error');
+
+                }else{
+                    let name=$('#license_type_id :selected').text();
+
+                    var economical=`<div class="form-group col-md-3" id="div`+id+`">
+                    <button type="button" class="btn btn-sm" onclick="deleteLicense(`+id+`)"><i class="fas fa-window-close" style="color:red"></i></button>
+                    <label>د `+name+` جواز نمبر</label>
                     <input type="hidden" name="licenseTypeId[]" id="economical" value="`+id+`" class="form-control">
                     <input type="date" name="issueDate[]" id="issueDate" class="form-control">
                     <input type="text"  placeholder="د اقتصاد وزارت جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
@@ -599,51 +562,95 @@ $(function () {
                     `;
 
                     $('.license').append(economical);
-                    // $('#license_type_id').attr('disabled',true);
-                    // var mani=`<div class="form-group col-md-3">
-                    // <label>د شاروالی جواز نمبر  </label>
-                    // <input type="text" name="mani[]" id="mani" class="form-control">
-                    // <input type="text" placeholder="د شاروالی جواز نمبر ولیکی"  name="mani[]" class="form-control">
-                    // <input type="file" name="mani[]" id="maniId" class="form-control">
-                    //  </div>
-                    // `;
-
-
-                    // var bank=`<div class="form-group col-md-3">
-                    // <label>د بانک جواز نمبر  </label>
-                    // <input type="text" name="bank[]" id="bank" class="form-control">
-                    // <input type="text" placeholder="د افغانتسان بانک جواز نمبر ولیکی"  name="bank[]" class="form-control">
-                    // <input type="file" name="bank[]" id="bankId" class="form-control">
-                    //  </div>
-                    // `;
-                    // if($('#license_type_id').val()==1){
-
-                    //     $('.license').append(economical);
-                    //     $('#economical').val($('#license_type_id').val());
-
-                    // }
-
-                    // if($('#license_type_id').val()==2){
-
-                    //     $('.license').append(mani);
-                    //     $('#mani').val($('#license_type_id').val());
-                    // }
-                    // if($('#license_type_id').val()==3){
-                    //     $('.license').append(bank);
-                    //     $('#bank').val($('#license_type_id').val());
-                    // }
-
-
-
-
-
+                     liArr.push(id);
+                }
             });
 
 
 
 
-        })
 
 
+            $(document).on('click','#companyId',function(e){
+                $('#company_id').val($(this).val());
+                var id=$(this).val();
+                $('#adetails').html('');
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('company.agent') }}/"+id,
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                        $('#agent_id').html('');
+                        $('#agent_id').append('<option selected>د بنسټ نماینده انتخاب کړی</option>');
+
+                        $.each(response.agent, function(index, value) {
+                             $('#agent_id').append('<option value="'+value.id+'">'+value.agentName+'</option>');
+                           });
+                        // $("#exampleModal").modal("hide");
+                        // alert('samiullah it was successfuly added ');
+                        // $('#exampleModal').modal('hide');
+                        // $('#exampleModal').css('display', 'none');
+                        // $('[data-dismiss="modal"]').click();
+                        // $('#regForm')[0].reset();
+                    }
+                });
+
+            })
+
+
+
+
+            $(document).on('change','#agent_id',function(){
+                var id=$(this).val();
+
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('agent.details') }}/"+id,
+                    dataType: "json",
+                    success: function(response) {
+                        $('.table-agent').removeClass('d-none');
+                             $('#adetails').html('');
+                             console.log(response);
+                        // $.each(response.agent, function(index, value) {
+                             $('#adetails').html('<tr><td>'+response.agent.agentName+'</td><td>'+response.agent.fName+'</td><td>'+response.agent.NIC+'</td><td>'+response.agent.NIC+'</td><td><form method="POST" id="frmSugest" action="'+response.route+'">@csrf<input type="hidden" name="agent_id" value="'+response.agent_id+'"><input type="hidden" name="company_id" value="'+response.company_id+'"><div class="form-inline"><lable>پشنهادی فایل</lable><input type="file" name="suggestion_file" class="form-control"><input type="submit" value="ثبت" class="btn btn-primary"></div></form></tr>');
+                        //    });
+                        // $("#exampleModal").modal("hide");
+                        // alert('samiullah it was successfuly added ');
+                        // $('#exampleModal').modal('hide');
+                        // $('#exampleModal').css('display', 'none');
+                        // $('[data-dismiss="modal"]').click();
+                        // $('#regForm')[0].reset();
+                    }
+                });
+
+            })
+
+
+            $(document).on('click','#searchcom, .page-link',function(e){
+                e.preventDefault();
+                let searchformdata=$('#frmSearch').serialize();
+                $.ajax({
+                    url: $(this).attr('href'),
+                    data: searchformdata,
+                    success:function(response){
+                        $('#tbody1').html(response.success)
+
+                    }
+                })
+            })
+
+
+        });
+
+        function deleteLicense(id){
+            liArr = $.grep(liArr, function(value) {
+                        return value != id;
+                    });
+              $('#div'+id).remove();
+
+        }
     </script>
 @endsection

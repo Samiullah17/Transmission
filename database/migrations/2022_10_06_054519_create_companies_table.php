@@ -32,8 +32,8 @@ return new class extends Migration
             $table->string('companyAddress');
             $table->float('latitude')->nullable();
             $table->float('longtitude')->nullable();
+            $table->integer('status')->default(1);
             $table->string('created_at')->nullable();
-
             $table->string('updated_at')->nullable();
         });
     }

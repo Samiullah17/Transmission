@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 @section('style')
 @endsection
 <style>
@@ -58,9 +58,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    
+
                                     @foreach ($registrationRights as $item)
-                                   
+
                                         <tr style="text-align:center">
                                             <td>{{ $item->cname }}</td>
                                             <td>{{ $item->reg_year }}</td>
@@ -87,7 +87,7 @@
                                             @if ($item->status == 1)
                                                 <td>
                                                     <span class="badge badge-danger" style="height: 30px">غیر فعال</span>
-                                                </td>`="d-flex justify-content-between">
+                                                </td><td class="d-flex justify-content-between">
                                                     {{-- data-mdb-ripple-color="dark"
                                                         data-toggle="modal" data-target="#modal-x2" --}}
                                                     <a class="btn btn-primary" id="RegRightEdit"
@@ -105,7 +105,7 @@
 
 
                                         </tr>
-                                        
+
                                     @endforeach
 
 
@@ -169,10 +169,10 @@
                                         <span id="1financetDate" name="financetDate" class="text-danger mdl"></span>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="row">
-                                
+
 
                                 <div class="col-lg-3">
                                     <div class="form-group">
@@ -215,10 +215,10 @@
                                         </span>
                                     </div>
                                 </div>
-                               
+
                             </div>
                             <div class="row">
-                               
+
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for=""> بانک نوم</label>
@@ -311,7 +311,7 @@
                                         <span id="1financetDate" name="financetDate " class="text-danger mdl"></span>
                                     </div>
                                 </div>
-                               
+
                             </div>
                             <div class="row">
                                 <div class="col-lg-3">
@@ -342,7 +342,7 @@
                                 <div class="col-lg-3 col-6">
                                     <div class="form-group">
                                         <label for="startDate">د تعرفه نیټه : </label>
-                                        <input type="text" class="form-scontrol date" id="reciptDate"
+                                        <input type="text" class="form-control date" id="reciptDate"
                                             name="recipttDate">
                                         <span id="1recipttDate" name="recipttDate" class="text-danger mdl"></span>
                                     </div>
@@ -359,7 +359,7 @@
                                     </div>
                                 </div>
 
-                              
+
 
                             </div>
                             <div class="row">

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('content')
     <div class="content-wrapper">
@@ -452,7 +452,7 @@ $(function () {
     var table = $('.findata-table').DataTable({
         processing: true,
         serverSide: true,
-        
+
         ajax: "{{ route('fine.show',$id) }}",
         columns: [
             {data:'cname'},
@@ -463,7 +463,7 @@ $(function () {
             {data:'finance_fine_number'},
             {data:'finace_fine_date'},
             {data:'fine_bill_number'},
-            
+
             {data:'fine_recipt_number'},
             {data:'fine_recipt_date'},
             {data:'bank'},

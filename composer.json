@@ -15,12 +15,14 @@
         "laravel/ui": "^3.4",
         "morilog/jalali": "3.*",
         "nesbot/carbon": "^2.63",
+        "realrashid/sweet-alert": "^5.1",
         "spatie/laravel-permission": "^5.7",
         "yajra/laravel-datatables": "1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "laravel/breeze": "^1.10",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
@@ -55,7 +57,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/dusk"
+            ]
         }
     },
     "config": {
@@ -63,6 +67,7 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
+  
     "minimum-stability": "dev",
     "prefer-stable": true
 }

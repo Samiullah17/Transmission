@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('content')
     <div class="content-wrapper">
@@ -13,7 +13,7 @@
                                 <input type="hidden" value="{{ $aname->id }}" id="agentId">
                               </div>
                             <div class="card-title">
-
+                                     {{-- <a href="{{ Storage::url($curentAgent->photo) }}">kdfjdkjf</a> --}}
 
 
 {{--
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped table-bordred table-hover">
                             <thead>
                                 <th>د نماینده نوم</th>
@@ -40,6 +40,7 @@
                                 <th>اصلی کلی</th>
                                 <th>اوسنی ولسوالی</th>
                                 <th>اوسنی کلی</th>
+                                <th>عکس</th>
 
 
                             </thead>
@@ -57,6 +58,7 @@
                                     <td>{{ $curentAgent->ovillage }}</td>
                                     <td>{{ $curentAgent->cname }}</td>
                                     <td>{{ $curentAgent->cvillage }}</td>
+                                    <td><img width="70px" height="80px" src="{{ Storage::url($curentAgent->photo) }}" alt=""></td>
                                 </tr>
 
 
@@ -95,7 +97,8 @@
                                      @if ($order->status==0)
 
                                      <td><a href="{{ route('order.transmission',$order->order) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                     <button type="button" class="btn btn-danger" data-toggle="modal"data-target="#modal-danger"><i class="fas fa-trash-alt"></button></td>
+                                     @if($company->status==1)
+                                     <button type="button" class="btn btn-danger" data-toggle="modal"data-target="#modal-danger"><i class="fas fa-trash-alt"></button>@endif</td>
                                      @endif
                                 </tr>
 
@@ -133,23 +136,6 @@
                 </div>
                 <!-- /.card -->
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </div>
 

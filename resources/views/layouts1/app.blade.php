@@ -1,16 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Laravel</title>
 
     <!-- Fonts -->
     {{-- <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"> --}}
     {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"> --}}
     {{-- <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
+
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{asset('persiandtpicker/bootstrap-datepicker.min.css')}}">
@@ -338,18 +341,33 @@
     <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/bootstrap-4-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="{{ asset('alert/bootstrap-4.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('alert/toastr.min.css') }}"> --}}
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('persiandtpicker/bootstrap-datepicker.min.css')}}">
+   <link rel="stylesheet" href="{{ asset('alert/bootstrap-4.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('alert/toastr.min.css') }}">
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Google Font: Source Sans Pro -->
     {{-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> --}}
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"> --}}
 
+    <!-- Theme style -->
+
+
+
+
+    <!-- Google Font: Source Sans Pro -->
 </head>
 
-            <!-- Page Heading -->
-
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        @include('layouts1.header')
+        @include('layouts1.sidebar')
 
         @yield('content')
-{{-- 
-        @include('layouts.footer') --}}
+
+        @include('layouts1.footer')
 
     </div>
 
@@ -368,7 +386,25 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
 </body>
 
 
 </html>
+

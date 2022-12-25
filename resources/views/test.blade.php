@@ -1,34 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AdminLTE 3 | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
     <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css?v=3.2.0">
-    {{-- <script nonce="aded8121-193a-42a9-8d15-79d14de98dc9">(function(w,d){!function(eK,eL,eM,eN){eK.zarazData=eK.zarazData||{};eK.zarazData.executed=[];eK.zaraz={deferred:[],listeners:[]};eK.zaraz.q=[];eK.zaraz._f=function(eO){return function(){var eP=Array.prototype.slice.call(arguments);eK.zaraz.q.push({m:eO,a:eP})}};for(const eQ of["track","set","debug"])eK.zaraz[eQ]=eK.zaraz._f(eQ);eK.zaraz.init=()=>{var eR=eL.getElementsByTagName(eN)[0],eS=eL.createElement(eN),eT=eL.getElementsByTagName("title")[0];eT&&(eK.zarazData.t=eL.getElementsByTagName("title")[0].text);eK.zarazData.x=Math.random();eK.zarazData.w=eK.screen.width;eK.zarazData.h=eK.screen.height;eK.zarazData.j=eK.innerHeight;eK.zarazData.e=eK.innerWidth;eK.zarazData.l=eK.location.href;eK.zarazData.r=eL.referrer;eK.zarazData.k=eK.screen.colorDepth;eK.zarazData.n=eL.characterSet;eK.zarazData.o=(new Date).getTimezoneOffset();if(eK.dataLayer)for(const eX of Object.entries(Object.entries(dataLayer).reduce(((eY,eZ)=>({...eY[1],...eZ[1]})))))zaraz.set(eX[0],eX[1],{scope:"page"});eK.zarazData.q=[];for(;eK.zaraz.q.length;){const e_=eK.zaraz.q.shift();eK.zarazData.q.push(e_)}eS.defer=!0;for(const fa of[localStorage,sessionStorage])Object.keys(fa||{}).filter((fc=>fc.startsWith("_zaraz_"))).forEach((fb=>{try{eK.zarazData["z_"+fb.slice(7)]=JSON.parse(fa.getItem(fb))}catch{eK.zarazData["z_"+fb.slice(7)]=fa.getItem(fb)}}));eS.referrerPolicy="origin";eS.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(eK.zarazData)));eR.parentNode.insertBefore(eS,eR)};["complete","interactive"].includes(eL.readyState)?zaraz.init():eK.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,0,"script");})(window,document);</script></head> --}}
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
 
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Admin</b>LTE</a>
+             د مخابرو د پروګرام عمومی سیستم
         </div>
-
+        <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="{{route('login')}}" method="post">
+                <p class="login-box-msg">ایمیل آدرس او پاسورد مو ولیکی او سیستم ته داخل شی</p>
+
+                <form action="{{ route('login') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="email" name='email' class="form-control" placeholder="Email">
+                        <input type="email" name="email" class="form-control" placeholder="ایمیل آدرس مو ولیکی">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -36,7 +41,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name='password' class="form-control" placeholder="Password">
+                        <input type="password" name="password" class="form-control" placeholder="پټ نوم/پاسورډ">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -48,36 +53,30 @@
                             <div class="icheck-primary">
                                 <input type="checkbox" id="remember">
                                 <label for="remember">
-                                    Remember Me
+                                    پاسورډ ذخیره شی
                                 </label>
                             </div>
                         </div>
-
+                        <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">ننوتل</button>
                         </div>
-
+                        <!-- /.col -->
                     </div>
                 </form>
- 
+                <!-- /.social-auth-links -->
 
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
-                <p class="mb-0">
-                    <a href="register.html" class="text-center">Register a new membership</a>
-                </p>
             </div>
-
+            <!-- /.login-card-body -->
         </div>
     </div>
+    <!-- /.login-box -->
 
-
+    <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
-
+    <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="../../dist/js/adminlte.min.js?v=3.2.0"></script>
 </body>
 
 </html>

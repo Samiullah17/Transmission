@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 @section('style')
 @endsection
 <style>
@@ -15,14 +15,14 @@
                         <div class="card-tools">
                             د پخوانیو حق الثبتونو  معلومات
                         </div>
-                        
+
                         <div class="card-title">
-                            <a type="button" id="OldRight"  href="{{ route('saveRight.company',$id)}}" class="btn btn-primary">  
+                            <a type="button" id="OldRight"  href="{{ route('saveRight.company',$id)}}" class="btn btn-primary">
                                   شاتګ </a>
                             {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
                         </div>
-                        
+
 
                     </div>
                     <!-- /.card-header -->
@@ -43,14 +43,14 @@
                                     <th>د تعرفه سکن</th>
                                     <th>حالت</th>
 
-                               
+
 
                                 </tr>
                             </thead>
                             <tbody id="tbody">
-                                
+
                                 @foreach ($regRights as $item)
-                               
+
                                     <tr style="text-align:center">
                                         <td>{{ $item->cname }}</td>
                                         <td>{{ $item->reg_year }}</td>
@@ -71,13 +71,13 @@
                                             <td>
                                                 <span class="badge badge-danger" style="height: 30px">غیر فعال</span>
                                             </td>
-                                           
-                                        
+
+
 
 
 
                                     </tr>
-                                    
+
                                 @endforeach
 
 

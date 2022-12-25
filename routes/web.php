@@ -7,10 +7,11 @@ use App\Http\Controllers\CompanyFineController;
 use App\Http\Controllers\LicenseExtensionController;
 use App\Http\Controllers\permissionController;
 use App\Http\Controllers\RegistrationRightController;
-use App\Http\Controllers\roleController;
+use App\Http\Controllers\roleController;use App\Http\Controllers\orderController;
 use App\Models\RegistrationRight;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Finder;
+use App\Http\Controllers\transmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,18 +23,22 @@ use Symfony\Component\Finder\Finder;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
-    return view('test');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
     return view('welcome');
 })->middleware(['auth'])->name('dashboard');
+
+
 require __DIR__ . '/auth.php';
 
-Route::middleware('auth')->group(function () {
-   
-    Route::get('add/company', [companyController::class, 'addCompany'])->name('add.company')->middleware('role:admin');
+
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('add/company', [companyController::class, 'addCompany'])->name('add.company');
     Route::post('save/company', [companyController::class, 'saveCompnay'])->name('save.company');
     Route::post('save/company1', [companyController::class, 'saveCompany1'])->name('save.company1');
 
@@ -46,12 +51,14 @@ Route::middleware('auth')->group(function () {
     Route::get('ad/trasmission/{id?}/{cid?}', [companyController::class, 'addTransmission0'])->name('add.transmittion0');
 
     Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
+    Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
 
-    Route::get('comopanies/orders', [transmissionController::class, 'listTransmission'])->name('companies.orders');
-    Route::get('list/transmission', function () {
-        return view('transmittion.list');
-    })->name('list.transmission');
-    Route::get('company/transmission/{id?}', [companyController::class, 'companyTransmission'])->name('company.transmission');
+        Route::get('comopanies/orders',  [transmissionController::class,  'listTransmission'])->name('companies.orders');
+        Route::get('list/transmission',  function  ()  {
+            return view('transmittion.list');
+        })->name('list.transmission');
+        Route::get('company/transmission/{id?}',  [companyController::class,  'companyTransmission'])->name('company.transmission');
+    Route::get('company/search',[companyController::class,'Search'])->name('company.search');
 
     Route::get('company/agent/{id?}', [agentController::class, 'companyAgent'])->name('company.agent');
     Route::get('agent/details/{id?}', [agentController::class, 'cagent'])->name('agent.details');
@@ -74,14 +81,21 @@ Route::middleware('auth')->group(function () {
     Route::get('EditlicenseExtension/company/{id}', [LicenseExtensionController::class, 'update'])->name('EditlicenseExtension.company');
     Route::get('oldlicenseExt/company/{id}', [LicenseExtensionController::class, 'index'])->name('oldlicenseExt.company');
 
-    Route::get('fine/company/{id}', [CompanyFineController::class, 'show'])->name('fine.company');
-    Route::get('fine/show/{id}', [CompanyFineController::class, 'show1'])->name('fine.show');
+        Route::get('fine/company/{id}', [CompanyFineController::class, 'show'])->name('fine.company');
+    Route::get('fine/show/{id}',  [CompanyFineController::class,  'show1'])->name('fine.show');
     Route::delete('delteFine/company/{id}', [CompanyFineController::class, 'destroy'])->name('delteFine.company');
     Route::PUT('UpdateFine/company/{id}', [CompanyFineController::class, 'update'])->name('UpdateFine.company');
-    Route::get('EditFine/company/{id}', [CompanyFineController::class, 'edit'])->name('EditFine.company');
+       Route::get('EditFine/company/{id}',  [CompanyFineController::class,  'edit'])->name('EditFine.company');
     Route::get('edit/company{id}', [companyController::class, 'edit'])->name('edit.company');
 
-    Route::post('company/{id}')->name('order.create');
+    Route::get('list/company', [companyController::class, 'index'])->name('list.company');
+    Route::get('details/company/{id}', [companyController::class, 'details'])->name('details.company');
+    Route::get('edit/company{id}', [companyController::class, 'edit12'])->name('edit.company');
+    Route::get('company/edit/{id}', [companyController::class, 'edit'])->name('company.edit');
+    Route::post('update/company', [companyController::class, 'update'])->name('update.company');
+    Route::get('deactive/company/{id}', [companyController::class, 'DeActive'])->name('company.deactive');
+    Route::get('active/company/{id}', [companyController::class, 'active'])->name('company.active');
+    // Route::post('company/{id}')->name('order.create');
     Route::post('license/add', [companyController::class, 'addLicense'])->name('add.license');
     Route::get('license/edit/{id}', [companyController::class, 'editLicense'])->name('license.edit');
     Route::post('license/update', [companyController::class, 'updateLicese'])->name('license.update');
@@ -104,7 +118,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('company/agents/{id}', [agentController::class, 'companyAgent'])->name('list.cagent');
     Route::post('save/agents', [agentController::class, 'saveAgent'])->name('save.agentd');
-    Route::get('order/status/{id?}', [companyController::class, 'orderStatus'])->name('order.status');
+    Route::get('order/status/{id?}', [orderController::class, 'orderStatus'])->name('order.status');
     Route::get('get/country', [companyController::class, 'getCountry'])->name('get.country');
     Route::get('load/agent/{id}', [agentController::class, 'loadAgent'])->name('loade.agent');
 
@@ -113,13 +127,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('users/index', [companyController::class, 'index1'])->name('users.index');
 
+    Route::get('add/order/{id}', [orderController::class, 'createOrder'])->name('add.order');
     Route::get('show/orders/{id?}', [orderController::class, 'getOrder'])->name('company.orders');
     Route::get('orders/program/{id?}', [orderController::class, 'program'])->name('order.program');
-    Route::middleware('role:admin')->group(function(){
-        Route::get('role/index',[roleController::class,'index'])->name('role.index');
-        Route::get('permission/index',[permissionController::class,'index'])->name('permission.index');
+    Route::get('test',function(){
+        return view('test');
     });
-    
-
-   
 });

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts1.app')
 
 @section('content')
     <div class="content-wrapper">
@@ -29,32 +29,32 @@
                                         <th>د تمدید مکتوب ګڼه </th>
                                         <th>د تمدید مکتوب نیټه </th>
                                         <th>حالت</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
                                     @foreach ($licenseExtensions as $item)
-                                       
+
                                         <tr style="text-align:center">
                                             <td>{{ $item->cname }}</td>
                                             <td>{{ $item->coming_date }}</td>
 
                                             <td>{{ $item->pname }}</td>
-                                            
+
                                             <td>{{ $item->frname }}</td>
 
                                             <td>{{ $item->licence_expiry_date }}</td>
                                             <td>{{ $item->valid_upto }}</td>
                                             <td>{{ $item->extension_doc_number }}</td>
                                             <td>{{ $item->extension_doc_date }}</td>
-                                       
+
                                             <td>
                                                 <span class="badge badge-danger" style="height: 30px">غیرفعال</span>
                                             </td>
-                                           
-                                        
-                                        
-                                         
+
+
+
+
 
                                         </tr>
                                     @endforeach
@@ -74,9 +74,9 @@
             </div>
         </div>
 
-     
-           
-    
+
+
+
 
 
     </div>
