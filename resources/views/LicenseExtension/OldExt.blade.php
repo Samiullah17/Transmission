@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                د تمدید برخه
+                                د پخوانیو تمدید برخه
                             </div>
                             <div class="card-title">
                                     <a type="button" id="oldlicenseExt" href="{{ route('licence.company',$id)}}" class="btn btn-primary">شاتګ</a>

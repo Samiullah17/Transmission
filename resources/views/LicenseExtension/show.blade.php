@@ -597,8 +597,8 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        alert('success');
-                        //window.location.replace(response.success);
+                        // alert('success');
+                        window.location.replace(response.success);
                     },
                     error: function(response, error) {
                         displayRegRightError(response.responseJSON.errors);
