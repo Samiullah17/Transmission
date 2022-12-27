@@ -250,7 +250,7 @@
         $(document).on('click', '#srate', function() {
 
             let d = $('#discountAmount').val();
-            if (d > 0) {
+            if (d) {
 
                 var data = {
                     'tra': $('#transmission_type_id').val(),
@@ -278,8 +278,6 @@
                     }
                 });
 
-            } else {
-                swal('', 'په مهربانی سره یو قیمت ورکړی مخابری ته او بیا کوښښ وکړی', 'error')
             }
 
 

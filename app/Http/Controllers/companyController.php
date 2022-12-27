@@ -137,62 +137,6 @@ class companyController extends Controller
         }
 
         return redirect()->back();
-
-
-
-
-        // $agent=new companyAgent();
-        // $agent->agentName=$request->agentName;
-        // $agent->fName=$request->fName;
-        // $agent->gFName=$request->gFName;
-        // $agent->NIC=$request->NIC;
-        // $agent->phone=$request->phone;
-        // $agent->email=$request->email;
-        // $agent->company_id =$company->id;
-        // $agent->odistrict_id=$request->odistrict_id;
-        // $agent->ovillage=$request->ovillage;
-        // $agent->cdistrict_id=$request->cdistrict_id;
-        // $agent->cvillage=$request->cvillage;
-        // $agent->Save();
-
-
-
-        // for($x=0; $x<count($request->frqNo); $x++){
-
-        //  $order=new order();
-        // $order->company_id=$company->id;
-        // $order->company_agent_id =$agent->id;
-        // $order->frqNo=$request->frqNo[$x];
-        // $order->freQuantity=$request->freQuantity;
-        // $order->save();
-
-        // }
-
-
-
-
-
-        // for($i=0;$i<count($request->transmission_type_id);$i++){
-        //     $transmission=new transmission();
-        //     $transmission->transmission_type_id  =$request->transmission_type_id[$i];
-        //     $transmission->transmission_model_id =$request->transmission_model_id[$i];
-        //     $transmission->provence_id= $request->provence_id[$i];
-        //     $transmission->serialNo=$request->serialNo[$i];
-        //     $transmission->order_id = $order->id;
-        //     $transmission->save();
-        //  }
-
-
-
-
-
-
-        // return response()->json([
-        //     'message' => 'company Added Successfuly ',
-        // ]);
-        // return response()->json(['data'=>$request->all()]);
-
-
     }
 
 
@@ -285,21 +229,12 @@ class companyController extends Controller
                 $transmission->serialNo = $request->serialNo[$key];
                 $transmission->order_id = $order->id;
                 $transmission->provence_id = $request->provence_id[$key];
-                $transmission->status = 1;
+                $transmission->status = 0;
                 $transmission->save();
 
             }
 
-            // for ($i = 0; $i < count($request->transmission_type_id); $i++) {
-            //     $transmission = new transmission();
-            //     $transmission->transmission_type_id  = $request->transmission_type_id[$i];
-            //     $transmission->transmission_model_id = $request->transmission_model_id[$i];
-            //     $transmission->serialNo = $request->serialNo[$i];
-            //     $transmission->order_id = $order->id;
-            //     $transmission->provence_id = $request->provence_id[$i];
-            //     $transmission->status = 1;
-            //     $transmission->save();
-            // }
+
 
 
 
@@ -314,14 +249,6 @@ class companyController extends Controller
                     $frequencey->save();
                 }
             }
-            // for ($i = 0; $i < count($request->freqNumber); $i++) {
-            //     $frequencey = new frequencey();
-            //     $frequencey->frequenceyNo = $request->freqNumber[$i];
-            //     $frequencey->autraLicenceNo = $request->afile[$i];
-            //     $frequencey->provence_id = $request->fprovence[$i];
-            //     $frequencey->order_id = $order->id;
-            //     $frequencey->save();
-            // }
 
 
 
@@ -417,6 +344,18 @@ class companyController extends Controller
         'transmission_models.transmissionModelName as mname',
        'provences.provenceName as pname','transmissions.serialNo as sname')->where('companies.id',$id)->get();
 
+    }
+
+    public function edit($id){
+         if($id!=null){
+            $company=company::find($id);
+            $companyType=companyType::all();
+            $companyActiveType=companyActiveType::all();
+            $citizenships=citizenship::all();
+            $countries=country::all();
+            $cid=$company->country_id;
+            return response()->json(['cid'=>$cid,'countries'=>$countries,'citizenships'=>$citizenships,'company'=>$company,'companyType'=>$companyType,'companyActiveType'=>$companyActiveType]);
+         }
     }
 
     public function update(Request $request)
@@ -560,5 +499,10 @@ class companyController extends Controller
     {
         $companysearchcomponet = new companySearchComponent($companys);
         return $companysearchcomponet->resolveView()->render();
+    }
+
+    public function getCountry(){
+        $country=country::all();
+        return response()->json(['country'=>$country]);
     }
 }

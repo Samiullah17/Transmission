@@ -15,7 +15,7 @@
                             <div class="card-title" id="ctitle">
 
                                 @if ($company->status == 1)
-                                    <a href="{{ route('order.program', $order) }}"
+                                    <a href="{{ route('order.programAgain', $order) }}"
                                         class="btn btn-primary btn-sm programOrdertow d-none">بیا ځلی پروګرام کول</a>
 
                                     <a href="{{ route('order.program', $order) }}"
@@ -33,9 +33,6 @@
                                         class="btn btn-primary btn-sm d-none">بیل چاپ کول</button>
                                 @endif
 
-                                {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
-
-
 
                             </div>
                         </div>
@@ -43,7 +40,7 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
 
-                        <input type="hidden" id="order" name="order" value="{{ $order }}">
+                        <input type="text" id="order" name="order" value="{{ $order }}">
 
 
                         <table class="table table-striped table-hover table-bordred">
@@ -132,6 +129,7 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
+                                                <input type="hidden" name="order" value="{{ $order }}" class="form-control">
                                                 <input type="hidden" name="transmission_id" id="tra_id"
                                                     class="form-control">
                                                 <div class="form-group col-md-3">
@@ -319,21 +317,31 @@
                 data: data,
                 dataType: "json",
                 success: function(response) {
-                    $('#tbody').html('');
+                    if (response.status == true) {
 
-                    $.each(response.data, function(index, value) {
-                        $('#tbody').append('<tr><td>' + value.tname + '</td><td>' + value
-                            .mname + '</td><td>' + value.serialNo + '</td><td>' + value
-                            .pname + '</td><td><button type="button" id="btnEdit" value="' +
-                            value.id +
-                            '" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"  data-toggle="modal" data-target="#modal-xl"><i class="fas fa-edit"></i></button><button type="button" id="btnDelete1" value="' +
-                            value.id +
-                            '" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button></td></tr>'
-                        );
-                    });
-                    $('#modal-danger').css('display', 'none');
-                    $('[data-dismiss="modal"]').click();
-                    console.log(response);
+                        $('#tbody').html('');
+
+                        $.each(response.data, function(index, value) {
+                            $('#tbody').append('<tr><td>' + value.tname + '</td><td>' + value
+                                .mname + '</td><td>' + value.serialNo + '</td><td>' + value
+                                .pname +
+                                '</td><td><button type="button" id="btnEdit" value="' +
+                                value.id +
+                                '" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"  data-toggle="modal" data-target="#modal-xl"><i class="fas fa-edit"></i></button><button type="button" id="btnDelete1" value="' +
+                                value.id +
+                                '" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button></td></tr>'
+                            );
+                        });
+                        $('#modal-danger').css('display', 'none');
+                        $('[data-dismiss="modal"]').click();
+                        swal('', response.message, 'success');
+
+                    } else {
+                        swal('', response.message, 'error');
+                        $('#modal-danger').css('display', 'none');
+                        $('[data-dismiss="modal"]').click();
+                    }
+
                 }
             });
 
@@ -344,6 +352,7 @@
         $(document).on('click', '#btnEdit', function() {
             var data = {
                 'id': $(this).val(),
+                'order': $('#order').val(),
             }
 
             $('#tra_id').val($(this).val());
@@ -355,49 +364,53 @@
                 data: data,
                 dataType: "json",
                 success: function(response) {
+                    if (response.status == true) {
 
-                    $('#transmission_type_id').html('');
-                    $('#transmission_model_id').html('');
-                    $('#provence_id').html('');
-                    $('#serialNo').html('');
-
-
-                    $.each(response.tra, function(index, value) {
-
-                        if (value.id == response.tType) {
-                            $('#transmission_type_id').append('<option selected value="' + value
-                                .id + '">' + value.transmissionTypeName + '</option>')
-                        } else {
-                            $('#transmission_type_id').append('<option value="' + value.id +
-                                '">' + value.transmissionTypeName + '</option>')
-                        }
-                    });
+                        $('#transmission_type_id').html('');
+                        $('#transmission_model_id').html('');
+                        $('#provence_id').html('');
+                        $('#serialNo').html('');
 
 
-                    $.each(response.tram, function(index, value) {
+                        $.each(response.tra, function(index, value) {
 
-                        if (value.id == response.tModel) {
-                            $('#transmission_model_id').append('<option selected value="' +
-                                value.id + '">' + value.transmissionModelName + '</option>')
-                        } else {
-                            $('#transmission_model_id').append('<option value="' + value.id +
-                                '">' + value.transmissionModelName + '</option>')
-                        }
-                    });
+                            if (value.id == response.tType) {
+                                $('#transmission_type_id').append('<option selected value="' +
+                                    value
+                                    .id + '">' + value.transmissionTypeName + '</option>')
+                            } else {
+                                $('#transmission_type_id').append('<option value="' + value.id +
+                                    '">' + value.transmissionTypeName + '</option>')
+                            }
+                        });
+
+                        $.each(response.tram, function(index, value) {
+
+                            if (value.id == response.tModel) {
+                                $('#transmission_model_id').append('<option selected value="' +
+                                    value.id + '">' + value.transmissionModelName +
+                                    '</option>')
+                            } else {
+                                $('#transmission_model_id').append('<option value="' + value
+                                    .id +
+                                    '">' + value.transmissionModelName + '</option>')
+                            }
+                        });
 
 
-                    $.each(response.pro, function(index, value) {
+                        $.each(response.pro, function(index, value) {
 
-                        if (value.id == response.tProvence) {
-                            $('#provence_id').append('<option selected value="' +
-                                value.id + '">' + value.provenceName + '</option>')
-                        } else {
-                            $('#provence_id').append('<option value="' + value.id +
-                                '">' + value.provenceName + '</option>')
-                        }
-                    });
+                            if (value.id == response.tProvence) {
+                                $('#provence_id').append('<option selected value="' +
+                                    value.id + '">' + value.provenceName + '</option>')
+                            } else {
+                                $('#provence_id').append('<option value="' + value.id +
+                                    '">' + value.provenceName + '</option>')
+                            }
+                        });
 
-                    $('#serialNo').val(response.tSerial);
+                        $('#serialNo').val(response.tSerial);
+                    }else{swal('',response.message,'error');}
 
                 }
             });
@@ -427,7 +440,7 @@
                             '" class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"  data-toggle="modal" data-target="#modal-xl"><i class="fas fa-edit"></i></button><button type="button" id="btnDelete" value="' +
                             value.id +
                             '" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td></tr>'
-                            );
+                        );
                     });
 
                     console.log(response);
@@ -440,8 +453,6 @@
 
         $(document).on('submit', '#traEdit', function(e) {
             e.preventDefault();
-
-
             $.ajax({
                 type: "POST",
                 url: "{{ route('transmission.saveEdit') }}",
@@ -454,12 +465,11 @@
                         $('[data-dismiss="modal"]').click();
                         $('#traEdit')[0].reset();
 
-                        swal('',response.message,'success');
+                        swal('', response.message, 'success');
                         show();
                     }
-                    if(response.status== false){
-                        swal('',response.message,'error');
-                        show();
+                    if (response.status == false) {
+                        swal('', response.message, 'error');
                     }
 
 
@@ -476,52 +486,37 @@
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(response) {
-                    console.log(response);
-                    if (response.order == 0 && response.tra.status == 0) {
+                    if (response.status == true) {
+                        if (response.order == 0 && response.tra.status == 0) {
 
-                        let tra = `<tr><td>` + response.tra.tname + `</td><td>` + response.tra.mname +
-                            `</td><td>` + response.tra.serialNo + `</td>
-                        <td>` + response.tra.pname +
-                            `</td><td><button type="button" id="btnEdit" value="` + response.tra.id + `"
+                            let tra = `<tr><td>` + response.tra.tname + `</td><td>` + response.tra
+                                .mname +
+                                `</td><td>` + response.tra.serialNo + `</td>
+                          <td>` + response.tra.pname +
+                                `</td><td><button type="button" id="btnEdit" value="` + response.tra
+                                .id + `"
                                                     class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"
                                                     data-toggle="modal" data-target="#modal-xl"><i
                                                         class="fas fa-edit"></i></button>
                                                 <button type="button" id="btnDelete1" value="` + response.tra.id +
-                            `"
+                                `"
                                                     class="btn btn-danger btn-sm" data-toggle="modal"
                                                     data-target="#modal-danger"><i class="fas fa-trash-alt"></i></button>
-                                            </td><td><span class="badge badge-info">د پروګرام په حال کی</span></td></tr>`;
+                                            </td></tr>`;
 
-                        $('#tbody').append(tra);
+                            $('#tbody').append(tra);
+                            $('#addTransmission').css('display', 'none');
+                            $('[data-dismiss="modal"]').click();
+                            $('#traAdd')[0].reset();
+                            swal('', response.message, 'success');
 
-                    }
+                        }
 
-                    if (response.order == 1 && response.status == 0) {
-
-
-                        let tra = `<tr><td>` + response.tra.tname + `</td><td>` + response.tra.mname +
-                            `</td><td>` + response.tra.serialNo + `</td>
-                        <td>` + response.tra.pname +
-                            `</td><td><span class="badge badge-danger">ستونزه لری</span></td></tr>`;
-                        $('#tbody').append(tra);
-
+                    } else {
+                        swal('', response.message, 'error');
                     }
 
 
-                    if (response.order == 1 && response.tra.status == 1) {
-
-                        let tra = `<tr><td>` + response.tra.tname + `</td><td>` + response.tra.mname +
-                            `</td><td>` + response.tra.serialNo + `</td>
-                        <td>` + response.tra.pname +
-                            `</td><td><span class="badge badge-success">پروګرام شوی</span></td></tr>`;
-
-                        $('#tbody').append(tra);
-                    }
-
-                    $('#addTransmission').css('display', 'none');
-                    $('[data-dismiss="modal"]').click();
-                    $('#traAdd')[0].reset();
-                    swal(response.message);
 
 
 

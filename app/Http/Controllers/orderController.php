@@ -119,6 +119,19 @@ class orderController extends Controller
         return view('transmittion.program', compact('transmissinos', 'order', 'transmissionTypes', 'status', 'company', 'agent'));
     }
 
+    public function programAgain($id){
+        if($id!=null){
+            $order=order::find($id);
+            if($order!=null){
+                $order->status=0;
+                $order->update();
+                $transmissions=transmission::where('order_id',$id)->update(['status'=>0]);
+                }
+                return redirect()->back();
+        }
+
+    }
+
     public function createOrder($id)
     {
         if($id!=null){

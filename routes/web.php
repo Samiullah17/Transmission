@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('ad/trasmission/{id?}/{cid?}', [companyController::class, 'addTransmission0'])->name('add.transmittion0');
 
     Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
-    Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
+    // Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
 
         Route::get('comopanies/orders',  [transmissionController::class,  'listTransmission'])->name('companies.orders');
         Route::get('list/transmission',  function  ()  {
@@ -128,6 +128,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('add/order/{id}', [orderController::class, 'createOrder'])->name('add.order');
     Route::get('show/orders/{id?}', [orderController::class, 'getOrder'])->name('company.orders');
     Route::get('orders/program/{id?}', [orderController::class, 'program'])->name('order.program');
+    Route::get('order/programAgain/{id}',[orderController::class,'programAgain'])->name('order.programAgain');
     Route::get('test',function(){
         return view('test');
     });

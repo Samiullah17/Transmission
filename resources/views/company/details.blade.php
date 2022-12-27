@@ -833,7 +833,7 @@
                     ],
                     language: {
                         "emptyTable": "غوښتنه/آرډر نلری",
-                        "lengthMenu": "نمایش MENU معلومات",
+                        "lengthMenu": "  نمایش معلومات _MENU_ ",
                         "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
                         "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
                         "search": "پلټل/جستجو:",
@@ -911,7 +911,7 @@
                     ],
                     language: {
                         "emptyTable": "دیتا موجود نیست .",
-                        "lengthMenu": "نمایش MENU معلومات",
+                        "lengthMenu": "نمایش _MENU_ معلومات",
                         "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
                         "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
                         "search": "پلټل/جستجو: ",
@@ -1018,11 +1018,11 @@
 
 
                         console.log(response);
-                        $('#companyName').val(response.name);
-                        $('#companyAddress').val(response.address);
-                        $('#latitude').val(response.lat);
-                        $('#longtitude').val(response.lan);
-                        $('#companyManagerName').val(response.manager);
+                        $('#companyName').val(response.company.companyName);
+                        $('#companyAddress').val(response.company.companyAddress);
+                        $('#latitude').val(response.company.latitude);
+                        $('#longtitude').val(response.company.longtitude);
+                        $('#companyManagerName').val(response.company.companyManagerName);
                         $('#citizenship_id').html('');
                         $('#company_type_id').html('');
                         $('#company_active_type_id').html('');
@@ -1031,7 +1031,7 @@
 
                         $.each(response.companyType, function(index, value) {
 
-                            if (value.id == response.type) {
+                            if (value.id == response.company.company_type_id) {
                                 $('#company_type_id').append(
                                     '<option selected value="' + value.id + '">' +
                                     value.companyTypeName + '</option>')
@@ -1044,7 +1044,7 @@
                         });
 
                         $.each(response.companyActiveType, function(index, value) {
-                            if (value.id == response.activeType) {
+                            if (value.id == response.company.company_active_type_id) {
                                 $('#company_active_type_id').append(
                                     '<option selected value="' + value.id + '">' +
                                     value.companyName + '</option>')
@@ -1092,7 +1092,7 @@
                                 }
 
                                 $.each(response.countries, function(index, value) {
-                                    if (response.country == value.id) {
+                                    if (value.id== response.cid) {
 
                                         $('#country_id').append(
                                             '<option selected value="' +
@@ -1100,8 +1100,8 @@
                                             .contryName + '</option>')
 
                                     } else {
-                                        $('#country').append(
-                                            '<option selected value="' +
+                                        $('#country_id').append(
+                                            '<option value="' +
                                             value.id + '">' + value
                                             .contryName + '</option>')
                                     }
@@ -1170,7 +1170,7 @@
                             <td>` + response.company.companyAddress + `</td><td>` + response.company.latitude +
                                 `</td><td>` + response.company.longtitude +
                                 `</td>
-                            <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i class="far fa-file-contract"></i></button></td></tr>`;
+                             </tr>`;
 
                         } else {
 
@@ -1180,7 +1180,7 @@
                             <td>` + response.company.companyAddress + `</td><td>` + response.company.latitude +
                                 `</td><td>` + response.company.longtitude +
                                 `</td>
-                            <td><button type="button" class="btn btn-sm btn-primary jawaz">جوازونه<i class="far fa-file-contract"></i></button></td></tr>`;
+                            </tr>`;
 
                         }
 
