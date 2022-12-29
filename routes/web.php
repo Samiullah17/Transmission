@@ -4,13 +4,17 @@ use App\Http\Controllers\agentController;
 use App\Http\Controllers\classController;
 use App\Http\Controllers\companyController;
 use App\Http\Controllers\CompanyFineController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LicenseExtensionController;
+use App\Http\Controllers\permissionController;
 use App\Http\Controllers\RegistrationRightController;
-use App\Http\Controllers\orderController;
+use App\Http\Controllers\roleController;use App\Http\Controllers\orderController;
+use App\Http\Controllers\profileController;
 use App\Models\RegistrationRight;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Finder;
 use App\Http\Controllers\transmissionController;
+use App\Http\Controllers\userController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +28,11 @@ use App\Http\Controllers\transmissionController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('test');
 });
 
-Route::get('/dashboard', function () {
-    return view('welcome');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard',[HomeController::class,'index'])->middleware(['auth'])->name('dashboard');
+
 
 require __DIR__ . '/auth.php';
 
@@ -132,4 +135,5 @@ Route::middleware(['auth'])->group(function(){
     Route::get('test',function(){
         return view('test');
     });
+    Route::get('user/profile/{id}',[profileController::class,'show'])->name('user.profile');
 });

@@ -9,11 +9,11 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                د تمدید برخه
+                                د فریکونسی د جواز/ تمدید برخه
                             </div>
                             <div class="card-title">
                                 <button type="button" id="licenseExt" class="btn btn-primary" data-mdb-ripple-color="dark"
-                                    data-toggle="modal" data-target="#modal-xl">د نوی تمدید اضافه کول </button>
+                                    data-toggle="modal" data-target="#modal-xl">د فریکونسی نوی جواز اضافه کول </button>
                                     <a type="button" id="oldlicenseExt" href="{{ route('oldlicenseExt.company',$id)}}" class="btn btn-primary">د پخوانیو تمدیدونو کتل </a>
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
@@ -113,7 +113,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">د بنسټ تمدید اضافه کول </h4>
+                        <h4 class="modal-title">د بنسټ د جواز/تمدید اضافه کول </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -382,7 +382,7 @@
                             </div> --}}
                             <div class="form-group">
                                 <input type="hidden" class="form-control" id="finefrequencyid" name="frequencyid">
-                                <label for="frequency" >فریکونسی</label>
+                                <label for="frequency">فریکونسی</label>
                                 <input type="text" disabled class="form-control" id="finefrequency" name="frequency">
                                 <span id="1frequency" name="frequency" class="text-danger "></span>
                             </div>
@@ -597,7 +597,11 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+<<<<<<< HEAD
                        // alert('success');
+=======
+                        // alert('success');
+>>>>>>> 6760f7c405a184537348a2f4a6fe8039b075630a
                         window.location.replace(response.success);
                     },
                     error: function(response, error) {

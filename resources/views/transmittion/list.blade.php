@@ -29,7 +29,6 @@
                                 <tbody>
 
                                 </tbody>
-
                             </table>
 
 
@@ -74,8 +73,8 @@
                     searchable: true,
                     language: {
                         "emptyTable": "دیتا موجود نیست .",
-                        "lengthMenu": "نمایش MENU معلومات",
-                        "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
+                        "lengthMenu": "نمایش _MENU_ معلومات",
+                        "info": "معلومات شماره _START_ الی _END_ مجموعه معلومات _TOTAL_",
                         "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
                         "search": "جستجو کردن : ",
                         "sProcessing": "در حال اضافه نمودن معلومات...",

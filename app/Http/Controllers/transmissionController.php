@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\companyAgent;
+use App\Models\discount;
 use App\Models\transmission;
 use Illuminate\Http\Request;
 use App\Models\order;
@@ -51,61 +53,71 @@ class transmissionController extends Controller
     public function changeRate(Request $request)
     {
 
-        $order = order::find($request->order);
-        if ($order->status == 0) {
-            $transmission = transmissionType::where('id', $request->tra)->first();
-            if ($transmission != null) {
-                if ($request->rate != 0) {
-                    $totalRate = $transmission->rate - $request->rate;
-                    $transmission->rate = $totalRate;
-                    $transmission->save();
-                    return response()->json(['rate' => $totalRate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
-                } else if ($request->rate == 0) {
-                    if ($transmission->id == 1) {
-                        $transmission->rate = 400;
-                        $rate = 400;
-                        $transmission->save();
-                        return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
+        // dd($request->all());
+        if ($request != null) {
+            if ($request->ajax()) {
+                $order = order::find($request->order);
+                if ($order->status == 0) {
+                    $transmission = transmissionType::where('id', $request->tra)->first();
+                    if ($transmission != null) {
+                        if ($request->rate > 0) {
+                            $totalRate = $transmission->rate - $request->rate;
+                            $discount=new discount();
+                            $discount->order_id=$order->id;
+                            $discount->discount=$request->rate;
+                            $discount->transmission_type_id=$transmission->id;
+                            $discount->save();
+                            $transmission->rate = $totalRate;
+
+                            $transmission->save();
+                            return response()->json(['discount'=>$discount->id,'rate' => $totalRate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
+                        } else if ($request->rate == 0) {
+                            if ($transmission->id == 1) {
+                                $transmission->rate = 400;
+                                $rate = 400;
+                                $transmission->save();
+                                return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
+                            }
+                            if ($transmission->id == 2) {
+                                $transmission->rate = 600;
+                                $rate = 600;
+                                $transmission->save();
+                                return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
+                            }
+                            if ($transmission->id == 3) {
+                                $transmission->rate = 800;
+                                $rate = 800;
+                                $transmission->save();
+                                return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
+                            }
+                            if ($transmission->id == 4) {
+                                $transmission->rate = 1200;
+                                $rate = 1200;
+                                $transmission->save();
+                                return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
+                            }
+                        }
+                    } else {
+                        return response()->json(['message' => 'په مهربانی سره مخابری ته یو قیمت ورکړی او وروسته بیا کوشش وکړی', 'status' => false]);
                     }
-                    if ($transmission->id == 2) {
-                        $transmission->rate = 600;
-                        $rate = 600;
-                        $transmission->save();
-                        return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
-                    }
-                    if ($transmission->id == 3) {
-                        $transmission->rate = 800;
-                        $rate = 800;
-                        $transmission->save();
-                        return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
-                    }
-                    if ($transmission->id == 4) {
-                        $transmission->rate = 1200;
-                        $rate = 1200;
-                        $transmission->save();
-                        return response()->json(['rate' => $rate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
-                    }
+                } else {
+                    return response()->json(['message' => 'دا غوښتنه پروګرام شوی تغیرات نشی پکی راوړلی که ستونزه وی په مهربانی سره غوښتنه له پروګرام حالت سخه وباسی او بیا کوښښ وکړی', 'status' => false]);
                 }
-            } else {
-                return response()->json(['message' => 'په مهربانی سره مخابری ته یو قیمت ورکړی او وروسته بیا کوشش وکړی', 'status' => false]);
             }
-        } else {
-            return response()->json(['message' => 'دا غوښتنه پروګرام شوی تغیرات نشی پکی راوړلی که ستونزه وی په مهربانی سره غوښتنه له پروګرام حالت سخه وباسی او بیا کوښښ وکړی', 'status' => false]);
         }
     }
 
     public function changeStatus(Request $request)
     {
 
-        // dd($request->all());
-        if ($request->order) {
+         if ($request->order) {
             $order = order::find($request->order);
             if ($order->status == 0) {
 
                 if ($request->status == 'pdone') {
 
                     $data = transmission::where('id', $request->id)->first();
-                    if ($data->status == 0) {
+                    if ($data->status == 0 || $data->status==2) {
                         $data->status = 1;
                         $tra = transmissionType::where('id', $data->transmission_type_id)->first()->rate;
                         $data->rate = $tra;
@@ -118,7 +130,7 @@ class transmissionController extends Controller
 
                     $data = transmission::where('id', $request->id)->first();
                     if ($data->status == 1) {
-                        $data->status = 0;
+                        $data->status = 2;
                         $data->rate = 0;
                         $data->save();
                         return response()->json(['rate' => 0, 'message' => 'ستونزه لری!', 'status' => true]);
@@ -127,7 +139,7 @@ class transmissionController extends Controller
                     }
                 }
             } else {
-                return response()->json(['message' => 'په دې غوښتنه کی موجودی مخابری پروګرام شوی که ستونزه وی غوښتنه له پروګرام حالت سخه وباسی او بیا کوښښ وکړی']);
+                return response()->json(['message' => 'په دې غوښتنه کی موجودی مخابری پروګرام شوی که ستونزه وی غوښتنه له پروګرام حالت څخه وباسی او بیا کوښښ وکړی']);
             }
         }
 
@@ -281,13 +293,15 @@ class transmissionController extends Controller
 
         $cid = order::where('id', $id)->first()->company_id;
         $cname = Company::where('id', $cid)->first()->companyName;
+        $agent= companyAgent::where('company_id',$cid)->first()->agentName;
+        $order1=order::find($order);
 
 
         $provence = provence::all();
         $transmissionModel = transmissionModel::all();
         $transmissionType = transmissionType::all();
         $company = Company::find($cid);
-        return view('order.transmission', compact('company', 'transmissions', 'order', 'provence', 'transmissionModel', 'transmissionType', 'cname'));
+        return view('order.transmission', compact('company', 'transmissions', 'order', 'provence', 'transmissionModel', 'transmissionType', 'cname','agent','order1'));
     }
 
     public function delete(Request $request)
@@ -296,7 +310,7 @@ class transmissionController extends Controller
         if ($request != null) {
             $order = order::find($request->order);
             if ($order != null) {
-                if ($order->status ==0) {
+                if ($order->status == 0) {
                     orderDetails::where('order_id', $request->order)->decrement('transmissionQuantity');
 
                     if ($request->id != null) {
@@ -311,17 +325,23 @@ class transmissionController extends Controller
                                 'provences.provenceName as pname'
                             )->where('transmissions.order_id', $request->order)->get();
                         return response()->json(['data' => $transmissions, 'message' => 'مخابره په بریالیتوب سره حذف/پاکه شوه!', 'status' => true]);
-                    }else{return response()->json(['message'=>'مخابره پیدا نشوه','status'=>false]);}
+                    } else {
+                        return response()->json(['message' => 'مخابره پیدا نشوه', 'status' => false]);
+                    }
                 } else {
                     return response()->json(['message' => 'مخابری پروګرام شوی تغیرات نشی پکی راوړلی که غواړی تغیرات راوړی غوښتنه/آرډر له پروګرام حالت څخه وباسی او بیا کوښښ وکړی']);
                 }
-            }else{return response()->json(['message'=>'غوښتنه پیدا نشوه بیا کوښښ وکړی!']);}
-        }else{return response()->json(['message'=>'ستونزه ده وروسته بیا کوښښ وکړی']);}
+            } else {
+                return response()->json(['message' => 'غوښتنه پیدا نشوه بیا کوښښ وکړی!']);
+            }
+        } else {
+            return response()->json(['message' => 'ستونزه ده وروسته بیا کوښښ وکړی']);
+        }
     }
 
     public function edit(Request $request)
     {
-        if($request!=null){
+        if ($request != null) {
             $tType = transmission::where('id', $request->id)->first()->transmission_type_id;
             $tModel = transmission::where('id', $request->id)->first()->transmission_model_id;
             $tProvence = transmission::where('id', $request->id)->first()->provence_id;
@@ -330,17 +350,17 @@ class transmissionController extends Controller
             $transmissionType = transmissionType::all();
             $transmissionModel = transmissionModel::all();
             $provences = provence::all();
-            return response()->json(['tType' => $tType, 'tModel' => $tModel, 'tProvence' => $tProvence, 'tSerial' => $tSerial, 'tra' => $transmissionType, 'tram' => $transmissionModel, 'pro' => $provences,'status'=>true]);
-
-        }else{return response()->json(['message'=>'مخابره پیدا نشوه','status'=>false]);}
-
+            return response()->json(['tType' => $tType, 'tModel' => $tModel, 'tProvence' => $tProvence, 'tSerial' => $tSerial, 'tra' => $transmissionType, 'tram' => $transmissionModel, 'pro' => $provences, 'status' => true]);
+        } else {
+            return response()->json(['message' => 'مخابره پیدا نشوه', 'status' => false]);
+        }
     }
 
     public function saveEdit(Request $request)
     {
-        $order=order::find($request->order);
-        if($order!=null){
-            if($order->status==0){
+        $order = order::find($request->order);
+        if ($order != null) {
+            if ($order->status == 0) {
                 $transmission = transmission::find($request->transmission_id);
                 if ($transmission != null) {
                     $transmission->transmission_type_id = $request->transmission_type_id;
@@ -349,12 +369,15 @@ class transmissionController extends Controller
                     $transmission->provence_id = $request->provence_id;
                     $transmission->update();
                     return response()->json(['data' => $request->all(), 'message' => 'د مخابری معلومات په بریالیتوب سره تغیر شول', 'status' => true]);
-                }else {
+                } else {
                     return response()->json(['message' => 'مخابره پیدا نشوله', 'status' => false]);
                 }
-            }else{return response()->json(['message'=>'آرډر/غوښتنه پروګرام شوی تغیرات نشی پکی راوړلی که غواړی تغیرات راولی په مهربانی سره آرډر/غوښتنه له پروګرام حالت څخه وباسی او بیا کوښښ وکړی!','status'=>false]);}
-        }else{return response()->json(['message'=>'آرډر پیدا نشو بیا کوښښ وکړی!','status'=>false]);}
-
+            } else {
+                return response()->json(['message' => 'آرډر/غوښتنه پروګرام شوی تغیرات نشی پکی راوړلی که غواړی تغیرات راولی په مهربانی سره آرډر/غوښتنه له پروګرام حالت څخه وباسی او بیا کوښښ وکړی!', 'status' => false]);
+            }
+        } else {
+            return response()->json(['message' => 'آرډر پیدا نشو بیا کوښښ وکړی!', 'status' => false]);
+        }
     }
 
     public function addNTransmission(Request $request)

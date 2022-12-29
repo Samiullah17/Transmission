@@ -330,6 +330,7 @@
             font-family: 'Nunito', sans-serif;
         }
     </style>
+ 
     <!-- Font Awesome Icons -->
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
@@ -348,6 +349,7 @@
 
 
         @yield('content')
+        
 {{-- 
         @include('layouts.footer') --}}
 

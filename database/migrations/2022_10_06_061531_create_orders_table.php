@@ -24,6 +24,8 @@ return new class extends Migration
             $table->tinyInteger('status')->default(0);
             $table->string('created_at')->nullable();
             $table->string('updated_at')->nullable();
+            $table->string('discountReason')->nullable();
+            $table->string('discountFile')->nullable();
         });
     }
 

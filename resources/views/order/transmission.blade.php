@@ -10,7 +10,6 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                د {{ $cname }} کمپنی/بنسټ
                             </div>
                             <div class="card-title" id="ctitle">
 
@@ -37,221 +36,291 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-tools">
+                                <p>د غوښتی/آرډر په اړه معلومات</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if ($order1->status == 0)
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <th>د کمپنی نوم</th>
+                                        <th>د نماینده نوم</th>
+                                        <th>د غوښتنی د راوړلو نیټه</th>
+                                        <th>حالت</th>
+                                    </thead>
+                                    <tbody>
+                                        <td>{{ $cname }}</td>
+                                        <td>{{ $agent }}</td>
+                                        <td>{{ $order1->created_at }}</td>
+                                             <td><span class="badge badge-info">د پروګرام په حال کی</span></td>
+                                      </tbody>
 
-                        <input type="text" id="order" name="order" value="{{ $order }}">
+                                </table>
+                            @endif
+                            @if($order1->status==1)
 
 
-                        <table class="table table-striped table-hover table-bordred">
-                            <thead>
-                                <tr>
-                                    <th>د مخابری ډول</th>
-                                    <th>د مخابری ماډل</th>
-                                    <th>سریال نمبر</th>
-                                    <th>ولایت</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <th>د کمپنی نوم</th>
+                                    <th>د نماینده نوم</th>
+                                    <th>د غوښتنی د راوړلو نیټه</th>
+                                    <th>د غوښتنی د پروګرام کول نیټه</th>
+                                     <th>د تخفیف وجه</th>
+                                     <th>حالت</th>
 
-                            <tbody id="tbody">
-                                @foreach ($transmissions as $item)
+                                </thead>
+                                <tbody>
+                                    <td>{{ $cname }}</td>
+                                    <td>{{ $agent }}</td>
+                                    <td>{{ $order1->created_at }}</td>
+                                    <td>{{ $order1->updated_at }}</td>
+                                    <td>{{ $order1->discountReason }}</td>
+
+                                         <td><span class="badge badge-success">پروګرام شوی</span></td>
+                                  </tbody>
+
+                            </table>
+
+
+                            @endif
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title" style="float: right">
+                            </div>
+
+                            <div class="card-tools">
+                                <p>د غوښتنی/آرډر د مخابرو لیست</p>
+                            </div>
+                        </div>
+
+                        <div class="card-body table-responsive p-0">
+
+                            <input type="hidden" id="order" name="order" value="{{ $order }}">
+
+
+                            <table class="table table-striped table-hover table-bordred">
+                                <thead>
                                     <tr>
-                                        <td>{{ $item->tname }}</td>
-                                        <td>{{ $item->mname }}</td>
-                                        <td>{{ $item->serialNo }}</td>
-                                        <td>{{ $item->pname }}</td>
-                                        @if ($company->status == 1)
-                                            @if ($item->ostatus == 0)
-                                                <td><button type="button" id="btnEdit" value="{{ $item->id }}"
-                                                        class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"
-                                                        data-toggle="modal" data-target="#modal-xl"><i
-                                                            class="fas fa-edit"></i></button>
-                                                    <button type="button" id="btnDelete1" value="{{ $item->id }}"
-                                                        class="btn btn-danger btn-sm" data-toggle="modal"
-                                                        data-target="#modal-danger"><i
-                                                            class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            @endif
-                                        @endif
-
-                                        @if ($item->status == 0 && $item->ostatus == 1)
-                                            <td><span class="badge badge-danger">ستونزه لری</span></td>
-                                        @endif
-                                        @if ($item->status == 1 && $item->ostatus == 1)
-                                            <td><span class="badge badge-info">پروګرام شوی</span></td>
-                                        @endif
+                                        <th>د مخابری ډول</th>
+                                        <th>د مخابری ماډل</th>
+                                        <th>سریال نمبر</th>
+                                        <th>ولایت</th>
+                                        <th></th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+
+                                <tbody id="tbody">
+                                    @foreach ($transmissions as $item)
+                                        <tr>
+                                            <td>{{ $item->tname }}</td>
+                                            <td>{{ $item->mname }}</td>
+                                            <td>{{ $item->serialNo }}</td>
+                                            <td>{{ $item->pname }}</td>
+                                            @if ($company->status == 1)
+                                                @if ($item->ostatus == 0)
+                                                    <td><button type="button" id="btnEdit" value="{{ $item->id }}"
+                                                            class="btn btn-primary btn-sm" data-mdb-ripple-color="dark"
+                                                            data-toggle="modal" data-target="#modal-xl"><i
+                                                                class="fas fa-edit"></i></button>
+                                                        <button type="button" id="btnDelete1" value="{{ $item->id }}"
+                                                            class="btn btn-danger btn-sm" data-toggle="modal"
+                                                            data-target="#modal-danger"><i
+                                                                class="fas fa-trash-alt"></i></button>
+                                                    </td>
+                                                @endif
+                                            @endif
+
+                                            @if ($item->status == 2 && $item->ostatus == 1)
+                                                <td><span class="badge badge-danger">ستونزه لری</span></td>
+                                            @endif
+                                            @if ($item->status == 1 && $item->ostatus == 1)
+                                                <td><span class="badge badge-info">پروګرام شوی</span></td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
 
 
-                        <div class="modal fade" id="modal-danger">
-                            <div class="modal-dialog">
-                                <div class="modal-content bg-danger">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">اخطار</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                            <div class="modal fade" id="modal-danger">
+                                <div class="modal-dialog">
+                                    <div class="modal-content bg-danger">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">اخطار</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>آیا تاسو باوری یاست چي دا مخابره پاکه کړی؟؟&hellip;</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-outline-light"
+                                                data-dismiss="modal">نه</button>
+                                            <button type="button" id="btnDelete" class="btn btn-outline-light">هو</button>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        <p>آیا تاسو باوری یاست چي دا مخابره پاکه کړی؟؟&hellip;</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-outline-light"
-                                            data-dismiss="modal">نه</button>
-                                        <button type="button" id="btnDelete" class="btn btn-outline-light">هو</button>
-                                    </div>
+
                                 </div>
 
                             </div>
 
-                        </div>
 
 
 
 
-
-                        <div class="modal fade" id="modal-xl">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">د مخابری د معلوماتو د تغیر برخه</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body mr-5">
-                                        <form action="{{ route('save.company') }}" method="POST" id="traEdit"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="row">
-                                                <input type="hidden" name="order" value="{{ $order }}" class="form-control">
-                                                <input type="hidden" name="transmission_id" id="tra_id"
-                                                    class="form-control">
-                                                <div class="form-group col-md-3">
-                                                    <label>د مخابری نوع</label>
-                                                    <select name="transmission_type_id" id="transmission_type_id"
+                            <div class="modal fade" id="modal-xl">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">د مخابری د معلوماتو د تغیر برخه</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body mr-5">
+                                            <form action="{{ route('save.company') }}" method="POST" id="traEdit"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row">
+                                                    <input type="hidden" name="order" value="{{ $order }}"
                                                         class="form-control">
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label>د مخابری ماډل</label>
-                                                    <select name="transmission_model_id" id="transmission_model_id"
-                                                        class="form-control"></select>
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label>ولایت</label>
-                                                    <select name="provence_id" id="provence_id" class="form-control">
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label for="">سریال نمبر</label>
-                                                    <input type="text" name="serialNO" id="serialNo"
+                                                    <input type="hidden" name="transmission_id" id="tra_id"
                                                         class="form-control">
-                                                </div>
-                                            </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label>د مخابری نوع</label>
+                                                        <select name="transmission_type_id" id="transmission_type_id"
+                                                            class="form-control">
+                                                        </select>
+                                                    </div>
 
+                                                    <div class="form-group col-md-3">
+                                                        <label>د مخابری ماډل</label>
+                                                        <select name="transmission_model_id" id="transmission_model_id"
+                                                            class="form-control"></select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-3">
+                                                        <label>ولایت</label>
+                                                        <select name="provence_id" id="provence_id" class="form-control">
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-3">
+                                                        <label for="">سریال نمبر</label>
+                                                        <input type="text" name="serialNO" id="serialNo"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">بندول</button>
+                                            <button type="submit" class="btn btn-primary">ذخیره کول</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">بندول</button>
-                                        <button type="submit" class="btn btn-primary">ذخیره کول</button>
-                                        </form>
-                                    </div>
+                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal-content -->
+                                <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.modal-dialog -->
-                        </div>
 
 
 
 
 
-                        <div class="modal fade" id="addTransmission">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">په موجوده غوښتنه کی د نوی مخابری اضافه کول</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                            <div class="modal fade" id="addTransmission">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">په موجوده غوښتنه کی د نوی مخابری اضافه کول</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body mr-5">
+                                            <form method="POST" id="traAdd" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row">
+                                                    <input type="hidden" name="order_id" id="order_id"
+                                                        class="form-control" value="{{ $order }}">
+                                                    <div class="form-group col-md-3">
+                                                        <label>د مخابری نوع</label>
+                                                        <select name="transmission_type_id" id="transmission_type_id"
+                                                            class="form-control">
+
+                                                            <option selected disabled>د مخابری نوعه انتخاب کړی</option>
+                                                            @foreach ($transmissionType as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->transmissionTypeName }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-3">
+                                                        <label>د مخابری ماډل</label>
+                                                        <select name="transmission_model_id" id="transmission_model_id"
+                                                            class="form-control">
+                                                            <option selected disabled>د مخابری ماډل انتخاب کړی</option>
+                                                            @foreach ($transmissionModel as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->transmissionModelName }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-3">
+                                                        <label>ولایت</label>
+                                                        <select name="provence_id" id="provence_id" class="form-control">
+
+                                                            <option selected disabled>ولایت انتخاب کړی</option>
+                                                            @foreach ($provence as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->provenceName }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-3">
+                                                        <label for="">سریال نمبر</label>
+                                                        <input type="text" name="serialNO"
+                                                            placeholder="د مخابری سریال نمبر داخل کړی"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">بندول</button>
+                                            <button type="submit" class="btn btn-primary">ذخیره کول</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="modal-body mr-5">
-                                        <form method="POST" id="traAdd" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="row">
-                                                <input type="hidden" name="order_id" id="order_id"
-                                                    class="form-control" value="{{ $order }}">
-                                                <div class="form-group col-md-3">
-                                                    <label>د مخابری نوع</label>
-                                                    <select name="transmission_type_id" id="transmission_type_id"
-                                                        class="form-control">
-
-                                                        <option selected disabled>د مخابری نوعه انتخاب کړی</option>
-                                                        @foreach ($transmissionType as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item->transmissionTypeName }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label>د مخابری ماډل</label>
-                                                    <select name="transmission_model_id" id="transmission_model_id"
-                                                        class="form-control">
-                                                        <option selected disabled>د مخابری ماډل انتخاب کړی</option>
-                                                        @foreach ($transmissionModel as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item->transmissionModelName }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label>ولایت</label>
-                                                    <select name="provence_id" id="provence_id" class="form-control">
-
-                                                        <option selected disabled>ولایت انتخاب کړی</option>
-                                                        @foreach ($provence as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->provenceName }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label for="">سریال نمبر</label>
-                                                    <input type="text" name="serialNO"
-                                                        placeholder="د مخابری سریال نمبر داخل کړی" class="form-control">
-                                                </div>
-                                            </div>
-
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">بندول</button>
-                                        <button type="submit" class="btn btn-primary">ذخیره کول</button>
-                                        </form>
-                                    </div>
+                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal-content -->
+                                <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.modal-dialog -->
+
+
+
+
+
                         </div>
-
-
-
-
 
                     </div>
+                    <!-- /.card-header -->
+
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
@@ -410,7 +479,9 @@
                         });
 
                         $('#serialNo').val(response.tSerial);
-                    }else{swal('',response.message,'error');}
+                    } else {
+                        swal('', response.message, 'error');
+                    }
 
                 }
             });

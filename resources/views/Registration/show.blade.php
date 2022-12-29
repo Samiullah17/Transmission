@@ -87,8 +87,7 @@
                                             @if ($item->status == 1)
                                                 <td>
                                                     <span class="badge badge-danger" style="height: 30px">غیر فعال</span>
-                                                </td>
-                                                <td class="d-flex justify-content-between">
+                                                </td><td class="d-flex justify-content-between">
                                                     {{-- data-mdb-ripple-color="dark"
                                                         data-toggle="modal" data-target="#modal-x2" --}}
                                                     <a class="btn btn-primary" id="RegRightEdit"
@@ -343,7 +342,7 @@
                                 <div class="col-lg-3 col-6">
                                     <div class="form-group">
                                         <label for="startDate">د تعرفه نیټه : </label>
-                                        <input type="text" class="form-scontrol date" id="reciptDate"
+                                        <input type="text" class="form-control date" id="reciptDate"
                                             name="recipttDate">
                                         <span id="1recipttDate" name="recipttDate" class="text-danger mdl"></span>
                                     </div>

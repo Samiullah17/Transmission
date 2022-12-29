@@ -25,16 +25,47 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <p>د {{ $company }} کمپنی/بنسټ د {{ $agent }} نماینده لخوا راوړل شوی غوښتنه/آرډر
-                                پروګرام کول</p>
-                            <input type="hidden" class="orders" value="{{ $order }}">
+                              <input type="hidden" class="orders" value="{{ $order }}">
 
                             <div id="divprint" style="float: left;" class="card-title">
                                 <button value="{{ $order }}" data-toggle="modal" data-target="#modal-sm"
                                     style="width: 5rem" class="btn btn-primary btn-sm">تکمیل</button>
                             </div>
+                            <div class="card-tools">
+                                <p>د غوښتنی/آرډر په اړه معلومات</p>
+                            </div>
+                        </div>
 
 
+
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <th>د کمپنی نوم</th>
+                                    <th>د نماینده نوم</th>
+                                    <th>د غوښتنی د راوړلو نیټه</th>
+                                    <th>حالت</th>
+                                </thead>
+                                <tbody>
+                                    <td>{{ $company }}</td>
+                                    <td>{{ $agent }}</td>
+                                    <td>{{ $order1->created_at }}</td>
+                                    <td><span class="badge badge-info statSpan ">د پروګرام په حال کی</span></td>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
 
                             <div class="card-tools">
 
@@ -43,14 +74,14 @@
                                 </button>
 
                             </div>
-
                         </div>
+
 
                         <div class="card-body">
                             <div class="row">
 
 
-                                <div class="form-group col-md-4 transmission_type_id d-none">
+                                <div class="form-group col-md-3 transmission_type_id d-none">
                                     <label>د تخفیف لپاره د مخابری نوعه انتخاب کړی</label>
                                     <select name="transmission_type_id" id="transmission_type_id" class="form-control">
                                         <option selected disabled>د مخابری نوعه انتخاب کړی</option>
@@ -60,21 +91,35 @@
                                     </select>
 
                                 </div>
+                            </div>
 
+                            <div class="row">
 
-                                <div class="form-group col-md-4  discountAmount d-none">
+                                <div class="form-group col-md-3  discountAmount d-none">
                                     <label>د تخفیف اندازه</label>
                                     <input type="number" id="discountAmount" name="dicount" class="form-control input-sm"
                                         placeholder="د تخفیف مقدار وارد کړی">
+                                    <input type="text" name="zeroDiscount" id="zeroDiscount" class="form-control">
                                 </div>
+
+
+                                <div class="form-group col-md-3 d-none discountAmount">
+                                    <label for="">د تخفیف پشنهادی فایل</label>
+                                    <input type="file" name="discountFile" id="discountFile" class="form-control">
+
+                                </div>
+
+                                <div class="form-group col-md-4 d-none discountAmount">
+                                    <label>د تخفیف وجه</label>
+                                    <textarea name="discountreason" id="discountreason" class="form-control" id="discountreason" cols="40" rows="2" placeholder="د تخفیف وجه ولیکی"></textarea>
+
+                                </div>
+
 
                                 <div class="col-md-2 discountAmount d-none mt-4">
                                     <input type="button" id="srate" value="ثبت" name="srate"
                                         class="btn btn-success">
                                 </div>
-
-
-
                             </div>
 
 
@@ -85,6 +130,13 @@
 
 
                     <div class="card">
+
+                        <div class="card-header">
+                            <div class="card-title" style="float: right">
+                                <p>د مخابرو د پروګرام کولو برخه</p>
+                            </div>
+
+                        </div>
 
                         <table class="table table-striped table-hover">
                             <thead>
@@ -270,6 +322,7 @@
                         if (response.status == true) {
                             $('.rate' + tid).html(response.rate);
                             $('#discountAmount').val('');
+                            $('#zeroDiscount').val(response.discount);
                             swal('', response.message, 'success');
                         } else {
                             swal('', response.message, 'error');
@@ -300,22 +353,27 @@
 
         })
 
-
-
-
         $(document).on('click', '.btnprint', function() {
             var id = $(this).val();
-            $.ajax({
+            var data={
+                'discountFile':$('#discountFile').val(),
+                'discountreason':$('#discountreason').val(),
+            }
+             $.ajax({
                 type: "get",
                 url: "{{ route('order.status') }}/" + id,
+                data:data,
                 dataType: "json",
                 success: function(response) {
                      if (response.status == true) {
                         $('.btnpdone').removeClass('btnpdone').addClass('done');
                         $('.cls').removeClass('cls').addClass('done');
                         $('.btnprint').removeClass('btnprint').addClass('done');
+                        $('.statSpan').removeClass('badge-info').addClass('badge-success').html('پروګرام شوی');
                         $('.discount').removeClass('discount').addClass('done');
                         $('#modal-sm').css('display', 'none');
+                        $('#discountFile').val('').prop('disabled',true);
+                        $('#discountreason').val('').prop('disabled',true);
                         $('[data-dismiss="modal"]').click();
                         swal("", response.message, "success");
 

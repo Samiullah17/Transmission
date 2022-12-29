@@ -83,7 +83,7 @@ class orderController extends Controller
                     })
                     ->rawColumns(['action', 'status'])
                     ->make(true);
-            }else{
+            } else {
                 return redirect()->back();
             }
         } else {
@@ -93,6 +93,7 @@ class orderController extends Controller
 
     public function program($id)
     {
+
         $order = $id;
         $status = order::where('id', $id)->first()->status;
         $cid = order::where('id', $id)->first()->company_id;
@@ -100,6 +101,7 @@ class orderController extends Controller
         $company = Company::where('id', $cid)->first()->companyName;
         $aid = order::where('id', $id)->first()->company_agent_id;
         $agent = companyAgent::where('id', $aid)->first()->agentName;
+        $order1 = order::find($order);
 
         $transmissinos = order::join('transmissions', 'orders.id', 'transmissions.order_id')
             ->join('transmission_types', 'transmissions.transmission_type_id', 'transmission_types.id')
@@ -116,28 +118,28 @@ class orderController extends Controller
             )->where('orders.id', $id)->get();
         $transmissionTypes = transmissionType::all();
 
-        return view('transmittion.program', compact('transmissinos', 'order', 'transmissionTypes', 'status', 'company', 'agent'));
+        return view('transmittion.program', compact('order1', 'transmissinos', 'order', 'transmissionTypes', 'status', 'company', 'agent'));
     }
 
-    public function programAgain($id){
-        if($id!=null){
-            $order=order::find($id);
-            if($order!=null){
-                $order->status=0;
+    public function programAgain($id)
+    {
+        if ($id != null) {
+            $order = order::find($id);
+            if ($order != null) {
+                $order->status = 0;
                 $order->update();
-                $transmissions=transmission::where('order_id',$id)->update(['status'=>0]);
-                }
-                return redirect()->back();
+                $transmissions = transmission::where('order_id', $id)->update(['status' => 0]);
+            }
+            return redirect()->back();
         }
-
     }
 
     public function createOrder($id)
     {
-        if($id!=null){
+        if ($id != null) {
             $cid = $id;
             $agent = companyAgent::where('company_id', $id)->get();
-            if($agent!=null){
+            if ($agent != null) {
                 $provence = provence::all();
                 $district = district::all();
                 $companies = Company::all();
@@ -145,39 +147,54 @@ class orderController extends Controller
                 $transmissionModel = transmissionModel::all();
                 $transmissionType = transmissionType::all();
                 return view('transmittion.add', compact('agent', 'provence', 'district', 'companies', 'transmissionModel', 'transmissionType', 'company'));
-            }else{return redirect()->back();}
-
-        }else{return redirect()->back();}
-
+            } else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect()->back();
+        }
     }
 
-    public function orderStatus($id)
+    public function orderStatus(Request $request, $id)
     {
-
         $order = order::find($id);
-        if ($order->status == 0) {
+        $transmissinos = transmission::where('order_id', $id)->where('status', 0)->get();
+        if ($order && $transmissinos->isEmpty()) {
 
-            $order->status = 1;
-            $order->Save();
-            $transmissiontype = new transmissionType();
-            $transmission = transmissionType::find(1);
-            $transmission->rate = 400;
-            $transmission->update();
+            if ($order->status == 0) {
 
-            $transmission = transmissionType::find(2);
-            $transmission->rate = 600;
-            $transmission->update();
+                if ($request->discountreason) {
+                    $order->discountreason = $request->discountreason;
+                    $order->update();
+                }
+                if ($request->discountFile) {
+                    $order->discountFile = $request->discountFile;
+                    $order->update();
+                }
 
-            $transmission = transmissionType::find(3);
-            $transmission->rate = 900;
-            $transmission->update();
+                $order->status = 1;
+                $order->Save();
+                $transmissiontype = new transmissionType();
+                $transmission = transmissionType::find(1);
+                $transmission->rate = 400;
+                $transmission->update();
 
-            $transmission = transmissionType::find(4);
-            $transmission->rate = 1200;
-            $transmission->update();
-            return response()->json(['order' => $order, 'message' => 'مخابری په بریالیتوب سره پروګرام شوی!!!', 'status' => true]);
-        } else {
-            return response()->json(['message' => 'مخابری پخوا پروګرام شوی !!!', 'status' => false]);
-        }
+                $transmission = transmissionType::find(2);
+                $transmission->rate = 600;
+                $transmission->update();
+
+                $transmission = transmissionType::find(3);
+                $transmission->rate = 900;
+                $transmission->update();
+
+                $transmission = transmissionType::find(4);
+                $transmission->rate = 1200;
+                $transmission->update();
+                return response()->json(['order' => $order, 'message' => 'مخابری په بریالیتوب سره پروګرام شوی!!!', 'status' => true]);
+            } else {
+                return response()->json(['message' => 'مخابری پخوا پروګرام شوی !!!', 'status' => false]);
+            }
+        }else if($transmissinos->isNotEmpty()){return response()->json(['message'=>'د ټولو مخابرو حالت مو نده بدل کړی په مهربانی سره ځان ډاډه کړی چي د تولو مخابرو حالت مو پروګرام یا هم ستونزی ته بدل کړی وې!','status'=>false]);}
+        else{return response()->json(['message'=>'د مخابرو د پروګرام په برخه کی ستونزه موجوده ده په مهربانی سره بیا کوښښ وکړی!']);}
     }
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Log in</title>
+    <title>Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,13 +20,15 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-             د مخابرو د پروګرام عمومی سیستم
-        </div>
+<body style=" background-image: url('{{asset("images/login_back_img.jpg") }}'); background-size: 100% 100%;" class="hold-transition login-page">
+    <div class="login-box mt-8">
+      
         <!-- /.login-logo -->
-        <div class="card">
+        <div class="card ">
+            <div class="card-headercard-header text-bold text-center">
+                د مخابرو د پروګرام عمومی سیستم ته ننوتل
+
+            </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">ایمیل آدرس او پاسورد مو ولیکی او سیستم ته داخل شی</p>
 
