@@ -45,7 +45,7 @@
   
                   <div class="col-lg-4 col-6">
   
-                      <div class="small-box bg-warning">
+                      <div class="small-box bg-danger">
                           <div class="inner">
                               <h3>{{ $totalDeactiveCompany }}</h3>
                               <p>موجوده غیر فعاله کمپنی</p>
@@ -65,7 +65,7 @@
                               <p> مجموعه دی آردرونو</p>
                           </div>
                           <div class="icon">
-                              <i class="fas fa-car-side"></i>
+                            <i class="fas fa-layer-group"></i>
                           </div>
                       </div>
                   </div>
@@ -73,7 +73,7 @@
               <div class="row d-flex justify-content-center">
                   <div class="col-lg-4 col-6">
   
-                      <div class="small-box bg-success">
+                      <div class="small-box bg-warning">
                           <div class="inner">
                             <h3>{{ $totalNonOrders }}</h3>
                             <p> د پروګرام په حال آردرونه</p>
@@ -86,7 +86,7 @@
   
                   <div class="col-lg-4 col-6">
   
-                      <div class="small-box bg-danger">
+                      <div class="small-box bg-success">
                           <div class="inner">
                               {{-- <h3>{{ $totalFinishingParts }}</h3> --}}
                               <h3>{{ $totalUnProgrameOrder }}</h3>
@@ -99,7 +99,7 @@
                   </div>
               </div>
           </div>
-
+      </section>
       
 
     </div>

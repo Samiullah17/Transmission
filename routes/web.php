@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\agentController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\classController;
 use App\Http\Controllers\companyController;
 use App\Http\Controllers\CompanyFineController;
@@ -13,6 +14,7 @@ use App\Models\RegistrationRight;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Finder;
 use App\Http\Controllers\transmissionController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,8 @@ require __DIR__ . '/auth.php';
 
 
 Route::middleware(['auth'])->group(function(){
+    route::get('register',[RegisteredUserController::class,'create'])->name('register');
+    route::post('register',[RegisteredUserController::class,'store'])->name('register');
     Route::get('add/company', [companyController::class, 'addCompany'])->name('add.company');
     Route::post('save/company', [companyController::class, 'saveCompnay'])->name('save.company');
     Route::post('save/company1', [companyController::class, 'saveCompany1'])->name('save.company1');
@@ -129,6 +133,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('add/order/{id}', [orderController::class, 'createOrder'])->name('add.order');
     Route::get('show/orders/{id?}', [orderController::class, 'getOrder'])->name('company.orders');
     Route::get('orders/program/{id?}', [orderController::class, 'program'])->name('order.program');
+    route::get('list/user',[UserController::class,'index'])->name('list.user');
     Route::get('test',function(){
         return view('test');
     });
