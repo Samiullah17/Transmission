@@ -12,9 +12,9 @@
                                 د جریمی برخه
                             </div>
                             <div class="card-title">
-                                <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
+                                {{-- <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
                                     data-toggle="modal" id="modalclick" data-target="#modal-xl">د نوی جریمی اضافه کول
-                                </button>
+                                </button> --}}
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
                             </div>
@@ -26,15 +26,15 @@
                                     <tr style="text-align:center">
                                         <th>کمپنی</th>
                                         <th>ولایت</th>
-                                        <th style="width: 130px">د مراجعه نیټه</th>
+                                        <th >د مراجعه نیټه</th>
                                         <th>د جریمی موده</th>
                                         <th>مقدار د جریمی </th>
                                         <th>د مالی ریاست مکتوب ګڼه </th>
                                         <th>د مالی ریاست مکتوب نیټه </th>
                                         <th>د آویز نمبر </th>
                                         <th>د تعرفه نمبر </th>
-                                        <th style="width: 130px">د تعرفه نیټه </th>
-                                        <th>بانک</th>
+                                        <th >د تعرفه نیټه </th>
+                                        <th>بانک نوم</th>
                                         <th>د مالی دریاست مکتوب</th>
                                         <th>د مالی دیاست تعرفه</th>
                                         <th>عمل</th>
@@ -214,7 +214,7 @@
 
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label for="bank">بانک</label>
+                                        <label for="bank">بانک نوم</label>
                                         <input type="text" class="form-control" name="bank" placeholder="بانک">
                                         <span id="1bank" class="text text-danger" name="bank" role="alert">
 
@@ -475,7 +475,7 @@ $(function () {
         ],
         language: {
                     "emptyTable": "دیتا موجود نیست .",
-                    "lengthMenu": "نمایش MENU معلومات",
+                    "lengthMenu": "  نمایش معلومات_MENU_ ",
                     "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
                     "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
                     "search": "جستجو کردن : ",

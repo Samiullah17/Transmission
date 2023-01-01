@@ -63,7 +63,7 @@
                                                         <a href="" title="حدف یوزر">
                                                             <i class="fas fa-window-close" style="color: red;"></i>
                                                         </a>
-                                                        <a href="" data-toggle="modal"
+                                                        <a href="{{ route('user.permissions', $user->id) }}" data-toggle="modal"
                                                             data-target="#userPermissionsModal" title="صلاحیت یوزر">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
@@ -80,9 +80,208 @@
                 </div>
             </div>
           </div>
-
-      
+{{-- user permmision models --}}
+          <div class="modal fade show" id="userPermissionsModal" style="display: none;" aria-modal="true" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header " >
+                        <h5 class="modal-title">صلاحیت های یوزر</h5>
+                        
+                    </div>
+                    <div id="userPermissionsInfo">
+                        <form id="DeletePermission">
+                           
+                            <div class="addperm form-group" style="display: inline" id='addperm'></div></form>
+              <form  method="Post" id="permissionForm">
+                                <input type="hidden" name='userID' id='userID'>
+                            <div class="form-group">
+                                <label for="permission">افزودن صلاحیت جدید</label>
+                                <select name="permission" class="form-control">
+                                    @foreach ($permissions as $permission)
+                                        <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                                    @endforeach
+                                    {{-- <option value="">sdfasfasd</option>
+                                    <option >sadfasfa</option>
+                                    <option >safasf</option> --}}
+                                </select>
+                                <span class="text-danger" id="permission"></span>
+                            </div>
+                       
+                    </div>
+                </form>
+                    <div class="modal-footer justify-content-between pb-1">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                        <input type="reset" hidden>
+                        <a class="btn btn-success" type="submit"  href="{{route('user.permission.grant')}}"
+                            name="grantPermissionToUser">ثپت
+                            <i class="fas fa-save"></i></a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </section>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // Headers for Ajax Request
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // $(document).on('click', '[data-target="#userUpdateModal"]', function(e) {
+            //     e.preventDefault();
+
+            //     $.ajax({
+            //         method: 'GET',
+            //         url: $(this).attr('href'),
+            //         beforeSend: function() {
+            //             displayLoading();
+            //         },
+            //         success: function(response) {
+            //             $('#userUpdateInfo').html(response.success);
+            //             removeLoading();
+            //         },
+            //         error: function(response, error) {
+            //             removeLoading();
+            //         }
+            //     });
+            // });
+
+            // $(document).on('click', '[name="updateUser"]', function(e) {
+            //     e.preventDefault();
+
+            //     $.ajax({
+            //         method: 'PUT',
+            //         url: $(this).attr('href'),
+            //         data: $(this).closest('form').serialize(),
+            //         beforeSend: function() {
+            //             displayLoading();
+            //         },
+            //         success: function(response) {
+            //             $('#userUpdateModal').hide();
+            //             $('[data-dismiss="modal"]').click();
+
+            //             $('#tbody').html(response.success);
+            //             hideModal();
+            //             removeLoading();
+            //         },
+            //         error: function(response, error) {
+            //             displayErrorMessages(response);
+            //             removeLoading();
+            //         }
+            //     });
+            // });
+
+            // $(document).on('click', '[class="fas fa-window-close"]', function(e) {
+            //     e.preventDefault();
+            //     let mainThis = this;
+
+            //     $.ajax({
+            //         url: $(this).closest('a').attr('href'),
+            //         method: 'DELETE',
+            //         beforeSend: function() {
+            //             displayLoading();
+            //         },
+            //         success: function(response) {
+            //             $(mainThis).closest('tr').remove();
+            //             removeLoading();
+            //         },
+            //         error: function() {
+            //             removeLoading();
+            //         }
+            //     });
+            // });
+
+            $(document).on('click', '[data-target="#userPermissionsModal"]', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'GET',
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
+                    success: function(response) {
+                        // $('#userPermissionsInfo').html(response.success);
+                        // removeLoading();
+                        $('#addperm').html('');
+                        
+                        $('#userID').val(response.userID);
+                        $.each(response.success, function(key, item) {
+                            $('#addperm').append('<a class="btn btn-danger m-2">' +
+                                item.name + '</a>');
+                        });
+                     
+                    },
+                    error: function(response, error) {
+                        // removeLoading();
+                    }
+                });
+            });
+
+            $(document).on('click', '[name="grantPermissionToUser"]', function(e) {
+                e.preventDefault();
+                clearErrorMessage();
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'POST',
+                    data: $('#permissionForm').serialize(),
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
+                    success: function(response) {
+                        $('#userPermissionsModal').hide();
+                        $('[data-dismiss="modal"]').click();
+                        hideModal();
+                        // removeLoading();
+                    },
+                    error: function(response, error) {
+                        displayErrorMessages(response);
+                        removeLoading();
+                    }
+                });
+            });
+
+            $(document).on('click', '[class="btn btn-danger m-2"]', function(e) {
+                e.preventDefault();
+                let mainThis = this;
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'DELETE',
+                    beforeSend: function() {
+                        displayLoading();
+                    },
+                    success: function(response) {
+                        $(mainThis).closest('a').remove();
+                        removeLoading();
+                    },
+                    error: function(response) {
+                        removeLoading();
+                    }
+                });
+            });
+
+            function displayErrorMessages(response) {
+                if (response.status === 403 || response.status === 404) $().html(response.message);
+                else {
+                    $.each(response.responseJSON.errors, function(key, error) {
+                        $('span#' + key).html(error[0]);
+                    });
+                }
+            }
+
+            function clearErrorMessage() {
+                $('span').html('');
+            }
+        });
+    </script>
 @endsection

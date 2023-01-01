@@ -134,6 +134,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('show/orders/{id?}', [orderController::class, 'getOrder'])->name('company.orders');
     Route::get('orders/program/{id?}', [orderController::class, 'program'])->name('order.program');
     route::get('list/user',[UserController::class,'index'])->name('list.user');
+    Route::get('user/{id}/permission', [PermissionController::class, 'userPermissions'])->name('user.permissions');
+    Route::post('user/permission/grant',[permissionController::class,'grantPermissions'])->name('user.permission.grant');
     Route::get('test',function(){
         return view('test');
     });
