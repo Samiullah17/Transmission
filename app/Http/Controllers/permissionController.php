@@ -24,4 +24,12 @@ class permissionController extends Controller
       $user->givePermissionTo($request->permission);
       return response()->json(['success' => 'صلاحیت موفقانه به یوزر داده شد'],  response::HTTP_OK);
    }
+   public function revokePermission(Request $request,$id)
+   {
+      
+      $userID=$request->userID;
+      $permissions=User::find($userID)->revokePermissionTo($id);
+   
+      return response()->json(['success' => 'صلاحیت موفقانه حدف شد'], Response::HTTP_OK);
+   }
 }

@@ -136,6 +136,7 @@ Route::middleware(['auth'])->group(function(){
     route::get('list/user',[UserController::class,'index'])->name('list.user');
     Route::get('user/{id}/permission', [PermissionController::class, 'userPermissions'])->name('user.permissions');
     Route::post('user/permission/grant',[permissionController::class,'grantPermissions'])->name('user.permission.grant');
+    Route::delete('revoke/premission/{id}',[permissionController::class,'revokePermission'])->name('revoke.Permission');
     Route::get('test',function(){
         return view('test');
     });

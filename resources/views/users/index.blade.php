@@ -16,6 +16,11 @@
     </div>
 @endsection --}}
 {{-- Page Content --}}
+<style>
+    .forbtn{
+        display: inline;
+    }
+</style>
 @section('content')
     <div class="content-wrapper">
      
@@ -89,11 +94,13 @@
                         
                     </div>
                     <div id="userPermissionsInfo">
-                        <form id="DeletePermission">
-                           
+                        <form id="DeletePermission" method="post" >
+                            @csrf
+                            @method('Delete')
+                            <input type="hidden" name='userID' id='userDeleteID'>
                             <div class="addperm form-group" style="display: inline" id='addperm'></div></form>
-              <form  method="Post" id="permissionForm">
-                                <input type="hidden" name='userID' id='userID'>
+                            <form  method="Post" id="permissionForm">
+                            <input type="hidden" name='userID' id='userID'>
                             <div class="form-group">
                                 <label for="permission">افزودن صلاحیت جدید</label>
                                 <select name="permission" class="form-control">
@@ -212,11 +219,11 @@
                         // $('#userPermissionsInfo').html(response.success);
                         // removeLoading();
                         $('#addperm').html('');
-                        
+                        $('#userDeleteID').val(response.userID);
                         $('#userID').val(response.userID);
                         $.each(response.success, function(key, item) {
-                            $('#addperm').append('<a class="btn btn-danger m-2">' +
-                                item.name + '</a>');
+                       
+                            $('#addperm').append('<div class="forbtn"><a class="btn btn-danger m-2" href="'+'{!!URL::to('revoke/premission')!!}'+'/'+item.id+'"> '+item.name + '</a><input type="hidden" name="'+item.id+'btn" value='+item.id+'></div>');
                         });
                      
                     },
@@ -257,12 +264,13 @@
                 $.ajax({
                     url: $(this).attr('href'),
                     method: 'DELETE',
-                    beforeSend: function() {
-                        displayLoading();
-                    },
+                    data:$('#DeletePermission').serialize(),
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
                     success: function(response) {
                         $(mainThis).closest('a').remove();
-                        removeLoading();
+                        // removeLoading();
                     },
                     error: function(response) {
                         removeLoading();
