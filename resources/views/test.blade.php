@@ -42,6 +42,9 @@
                             </div>
                         </div>
                     </div>
+                    @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" placeholder="پټ نوم/پاسورډ">
                         <div class="input-group-append">

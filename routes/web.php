@@ -134,6 +134,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('show/orders/{id?}', [orderController::class, 'getOrder'])->name('company.orders');
     Route::get('orders/program/{id?}', [orderController::class, 'program'])->name('order.program');
     route::get('list/user',[UserController::class,'index'])->name('list.user');
+    Route::put('user/deactivate/{id}',[UserController::class,'destroy'])->name('user.deactivate');
     Route::get('user/{id}/permission', [PermissionController::class, 'userPermissions'])->name('user.permissions');
     Route::post('user/permission/grant',[permissionController::class,'grantPermissions'])->name('user.permission.grant');
     Route::delete('revoke/premission/{id}',[permissionController::class,'revokePermission'])->name('revoke.Permission');

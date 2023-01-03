@@ -49,6 +49,7 @@
                                                 <th>#</th>
                                                 <th>اسم یوزر</th>
                                                 <th>ایمیل</th>
+                                                <th>حالت</th>
                                                 <th style="text-align: center">اکشن/عمل</th>
                                             </tr>
                                         </thead>
@@ -59,18 +60,33 @@
                                                     <td>{{ $loop->index + 1 }}</td>
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
-                                             
+                                                    @if ($user->status==0)
+                                                    <td>
+                                                    <span class="badge badge-success" style="height: 30px">فعال</span>
+                                                  </td>
+                                                  @endif
+                                                  @if ($user->status==1)
+                                                  <td>
+                                                      <span class="badge badge-danger" style="height: 30px">غیر فعال</span>
+                                                  </td>
+                                                  @endif
                                                     <td style="text-align: center">
-                                                        <a href=""data-toggle="modal"
-                                                            data-target="#userUpdateModal" title="تغیر معلومات یوزر">
+                                                        <a href=""  data-toggle="modal"
+                                                            data-target="" title="تغیر معلومات یوزر">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <a href="" title="حدف یوزر">
-                                                            <i class="fas fa-window-close" style="color: red;"></i>
-                                                        </a>
+                                                        {{-- <button value='{{$user->id}}'>klllkl</button> --}}
+                                                        <button  value="{{$user->id}}" data-toggle="modal"
+                                                        data-target="#modal-sm" id="deacivate" title="  غیر فعال/فعال نمودن یوزر ">
+                                                           <i class="fab fa-creative-commons-zero" style="-webkit-text-fill-color: red"></i>
+                                                        </button>
                                                         <a href="{{ route('user.permissions', $user->id) }}" data-toggle="modal"
                                                             data-target="#userPermissionsModal" title="صلاحیت یوزر">
                                                             <i class="fas fa-eye"></i>
+                                                        </a>
+                                                        <a href="{{ route('user.permissions', $user->id) }}"
+                                                             title="د یوزر معلومات">
+                                                             <i class="fas fa-info-circle"></i>
                                                         </a>
                                                     </td> 
                                                 </tr>
@@ -86,6 +102,7 @@
             </div>
           </div>
 {{-- user permmision models --}}
+
           <div class="modal fade show" id="userPermissionsModal" style="display: none;" aria-modal="true" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -127,7 +144,29 @@
                 </div>
             </div>
         </div>
+{{-- end of user permission modal --}}
 
+<div class="modal fade show" id="modal-sm" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h4 class="modal-title">د یورز عیر فعاله کول</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">×</span>
+    </button>
+    </div>
+    <div class="modal-body">
+    <h3 style="-webkit-text-fill-color: red">مطمئن یاست چی یوزر غیر فعاله/فعاله کړی</h3>
+    </div>
+    <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-default" data-dismiss="modal">نه</button>
+    <a  class="btn btn-primary" id='yes'  href="">هو </a>
+    </div>
+    </div>
+    
+    </div>
+    
+    </div>
     </div>
 </section>
 @endsection
@@ -205,7 +244,7 @@
             //         }
             //     });
             // });
-
+            
             $(document).on('click', '[data-target="#userPermissionsModal"]', function(e) {
                 e.preventDefault();
 
@@ -256,7 +295,37 @@
                     }
                 });
             });
+                $(document).on('click','#deacivate', function (e) {
+                    e.preventDefault();
+                   var userID= $(this).closest('button').val();
+                      
+                  
 
+                    $(document).on('click','#yes',function (e) {
+                        e.preventDefault();
+                        url = "{{ route('user.deactivate', ':id') }}";
+                        url = url.replace(':id', userID);
+                $.ajax({
+                    url: url,
+                    method: 'Put',
+                    
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
+                    success: function(response) {
+                        window.location.replace(response.success);
+                        // removeLoading();
+                    },
+                    error: function(response) {
+                        //removeLoading();
+                    }
+                });
+                       
+                            
+                    
+                    
+                });
+            });
             $(document).on('click', '[class="btn btn-danger m-2"]', function(e) {
                 e.preventDefault();
                 let mainThis = this;
