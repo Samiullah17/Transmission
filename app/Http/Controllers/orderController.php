@@ -126,9 +126,10 @@ class orderController extends Controller
         if ($id != null) {
             $order = order::find($id);
             if ($order != null) {
-                $order->status = 0;
-                $order->update();
-                $transmissions = transmission::where('order_id', $id)->update(['status' => 0]);
+                // $order->status = 0;
+                $or=order::where('id',$id)->update(['status'=>0,'discountFile'=>null,'discountReason'=>null]);
+                // $order->update();
+                $transmissions = transmission::where('order_id', $id)->update(['status' => 0,'rate'=>0]);
             }
             return redirect()->back();
         }
@@ -197,4 +198,30 @@ class orderController extends Controller
         }else if($transmissinos->isNotEmpty()){return response()->json(['message'=>'د ټولو مخابرو حالت مو نده بدل کړی په مهربانی سره ځان ډاډه کړی چي د تولو مخابرو حالت مو پروګرام یا هم ستونزی ته بدل کړی وې!','status'=>false]);}
         else{return response()->json(['message'=>'د مخابرو د پروګرام په برخه کی ستونزه موجوده ده په مهربانی سره بیا کوښښ وکړی!']);}
     }
+
+    public function printBill($id){
+
+        $currentRate = transmission::where('order_id', $id)
+            ->select(DB::raw('SUM(rate) as total'))
+            ->first()->toArray();
+
+        $orderType = transmission::where('order_id', $id)->get(['transmission_type_id'])->toArray();
+        $netRate = 0;
+        for ($i = 0; $i < count($orderType); $i++) {
+            $tTypeRate = transmissionType::where('id',$orderType[$i]['transmission_type_id'])->first()->rate;
+            $netRate += $tTypeRate;
+        }
+        // $totalRes = ($currentRate['total']*100)/$netRate;
+        $curent=$currentRate['total'];
+         $discount=80;
+        $order=order::where('id',$id)->first();
+        $a=order::where('id',$id)->first()->company_agent_id;
+        $agent=companyAgent::find($a);
+        $transmissions=transmission::join('transmission_types','transmission_types.id','transmissions.transmission_type_id')
+        ->join('transmission_models','transmission_models.id','transmissions.transmission_model_id')
+        ->join('provences','provences.id','transmissions.provence_id')->
+        select('transmissions.*','transmission_types.transmissionTypeName as tname','transmission_models.transmissionModelName as mname','provences.provenceName as pname')->where('transmissions.order_id',$id)->get();
+
+        return view('order.print1',compact('transmissions','order','agent','curent'));
+     }
 }

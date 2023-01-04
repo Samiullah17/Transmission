@@ -10,7 +10,7 @@
                         <div class="card-header">
 
                             <div class="card-tools">
-
+                                <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- /.card-header -->

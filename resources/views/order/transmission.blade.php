@@ -10,6 +10,8 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
+                                <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
+
                             </div>
                             <div class="card-title" id="ctitle">
 
@@ -28,8 +30,10 @@
 
 
 
-                                    <button type="button" id="printBill" value="{{ $order }}"
-                                        class="btn btn-primary btn-sm d-none">بیل چاپ کول</button>
+                                    {{-- <button type="button" id="printBill" value="{{ $order }}"
+                                        class="btn btn-primary btn-sm d-none">بیل چاپ کول</button> --}}
+
+                                    <a href="{{ route('transmission.printBill',$order) }}" id="printBill" class="btn btn-primary btn-sm d-none">بیل چاپ کول</a>
                                 @endif
 
 
@@ -69,6 +73,7 @@
                                     <th>د نماینده نوم</th>
                                     <th>د غوښتنی د راوړلو نیټه</th>
                                     <th>د غوښتنی د پروګرام کول نیټه</th>
+                                    <th>تخفیف</th>
                                      <th>د تخفیف وجه</th>
                                      <th>حالت</th>
 
@@ -78,6 +83,7 @@
                                     <td>{{ $agent }}</td>
                                     <td>{{ $order1->created_at }}</td>
                                     <td>{{ $order1->updated_at }}</td>
+                                    <td>{{ $discount }}</td>
                                     <td>{{ $order1->discountReason }}</td>
 
                                          <td><span class="badge badge-success">پروګرام شوی</span></td>
@@ -594,5 +600,28 @@
                 }
             })
         })
+
+        // $(document).on('click','#printBill',function(e){
+        //     e.preventDefault();
+        //     var id=$(this).val();
+        //     if(id!=null){
+        //         let url = "{{ route('transmission.printBill', ':id') }}";
+        //         url = url.replace(':id',id);
+        //         $.ajax({
+        //             type:'Get',
+        //             url:url,
+        //             dataType:'json',
+        //             success:function(response){
+        //               console.log(response);
+        //             },
+        //             error:function(response){
+
+        //             }
+        //         })
+        //     }
+        //     else{
+        //         swal('','ستونزه موجوده ده بیا کوښښ وکړی','error')
+        //     }
+        // })
     </script>
 @endsection

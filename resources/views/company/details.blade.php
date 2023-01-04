@@ -14,7 +14,8 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                د {{ $company->companyName }} کمپنی/بنسټ
+                                <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
+
 
                             </div>
                             <div class="card-title">
@@ -27,6 +28,10 @@
 
                                 <button type="button" value="{{ $company->id }}"
                                     class="btn btn-primary showOrder btn-sm">د بنسټ ټولی غوښتنی</button>
+
+
+                                <button type="button" value="{{ $company->id }}"
+                                    class="btn btn-primary showFreq btn-sm">فریکونسی</button>
 
 
                                 <button type="button" class="btn btn-primary  showAgents btn-sm">
@@ -327,6 +332,40 @@
 
                                         </tr>
                                     @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+
+                    <div class="card d-none showFreqCard mt-5">
+
+                        <div class="card-header">
+                            د {{ $company->companyName }} بنسټ/کمپنی د فریکونسیانو لیست
+                        </div>
+
+                        <div class="card-title">
+                            @if ($company->status == 1)
+                                <button type="button" style="float: left"
+                                    class="btn btn-primary addLicense btn-sm mt-2 ml-2" data-toggle="modal"
+                                    data-target="#modal-lg-add-license">د فریکونسی اضافه کول</button>
+                            @endif
+                        </div>
+
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered table-hover table-sm">
+
+                                <thead>
+                                    <th style="text-align: start">د فریکونسی نمبر</th>
+                                    <th style="text-align: start">ولایت</th>
+                                    <th style="text-align: start">د اترا لیسانس نمبر</th>
+                                    {{-- <th style="text-align: start">فایل</th> --}}
+
+                                </thead>
+                                <tbody id="licenseTbody">
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -910,7 +949,7 @@
                         // {data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                     language: {
-                        "emptyTable": "دیتا موجود نیست .",
+                        "emptyTable": "نماینده نلری",
                         "lengthMenu": "نمایش _MENU_ معلومات",
                         "info": "معلومات شماره START الی END مجموعه معلومات TOTAL",
                         "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
@@ -948,6 +987,8 @@
             $('.orderCard').removeClass('d-none');
             $('.licenseCard').addClass('d-none');
             $(this).removeClass('showOrder').addClass('order');
+            $('.showFreqCard').addClass('d-none');
+
         })
 
 
@@ -956,6 +997,7 @@
             $('.agentCard').addClass('d-none');
             $('.orderCard').removeClass('d-none');
             $('.licenseCard').addClass('d-none');
+            $('.showFreqCard').addClass('d-none');
 
         })
 
@@ -965,6 +1007,16 @@
             $('.licenseCard').removeClass('d-none');
             $('.agentCard').addClass('d-none');
             $('.orderCard').addClass('d-none');
+            $('.showFreqCard').addClass('d-none');
+        })
+
+
+        $(document).on('click', '.showFreq', function(e) {
+            e.preventDefault();
+             $('.licenseCard').addClass('d-none');
+            $('.agentCard').addClass('d-none');
+            $('.orderCard').addClass('d-none');
+            $('.showFreqCard').removeClass('d-none');
         })
 
 

@@ -32,7 +32,7 @@
                                     style="width: 5rem" class="btn btn-primary btn-sm">تکمیل</button>
                             </div>
                             <div class="card-tools">
-                                <p>د غوښتنی/آرډر په اړه معلومات</p>
+                                <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@
                                     <label>د تخفیف اندازه</label>
                                     <input type="number" id="discountAmount" name="dicount" class="form-control input-sm"
                                         placeholder="د تخفیف مقدار وارد کړی">
-                                    <input type="text" name="zeroDiscount" id="zeroDiscount" class="form-control">
+                                    <input type="hidden" name="zeroDiscount" id="zeroDiscount" class="form-control">
                                 </div>
 
 

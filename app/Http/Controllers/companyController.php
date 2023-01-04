@@ -164,8 +164,14 @@ class companyController extends Controller
                 $companylicense = Company::Join('company_licenses', 'companies.id', 'company_licenses.company_id')
                     ->join('license_types', 'company_licenses.license_type_id', 'license_types.id')
                     ->select('company_licenses.*', 'license_types.licenseTypeName as ltname')->where('companies.id', $company->id)->get();
-                if ($company != null) {
-                    return view('company.details', compact('company', 'provence', 'district', 'companylicense', 'licenseType'));
+
+                    //  $companyFreq=frequencey::join('provences','frequenceys.provence_id','provences.id')
+                    // ->select('provences.provenceName as pname','frequenceys.*')->where('frequenceys.order_id',$order)->get();
+
+
+
+                    if ($company != null) {
+                    return view('company.details', compact('company', 'provence', 'district', 'companylicense', 'licenseType',));
                 } else {
                     return redirect()->back();
                 }

@@ -9,8 +9,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                د {{ $aname->agentName }} د مخابرو لیست چی د {{ $company->companyName }} کمپنی لپاره یی راوړی
-                                <input type="hidden" value="{{ $aname->id }}" id="agentId">
+                                <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
+
+                                 <input type="hidden" value="{{ $aname->id }}" id="agentId">
                               </div>
                             <div class="card-title">
                                      {{-- <a href="{{ Storage::url($curentAgent->photo) }}">kdfjdkjf</a> --}}

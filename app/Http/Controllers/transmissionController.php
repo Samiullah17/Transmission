@@ -15,6 +15,8 @@ use App\Models\transmissionModel;
 use App\Models\transmissionType;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
+
 
 class transmissionController extends Controller
 {
@@ -62,15 +64,15 @@ class transmissionController extends Controller
                     if ($transmission != null) {
                         if ($request->rate > 0) {
                             $totalRate = $transmission->rate - $request->rate;
-                            $discount=new discount();
-                            $discount->order_id=$order->id;
-                            $discount->discount=$request->rate;
-                            $discount->transmission_type_id=$transmission->id;
+                            $discount = new discount();
+                            $discount->order_id = $order->id;
+                            $discount->discount = $request->rate;
+                            $discount->transmission_type_id = $transmission->id;
                             $discount->save();
                             $transmission->rate = $totalRate;
 
                             $transmission->save();
-                            return response()->json(['discount'=>$discount->id,'rate' => $totalRate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
+                            return response()->json(['discount' => $discount->id, 'rate' => $totalRate, 'message' => 'د مخابری قیمت په بریالیتوب سره تغیر شو', 'status' => true]);
                         } else if ($request->rate == 0) {
                             if ($transmission->id == 1) {
                                 $transmission->rate = 400;
@@ -110,14 +112,14 @@ class transmissionController extends Controller
     public function changeStatus(Request $request)
     {
 
-         if ($request->order) {
+        if ($request->order) {
             $order = order::find($request->order);
             if ($order->status == 0) {
 
                 if ($request->status == 'pdone') {
 
                     $data = transmission::where('id', $request->id)->first();
-                    if ($data->status == 0 || $data->status==2) {
+                    if ($data->status == 0 || $data->status == 2) {
                         $data->status = 1;
                         $tra = transmissionType::where('id', $data->transmission_type_id)->first()->rate;
                         $data->rate = $tra;
@@ -293,15 +295,29 @@ class transmissionController extends Controller
 
         $cid = order::where('id', $id)->first()->company_id;
         $cname = Company::where('id', $cid)->first()->companyName;
-        $agent= companyAgent::where('company_id',$cid)->first()->agentName;
-        $order1=order::find($order);
+        $agent = companyAgent::where('company_id', $cid)->first()->agentName;
+        $order1 = order::find($order);
+
+
+        $currentRate = transmission::where('order_id', $order)
+            ->select(DB::raw('SUM(rate) as total'))
+            ->first()->toArray();
+
+        $orderType = transmission::where('order_id', $order)->get(['transmission_type_id'])->toArray();
+        $netRate = 0;
+        for ($i = 0; $i < count($orderType); $i++) {
+            $tTypeRate = transmissionType::where('id',$orderType[$i]['transmission_type_id'])->first()->rate;
+            $netRate += $tTypeRate;
+        }
+        // $totalRes = ($currentRate['total']*100)/$netRate;
+         $discount=80;
 
 
         $provence = provence::all();
         $transmissionModel = transmissionModel::all();
         $transmissionType = transmissionType::all();
         $company = Company::find($cid);
-        return view('order.transmission', compact('company', 'transmissions', 'order', 'provence', 'transmissionModel', 'transmissionType', 'cname','agent','order1'));
+        return view('order.transmission', compact('company', 'transmissions', 'order', 'provence', 'transmissionModel', 'transmissionType', 'cname', 'agent', 'order1','discount'));
     }
 
     public function delete(Request $request)
