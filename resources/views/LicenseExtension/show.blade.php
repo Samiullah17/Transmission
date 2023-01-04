@@ -460,7 +460,7 @@
 
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="bank">بانک</label>
+                                <label for="bank">بانک نوم</label>
                                 <input type="text" class="form-control" name="bank" placeholder="بانک">
                                 <span id="1bank" class="text text-danger" name="bank" role="alert">
 
@@ -487,7 +487,7 @@
                     <div class="row">
                         <div class="form-group">
                             <label for="FineDays">د جریمی موده</label>
-                            <input type="number" class="form-control" name="FineDays" placeholder="بانک">
+                            <input type="number" class="form-control" name="FineDays" placeholder="د جریمی موده">
                             <span id="1FineDays" class="text text-danger" name="FineDays" role="alert">
 
                             </span>

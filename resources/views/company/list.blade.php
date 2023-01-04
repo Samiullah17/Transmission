@@ -105,8 +105,10 @@
                                         {{-- <th></th> --}}
                                     </tr>
                                 </thead>
+                                
                                 <tbody id="tbody1">
                                       <x-company-search-component :companys="$companys"></x-company-search-component>
+                                      
                                 </tbody>
                             </table>
                         </div>
