@@ -597,11 +597,7 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-<<<<<<< HEAD
                        // alert('success');
-=======
-                        // alert('success');
->>>>>>> 6760f7c405a184537348a2f4a6fe8039b075630a
                         window.location.replace(response.success);
                     },
                     error: function(response, error) {

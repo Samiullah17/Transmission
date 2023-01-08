@@ -16,7 +16,7 @@ class roleSeeder extends Seeder
     public function run()
     {
         // $role = Role::firstOrCreate(['name' => 'Admin']);
-        // User::find(1)->assignRole($role->id);
+        User::find(3)->assignRole("Admin");
         
         // Role::create(['name' => 'Provincial User'])->givePermissionTo(['display Company','Create Company','Create Trassmition',
         // 'Create Order','Diplay OrderDetails','Program Order','AddTrassmition',

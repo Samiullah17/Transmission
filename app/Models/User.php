@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -21,6 +22,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'Fname',
+        'GFname',
+        'NID',
+        'EID',
+        'phoneNO',
+        'provence_id',
+        'rutbaa_id',
+        'Management/Commander',
         'email',
         'password',
     ];

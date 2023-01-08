@@ -50,7 +50,9 @@
                                                 <th>اسم یوزر</th>
                                                 <th>ایمیل</th>
                                                 <th>حالت</th>
+                                                @can('Admin')
                                                 <th style="text-align: center">اکشن/عمل</th>
+                                                @endcan
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -70,25 +72,32 @@
                                                       <span class="badge badge-danger" style="height: 30px">غیر فعال</span>
                                                   </td>
                                                   @endif
-                                                    <td style="text-align: center">
-                                                        <a href=""  data-toggle="modal"
-                                                            data-target="" title="تغیر معلومات یوزر">
+                                                  <td style="text-align: center">
+                                                  @can('Admin')
+                                                        <a href="{{ route('user.edit', $user->id) }}" 
+                                                            title="تغیر معلومات یوزر">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                         {{-- <button value='{{$user->id}}'>klllkl</button> --}}
                                                         <button  value="{{$user->id}}" data-toggle="modal"
                                                         data-target="#modal-sm" id="deacivate" title="  غیر فعال/فعال نمودن یوزر ">
-                                                           <i class="fab fa-creative-commons-zero" style="-webkit-text-fill-color: red"></i>
+                                                           <i class="fas fa-lock" style="-webkit-text-fill-color: red"></i>
                                                         </button>
                                                         <a href="{{ route('user.permissions', $user->id) }}" data-toggle="modal"
                                                             data-target="#userPermissionsModal" title="صلاحیت یوزر">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
+                                                        <a href="{{ route('user.roles', $user->id) }}" data-toggle="modal"
+                                                            data-target="#userRolesModal" title="رول یوزر">
+                                                            <i class="fab fa-critical-role"></i>
+                                                        </a>
+                                                        @endcan
                                                         <a href="{{ route('user.permissions', $user->id) }}"
                                                              title="د یوزر معلومات">
                                                              <i class="fas fa-info-circle"></i>
                                                         </a>
                                                     </td> 
+                                                   
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -114,6 +123,7 @@
                         <form id="DeletePermission" method="post" >
                             @csrf
                             @method('Delete')
+                            
                             <input type="hidden" name='userID' id='userDeleteID'>
                             <div class="addperm form-group" style="display: inline" id='addperm'></div></form>
                             <form  method="Post" id="permissionForm">
@@ -145,6 +155,50 @@
             </div>
         </div>
 {{-- end of user permission modal --}}
+{{-- start of user roles --}}
+<div class="modal fade show" id="userRolesModal" style="display: none;" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header " >
+                <h5 class="modal-title">دیوزر رول</h5>
+                
+            </div>
+            <div id="userRolesInfo">
+                <form id="DeleteRoles" method="post" >
+                    @csrf
+                    @method('Delete')
+                    
+                    <input type="hidden" name='userID' id='roleuserDeleteID'>
+                    <div class="addrole form-group" style="display: inline" id='addrole'></div></form>
+            <form  method="Post" id="roleForm">
+                    <input type="hidden" name='userID' id='roleuserID'>
+                    <div class="form-group">
+                        <label for="roles">د نوی رول اضافه کول</label>
+                        <select name="role" class="form-control">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                            {{-- <option value="">sdfasfasd</option>
+                            <option >sadfasfa</option>
+                            <option >safasf</option> --}}
+                        </select>
+                        <span class="text-danger" id="permission"></span>
+                    </div>
+               
+            </div>
+        </form>
+            <div class="modal-footer justify-content-between pb-1">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                <input type="reset" hidden>
+                <a class="btn btn-success" type="submit"  href="{{route('user.role.grant')}}"
+                    name="grantRoleToUser">ثپت
+                    <i class="fas fa-save"></i></a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{{-- end of user roles --}}
 
 <div class="modal fade show" id="modal-sm" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -244,7 +298,7 @@
             //         }
             //     });
             // });
-            
+            // start of permission jquery
             $(document).on('click', '[data-target="#userPermissionsModal"]', function(e) {
                 e.preventDefault();
 
@@ -295,6 +349,104 @@
                     }
                 });
             });
+
+            $(document).on('click', '[class="btn btn-danger m-2"]', function(e) {
+                e.preventDefault();
+                let mainThis = this;
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'DELETE',
+                    data:$('#DeletePermission').serialize(),
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
+                    success: function(response) {
+                        $(mainThis).closest('a').remove();
+                        // removeLoading();
+                    },
+                    error: function(response) {
+                        removeLoading();
+                    }
+                });
+            });
+            // end permission jquery
+
+            //start roles jquery
+            $(document).on('click', '[data-target="#userRolesModal"]', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'GET',
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
+                    success: function(response) {
+                        // $('#userPermissionsInfo').html(response.success);
+                        // removeLoading();
+                        $('#addrole').html('');
+                        $('#roleuserID').val(response.userID);
+                        $('#roleuserDeleteID').val(response.userID);
+                        
+                        $.each(response.success, function(key, item) {
+                        
+                            $('#addrole').append('<div class="forbtn"><a class="btn btn-danger m-2 deleteonerole" href="'+'{!!URL::to('revoke/role')!!}'+'/'+item+'"> '+item+ '</a><input type="hidden" name="'+item+'btn" value='+item+'></div>');
+                        });
+                     
+                    },
+                    error: function(response, error) {
+                        // removeLoading();
+                    }
+                });
+            });
+
+            $(document).on('click', '[name="grantRoleToUser"]', function(e) {
+                e.preventDefault();
+                clearErrorMessage();
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'POST',
+                    data: $('#roleForm').serialize(),
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
+                    success: function(response) {
+                        $('#userRolesModal').hide();
+                        $('[data-dismiss="modal"]').click();
+                        hideModal();
+                        // removeLoading();
+                    },
+                    error: function(response, error) {
+                        displayErrorMessages(response);
+                        removeLoading();
+                    }
+                });
+            });
+
+            $(document).on('click', '.deleteonerole', function(e) {
+                e.preventDefault();
+                let mainThis = this;
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'DELETE',
+                    data:$('#DeleteRoles').serialize(),
+                    // beforeSend: function() {
+                    //     displayLoading();
+                    // },
+                    success: function(response) {
+                        $(mainThis).closest('a').remove();
+                        // removeLoading();
+                    },
+                    error: function(response) {
+                        // removeLoading();
+                    }
+                });
+            });
+
+            // end roles jquery
                 $(document).on('click','#deacivate', function (e) {
                     e.preventDefault();
                    var userID= $(this).closest('button').val();
@@ -326,27 +478,7 @@
                     
                 });
             });
-            $(document).on('click', '[class="btn btn-danger m-2"]', function(e) {
-                e.preventDefault();
-                let mainThis = this;
-
-                $.ajax({
-                    url: $(this).attr('href'),
-                    method: 'DELETE',
-                    data:$('#DeletePermission').serialize(),
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
-                    success: function(response) {
-                        $(mainThis).closest('a').remove();
-                        // removeLoading();
-                    },
-                    error: function(response) {
-                        removeLoading();
-                    }
-                });
-            });
-
+            
             function displayErrorMessages(response) {
                 if (response.status === 403 || response.status === 404) $().html(response.message);
                 else {

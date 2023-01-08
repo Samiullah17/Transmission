@@ -28,7 +28,7 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">ایمیل آدرس او پاسورد مو ولیکی او سیستم ته داخل شی</p>
+                <p class="login-box-msg">ایمیل آدرس اوdasdasda پاسورد مو ولیکی او سیستم ته داخل شی</p>
 
                 <form action="{{ route('login') }}" method="post">
                     @csrf
