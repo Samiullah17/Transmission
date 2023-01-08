@@ -1,5 +1,10 @@
 @extends('layouts1.app')
 @section('content')
+   <style>
+    .error{
+        color: red;
+    }
+   </style>
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -51,20 +56,34 @@
                                                 <option value="{{ $item->id }}">{{ $item->agentName }}</option>
                                             @endforeach
                                         </select>
+                                        <span class="text text-danger" role="alert">
+                                            @error('agent_id')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label>پشنهادی فایل</label>
                                         <input type="hidden" name="agent_id1" id="orderAgentId" class="form-control">
-
                                         <input type="file" name="suggestion_file" id="sugesstionFile"
                                             placeholder="پشنهادی فایل وارد کړی" class="form-control">
+                                            <span class="text text-danger" role="alert">
+                                                @error('suggestion_file')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label>د فریکونسی تعداد</label>
                                         <input type="text" id="traQuantity" name="traQuantity"
                                             placeholder="د فریکونسی تعداد وارد کړی" class="form-control">
+                                            <span class="text text-danger" role="alert">
+                                                @error('suggestion_file')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
 
                                     </div>
                                 </div>
@@ -147,6 +166,27 @@
 <script>
     $(document).ready(function() {
 
+        $('#frm34').validate({
+            ignore:[],
+            rules:{
+                'transmission_type_id[]':'required',
+                'transmission_model_id[]':'required',
+                'provence_id[]':'required',
+                'serialNo[]':'required',
+                'agent_id':'required',
+                'suggestion_file':'required',
+            },
+            messages:{
+
+                'transmission_type_id[]':'په مهربانی سره د مخابری ډول انتخاب کړی!',
+                'transmission_model_id[]':'په مهربانی سره د مخابری ماډل انتخاب کړی',
+                'provence_id[]':'په مهربانی سره ولایت انتخاب کړی',
+                'serialNo[]':'په مهربانی سره سریال نمبر داخل کړی',
+                'agent_id':'د بنسټ نماینده انتخاب کړی',
+                'suggestion_file':'پشنهادی فایل داخل کړی!',
+            }
+        });
+
         $('#company_id').select2();
 
         $(document).on('click','#addTransmittion',function(){
@@ -206,37 +246,56 @@
                                 @endif
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_type_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">د واکی ټاکی ماډل</label>
-                            <select name="transmission_model_id[]" id="" class="form-control">
+                            <select name="transmission_model_id[]" id="" class="form-control wmodal">
                                 <option disabled selected>د واکی تاکی ماډل انتخاب کړی</option>
                                 @foreach ($transmissionModel as $item)
                                 <option value="{{ $item->id }}">{{ $item->transmissionModelName }}</option>
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_model_id')
+                                    {{ $message }}
+                                @enderror
+                             </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">ولایت</label>
-                            <select name="provence_id[]" id="pro" class="form-control">
+                            <select name="provence_id[]" id="pro" class="form-control wprovence">
                                 <option selected disabled>ولایت انتخاب کړی</option>
                                 @foreach ($provence as $item)
                                 <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('provence_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-2">
                             <label>سریال نمبر</label>
-                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
+                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control wserial">
+                            <span class="text text-danger" role="alert">
+                                @error('serialNo')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                         <div class="col-1"><div class="card-title mt-4">
                             <i class="fas fa-window-close" style="color:red"></i></div></div></div>`;
@@ -251,12 +310,17 @@
                                 @endif
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_type_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">د بیس ستیشن ماډل</label>
-                            <select name="transmission_model_id[]" id="" class="form-control">
+                            <select name="transmission_model_id[]" id="" class="form-control bmodal">
                                 <option selected disabled>د بیس سټیشن ماډل انتخاب کړی</option>
 
                                 @foreach ($transmissionModel as $item)
@@ -264,25 +328,39 @@
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_model_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">ولایت</label>
-                            <select name="provence_id[]" id="provence_id[]" class="form-control">
+                            <select name="provence_id[]" id="provence_id[]" class="form-control bprovence">
                                 <option selected disabled>ولایت انتخاب کړی</option>
                                 @foreach ($provence as $item)
                                 <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('provence_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-2">
                             <label>سریال نمبر</label>
-                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
+                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control bserial">
+                            <span class="text text-danger" role="alert">
+                                @error('serialNo')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                         <div class="col-1"><div class="card-title mt-4">
                             <i class="fas fa-window-close" style="color:red"></i></div></div></div>`;
@@ -296,37 +374,56 @@
                                 @endif
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_type_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">د کودان ماډل</label>
-                            <select name="transmission_model_id[]" id="" class="form-control">
+                            <select name="transmission_model_id[]" id="" class="form-control cmodal">
                                 <option disabled selected>د کودان ماډل انتخاب کړی</option>
                                 @foreach ($transmissionModel as $item)
                                 <option value="{{ $item->id }}">{{ $item->transmissionModelName }}</option>
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_model_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">ولایت</label>
-                            <select name="provence_id[]" id="pro" class="form-control">
+                            <select name="provence_id[]" id="pro" class="form-control cprovence">
                                 <option selected disabled>ولایت انتخاب کړی</option>
                                 @foreach ($provence as $item)
                                 <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('provence_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-2">
                             <label>سریال نمبر</label>
-                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
+                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control cserial">
+                            <span class="text text-danger" role="alert">
+                                @error('serialNo')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                         <div class="col-1"><div class="card-title mt-4">
                             <i class="fas fa-window-close" style="color:red"></i></div></div></div>`;
@@ -341,37 +438,56 @@
                                 @endif
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_type_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">د رپیټر ماډل</label>
-                            <select name="transmission_model_id[]" id="" class="form-control">
+                            <select name="transmission_model_id[]" id="" class="form-control rmodal">
                                 <option disabled selected>د رپیتر ماډل انتخاب کړی</option>
                                 @foreach ($transmissionModel as $item)
                                 <option value="{{ $item->id }}">{{ $item->transmissionModelName }}</option>
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('transmission_model_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-3">
                             <label for="">ولایت</label>
-                            <select name="provence_id[]" id="pro" class="form-control">
+                            <select name="provence_id[]" id="pro" class="form-control rprovence">
                                 <option selected disabled>ولایت انتخاب کړی</option>
                                 @foreach ($provence as $item)
                                 <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
 
                                 @endforeach
                             </select>
+                            <span class="text text-danger" role="alert">
+                                @error('provence_id')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
 
 
                         <div class="form-group col-md-2">
                             <label>سریال نمبر</label>
-                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control">
-
+                            <input type="text" name="serialNo[]" placeholder="سریال نمبر ولیکی" class="form-control rserial">
+                            <span class="text text-danger" role="alert">
+                                @error('serialNo')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                         <div class="col-1"><div class="card-title mt-4">
                             <i class="fas fa-window-close" style="color:red"></i></div></div></div>`;
@@ -391,9 +507,13 @@
 
             if(w>0){
                 for(var i=0; i<w; i++){
-
-                  $('#row12').append(wakiTaki)
-
+                  $('#row12').append(wakiTaki);
+                  $('.wmodal').attr('id','wm'+i);
+                    $('.wprovence').attr('id','wp'+i);
+                   $('.wserial').attr('id','ws'+i);
+                   $('.wmodal').removeClass('wmodal');
+                  $('.wprovence').removeClass('wprovence');
+                  $('.wserial').removeClass('wserial');
                 }
 
             }
@@ -403,16 +523,36 @@
             if(b>0){
               for(var i=0; i<b; i++){
                 $('#row12').append(base);
+
+                $('.bmodal').attr('id','bm'+i);
+                $('.bprovence').attr('id','bp'+i);
+                $('.bserial').attr('id','bs'+i);
+                $('.bmodal').removeClass('bmodal');
+                $('.bprovence').removeClass('bprovence');
+                $('.bserial').removeClass('bserial');
               }
             }
             if(c>0){
               for(i=0;i<c; i++){
                 $('#row12').append(code);
+
+                $('.cmodal').attr('id','cm'+i);
+                $('.cprovence').attr('id','cp'+i);
+                $('.cserial').attr('id','cs'+i);
+                $('.cmodal').removeClass('cmodal');
+                $('.cprovence').removeClass('cprovence');
+                $('.cserial').removeClass('cserial');
               }
             }
             if(r>0){
               for(i=0; i<r; i++){
                 $('#row12').append(rep);
+                $('.rmodal').attr('id','rm'+i);
+                $('.rprovence').attr('id','rp'+i);
+                $('.rserial').attr('id','rs'+i);
+                $('.rmodal').removeClass('rmodal');
+                $('.rprovence').removeClass('rprovence');
+                $('.rserial').removeClass('rserial');
               }
             }
             if(freq>0){

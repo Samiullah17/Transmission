@@ -499,7 +499,6 @@
 
             let url = "{{ route('transmission.show', ':id') }}";
             url = url.replace(':id', $('#order').val());
-
             $.ajax({
                 type: "get",
                 url: url,

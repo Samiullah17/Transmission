@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\createOrder;
+use App\Http\Requests\licenseEdit;
+use App\Http\Requests\licenseUpdate;
 use App\Http\Requests\SaveCompanyRequest;
+use App\Http\Requests\updateCompanyRequest;
 use App\Models\citizenship;
 use App\Models\Company;
 use App\Models\companyActiveType;
@@ -25,6 +29,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class companyController extends Controller
 {
@@ -52,22 +57,6 @@ class companyController extends Controller
                 'companies.*'
             )->paginate(5);
 
-        // $companies = Company::join('company_active_types', 'companies.company_active_type_id', 'company_active_types.id')
-        //     ->join('company_types', 'companies.company_type_id', 'company_types.id')
-        //     ->select(
-        //         'company_active_types.companyName as aname',
-        //         'company_types.companyTypeName as tname',
-        //         'companies.*'
-        //     )->get();
-
-
-
-
-        // $companies=company::join('company_active_types','companies.company_active_type_id','company_active_types.id')
-        // ->leftjoin('company_types','companies.company_type_id','company_types.id')
-        // ->leftjoin('citizenships','companies.citizenship_id','citizenships.id')
-        // ->select('company_active_types.companyName as aname','company_types.companyTypeName as tname',
-        // 'citizenships.citizenshipName as cname','companies.companyName as name','companies.companyManagerName as mname','companies.id as comp_id')->get();
 
 
         return view('company.list', compact('licenseType', 'countires', 'companyType', 'companyActiveType', 'citizenships', 'provence', 'district', 'companys'));
@@ -105,8 +94,6 @@ class companyController extends Controller
 
     public function saveCompnay(SaveCompanyRequest $request)
     {
-
-
 
         $company = new Company();
         $company->companyName = $request->companyName;
@@ -214,7 +201,7 @@ class companyController extends Controller
          return response()->json(['agent'=>$cagent,]);
     }
 
-    public function addTransmission(Request $request)
+    public function addTransmission(createOrder $request)
     {
 
         if ($request != null) {
@@ -360,11 +347,11 @@ class companyController extends Controller
             $citizenships=citizenship::all();
             $countries=country::all();
             $cid=$company->country_id;
-            return response()->json(['cid'=>$cid,'countries'=>$countries,'citizenships'=>$citizenships,'company'=>$company,'companyType'=>$companyType,'companyActiveType'=>$companyActiveType]);
-         }
+            return response()->json(['cid'=>$cid,'countries'=>$countries,'citizenships'=>$citizenships,'company'=>$company,'companyType'=>$companyType,'companyActiveType'=>$companyActiveType,'status'=>true]);
+         }else{return response()->json(['message'=>'ستونزه ده وروسته بیا کوښښ وکړی!','status'=>false]);}
     }
 
-    public function update(Request $request)
+    public function update(updateCompanyRequest $request)
     {
         $company = company::find($request->company_id);
         $company->companyName = $request->companyName;
@@ -384,7 +371,7 @@ class companyController extends Controller
             ->join('company_types', 'companies.company_type_id', 'company_types.id')
             ->select('companies.*', 'company_active_types.companyName as aname', 'company_types.companyTypeName as tname')
             ->where('companies.id', $request->company_id)->first();
-        return response()->json(['company' => $cmp, 'message' => 'د کمپنی معلومات په بریالیتوب سره تغیر شول!']);
+        return response()->json(['company' => $cmp, 'message' => 'د کمپنی معلومات په بریالیتوب سره تغیر شول!','status'=>true]);
     }
 
     public function DeActive($id)
@@ -418,7 +405,7 @@ class companyController extends Controller
 
     }
 
-    public function updateLicese(Request $request)
+    public function updateLicese(licenseUpdate $request)
     {
         if($request->ajax()){
             if($request!=null){
@@ -456,9 +443,8 @@ class companyController extends Controller
     }
 
 
-    public function addLicense(Request $request)
+    public function addLicense(licenseEdit $request)
     {
-
 
         if (companyLicense::where('company_id', $request->company_id)->where('license_type_id', $request->license_type_id)->exists()) {
             return response()->json(['message' => 'دا لیسانس موجود ده کمپنی کی کولای شی تفیر یا هم حذف یی کړی', 'status' => false]);
@@ -511,4 +497,21 @@ class companyController extends Controller
         $country=country::all();
         return response()->json(['country'=>$country]);
     }
+
+    public function getFreq($id){
+        $order=order::where('company_id',$id)->first()->id;
+        $freq=frequencey::join('provences','frequenceys.provence_id','provences.id')
+        ->select('provences.provenceName as pname','frequenceys.*')->where('frequenceys.order_id',$order)->get();
+        if($freq!=null){
+
+            return Datatables::of($freq)->addIndexColumn()
+            ->addColumn('status', function ($freq) {
+                    $btn = '<span class="badge badge-success">فعاله</span>';
+                    return $btn;
+            })
+            ->rawColumns(['action', 'status'])
+            ->make(true);
+
+        }
+     }
 }

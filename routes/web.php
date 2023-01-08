@@ -17,16 +17,6 @@ use Symfony\Component\Finder\Finder;
 use App\Http\Controllers\transmissionController;
 use App\Http\Controllers\UserController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('test');
@@ -145,4 +135,5 @@ Route::middleware(['auth'])->group(function(){
     Route::get('user/profile/{id}',[profileController::class,'show'])->name('user.profile');
     Route::get('program/again/{id}',[orderController::class,'programAgain'])->name('order.programAgain');
     Route::get('transmission/printBill/{id}',[orderController::class,'printBill'])->name('transmission.printBill');
+    Route::get('company/Frequencey/{id}',[companyController::class,'getFreq'])->name('company.frequencey');
 });

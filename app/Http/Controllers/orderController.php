@@ -19,7 +19,9 @@ use App\Models\provence;
 use App\Models\transmission;
 use App\Models\transmissionModel;
 use App\Models\transmissionType;
+use App\Models\userAcount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -128,6 +130,7 @@ class orderController extends Controller
             if ($order != null) {
                 // $order->status = 0;
                 $or=order::where('id',$id)->update(['status'=>0,'discountFile'=>null,'discountReason'=>null]);
+                $userAcount=userAcount::where('order_id',$id)->delete();
                 // $order->update();
                 $transmissions = transmission::where('order_id', $id)->update(['status' => 0,'rate'=>0]);
             }
@@ -175,6 +178,15 @@ class orderController extends Controller
 
                 $order->status = 1;
                 $order->Save();
+
+                $transmission=transmission::where('order_id',$id)->selectRaw('sum(rate) as total_order_amount')->get();
+
+                $userAcount=new userAcount();
+                $userAcount->order_id=$id;
+                $userAcount->user_id=Auth::user()->id;
+                $userAcount->money=$transmission[0]->total_order_amount;
+                $userAcount->save();
+
                 $transmissiontype = new transmissionType();
                 $transmission = transmissionType::find(1);
                 $transmission->rate = 400;
@@ -191,6 +203,8 @@ class orderController extends Controller
                 $transmission = transmissionType::find(4);
                 $transmission->rate = 1200;
                 $transmission->update();
+
+
                 return response()->json(['order' => $order, 'message' => 'مخابری په بریالیتوب سره پروګرام شوی!!!', 'status' => true]);
             } else {
                 return response()->json(['message' => 'مخابری پخوا پروګرام شوی !!!', 'status' => false]);
