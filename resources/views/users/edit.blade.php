@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-                    <div class="card-title text-center"><b> ثپت یوزر جدید</b></div>
+                    <div class="card-title text-center"><b>  دیوزر معلومات تغیرول</b></div>
                 </div>
             </div>
             <div class="card-body">
@@ -22,7 +22,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="name"><span class="text-danger">*</span> کارمند نوم</label>
-                            <input class="form-control" name="name" value="{{ old('name') }}" type="text" placeholder="اسم کارمند">
+                            <input class="form-control" name="name" value="{{$users->name}}" type="text" placeholder="اسم کارمند">
                             @error('name')
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
@@ -31,7 +31,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="Fname"><span class="text-danger">*</span>پلار نوم</label>
-                            <input class="form-control" name="Fname" value="{{ old('Fname') }}" type="text" placeholder="پلار نوم">
+                            <input class="form-control" name="Fname" value="{{$users->Fname }}" type="text" placeholder="پلار نوم">
                             @error('Fname')
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
@@ -40,7 +40,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="GFname"><span class="text-danger">*</span>د نیکه نوم</label>
-                            <input class="form-control" name="GFname" value="{{ old('GFname') }}" type="text" placeholder="د نیکه نوم">
+                            <input class="form-control" name="GFname" value="{{ $users->GFname }}" type="text" placeholder="د نیکه نوم">
                             @error('GFname')
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
@@ -49,7 +49,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="NID"><span class="text-danger">*</span>د تذکره شمیره</label>
-                            <input class="form-control" name="NID" value="{{ old('NID') }}" type="text" placeholder="د تذکره شمیره">
+                            <input class="form-control" name="NID" value="{{ $users->NID }}" type="text" placeholder="د تذکره شمیره">
                             @error('NID')
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
@@ -60,7 +60,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="CID"><span class="text-danger">*</span>دهویت کارت شمیره</label>
-                            <input class="form-control" name="CID" value="{{ old('CID') }}" type="text" placeholder="دهویت کارت شمیره">
+                            <input class="form-control" name="CID" value="{{$users->EID}}" type="text" placeholder="دهویت کارت شمیره">
                             @error('CID')
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
@@ -69,7 +69,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="mobile"><span class="text-danger">*</span> د موبایل شمیره</label>
-                            <input class="form-control" name="mobile" value="{{ old('mobile') }}" type="text" placeholder="د موبایل شمیره">
+                            <input class="form-control" name="mobile" value="{{ $users->phoneNO }}" type="text" placeholder="د موبایل شمیره">
                             @error('mobile')
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
@@ -78,7 +78,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="email"><span class="text-danger">*</span>ایمیل</label>
-                            <input class="form-control" name="email" value="{{ old('email') }}" type="email" placeholder=" ایمیل ">
+                            <input class="form-control" name="email" value="{{ $users->email  }}" type="email" placeholder=" ایمیل ">
                             @error('email')
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
@@ -87,7 +87,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="password">رمز <span class="text-danger">*</span></label>
-                            <input class="form-control" name="password" type="password" placeholder=" رمز">
+                            <input class="form-control" value="{{ $users->password  }}" name="password" type="password" placeholder=" رمز">
                             @error('password')
                             <span name="password" class="text-danger">{{$message}}</span>
                             @enderror
@@ -104,7 +104,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    {{-- <div class="col-lg-3">
                         <div class="form-group">
                             <label for=""><span class="text-danger">*</span>ولایت</label>
                             <select name="province" id="province" class="form-control ">
@@ -120,8 +120,8 @@
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-lg-3">
+                    </div> --}}
+                    {{-- <div class="col-lg-3">
                         <div class="form-group">
                             <label for="rutbaa"><span class="text-danger">*</span>رتبه</label>
                             <select name="rutbaa" id="rutbaa" class="form-control ">
@@ -137,14 +137,14 @@
                             <span name="name" class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
                    
                   
                     <div class="col-3">
                         <div class="form-group">
                             <label for="Base"><span class="text-danger">*</span>آمریت/مدیریت </label>
-                            <input class="form-control" name="Base" value="{{ old('Base') }}" type="text"
+                            <input class="form-control" value="{{ $users->Management_Commander}}"  name="Base" value="{{ old('Base') }}" type="text"
                                 placeholder="آمریت/مدیریت">
                                 @error('Base')
                                 <span name="name" class="text-danger">{{$message}}</span>

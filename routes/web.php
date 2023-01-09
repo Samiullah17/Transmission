@@ -9,7 +9,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LicenseExtensionController;
 use App\Http\Controllers\permissionController;
 use App\Http\Controllers\RegistrationRightController;
-use App\Http\Controllers\roleController;use App\Http\Controllers\orderController;
+use App\Http\Controllers\roleController;
+use App\Http\Controllers\orderController;
 use App\Http\Controllers\profileController;
 use App\Models\RegistrationRight;
 use Illuminate\Support\Facades\Route;
@@ -22,16 +23,34 @@ Route::get('/', function () {
     return view('test');
 });
 
-Route::get('/dashboard',[HomeController::class,'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 
 require __DIR__ . '/auth.php';
 
 
 
-Route::middleware(['auth'])->group(function(){
-    route::get('register',[RegisteredUserController::class,'create'])->name('register');
-    route::post('register',[RegisteredUserController::class,'store'])->name('register');
+Route::middleware(['auth'])->group(function () {
+
+    Route::middleware('role_or_permission:Admin')->group(function () {
+        route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+        route::post('register', [RegisteredUserController::class, 'store'])->name('register');
+
+        Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('user/deactivate/{id}', [UserController::class, 'destroy'])->name('user.deactivate');
+        Route::get('user/{id}/permission', [PermissionController::class, 'userPermissions'])->name('user.permissions');
+        Route::post('user/permission/grant', [permissionController::class, 'grantPermissions'])->name('user.permission.grant');
+        Route::delete('revoke/premission/{id}', [permissionController::class, 'revokePermission'])->name('revoke.Permission');
+
+        Route::get('user/{id}/role', [PermissionController::class, 'userRoles'])->name('user.roles');
+        Route::post('user/role/grant', [permissionController::class, 'grantRoles'])->name('user.role.grant');
+        Route::delete('revoke/role/{id}', [permissionController::class, 'revokeRole'])->name('revoke.role');
+
+    });
+
+    Route::middleware('role_or_permission:Admin|Display User')->group(function () {
+        route::get('list/user', [UserController::class, 'index'])->name('list.user');
+    });
     Route::get('add/company', [companyController::class, 'addCompany'])->name('add.company');
     Route::post('save/company', [companyController::class, 'saveCompnay'])->name('save.company');
     Route::post('save/company1', [companyController::class, 'saveCompany1'])->name('save.company1');
@@ -47,12 +66,12 @@ Route::middleware(['auth'])->group(function(){
     Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
     // Route::post('save/transmittion', [companyController::class, 'addTransmission'])->name('transmission.save');
 
-        Route::get('comopanies/orders',  [transmissionController::class,  'listTransmission'])->name('companies.orders');
-        Route::get('list/transmission',  function  ()  {
-            return view('transmittion.list');
-        })->name('list.transmission');
-        Route::get('company/transmission/{id?}',  [companyController::class,  'companyTransmission'])->name('company.transmission');
-    Route::get('company/search',[companyController::class,'Search'])->name('company.search');
+    Route::get('comopanies/orders',  [transmissionController::class,  'listTransmission'])->name('companies.orders');
+    Route::get('list/transmission',  function () {
+        return view('transmittion.list');
+    })->name('list.transmission');
+    Route::get('company/transmission/{id?}',  [companyController::class,  'companyTransmission'])->name('company.transmission');
+    Route::get('company/search', [companyController::class, 'Search'])->name('company.search');
 
     Route::get('company/agent/{id?}', [agentController::class, 'companyAgent'])->name('company.agent');
     Route::get('agent/details/{id?}', [agentController::class, 'cagent'])->name('agent.details');
@@ -75,11 +94,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('EditlicenseExtension/company/{id}', [LicenseExtensionController::class, 'update'])->name('EditlicenseExtension.company');
     Route::get('oldlicenseExt/company/{id}', [LicenseExtensionController::class, 'index'])->name('oldlicenseExt.company');
 
-        Route::get('fine/company/{id}', [CompanyFineController::class, 'show'])->name('fine.company');
+    Route::get('fine/company/{id}', [CompanyFineController::class, 'show'])->name('fine.company');
     Route::get('fine/show/{id}',  [CompanyFineController::class,  'show1'])->name('fine.show');
     Route::delete('delteFine/company/{id}', [CompanyFineController::class, 'destroy'])->name('delteFine.company');
     Route::PUT('UpdateFine/company/{id}', [CompanyFineController::class, 'update'])->name('UpdateFine.company');
-       Route::get('EditFine/company/{id}',  [CompanyFineController::class,  'edit'])->name('EditFine.company');
+    Route::get('EditFine/company/{id}',  [CompanyFineController::class,  'edit'])->name('EditFine.company');
     Route::get('edit/company{id}', [companyController::class, 'edit'])->name('edit.company');
 
     Route::get('list/company', [companyController::class, 'index'])->name('list.company');
@@ -124,16 +143,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('add/order/{id}', [orderController::class, 'createOrder'])->name('add.order');
     Route::get('show/orders/{id?}', [orderController::class, 'getOrder'])->name('company.orders');
     Route::get('orders/program/{id?}', [orderController::class, 'program'])->name('order.program');
-    route::get('list/user',[UserController::class,'index'])->name('list.user');
-    Route::put('user/deactivate/{id}',[UserController::class,'destroy'])->name('user.deactivate');
-    Route::get('user/{id}/permission', [PermissionController::class, 'userPermissions'])->name('user.permissions');
-    Route::post('user/permission/grant',[permissionController::class,'grantPermissions'])->name('user.permission.grant');
-    Route::delete('revoke/premission/{id}',[permissionController::class,'revokePermission'])->name('revoke.Permission');
-    Route::get('test',function(){
+
+    Route::get('test', function () {
         return view('test');
     });
-    Route::get('user/profile/{id}',[profileController::class,'show'])->name('user.profile');
-    Route::get('program/again/{id}',[orderController::class,'programAgain'])->name('order.programAgain');
-    Route::get('transmission/printBill/{id}',[orderController::class,'printBill'])->name('transmission.printBill');
-    Route::get('company/Frequencey/{id}',[companyController::class,'getFreq'])->name('company.frequencey');
+    Route::get('user/profile/{id}', [profileController::class, 'show'])->name('user.profile');
+    Route::get('program/again/{id}', [orderController::class, 'programAgain'])->name('order.programAgain');
+    Route::get('transmission/printBill/{id}', [orderController::class, 'printBill'])->name('transmission.printBill');
 });
