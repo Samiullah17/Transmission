@@ -20,7 +20,20 @@
     <link rel="stylesheet" href="{{ asset('alert/bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('alert/toastr.min.css') }}">
     <!-- Styles -->
+    @yield('style')
     <style>
+      img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        #loadingImage{
+            opacity: 1;
+        }
+    
         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
         html {
             line-height: 1.15;
@@ -363,16 +376,32 @@
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         @include('layouts1.header')
-        @include('layouts1.sidebar')
+        @include('layouts1.sidebar1')
 
         @yield('content')
-
         @include('layouts1.footer')
 
     </div>
+    <div id="loadingImage" class="d-none">
+        <img src="{{ asset('images/loading.gif') }}" alt="loading">
+    </div>
 
     @yield('script')
+<script>
+    function displayLoading() {
+        $('#loadingImage').removeClass('d-none');
+        $('.wrapper').addClass('d-none');
+        $('.container').addClass('d-none');
+        $('input,button,select').attr('disabled', 'true');
+    }
 
+    function removeLoading() {
+        $('input,button,select').removeAttr('disabled');
+        $('#loadingImage').addClass('d-none');
+        $('.wrapper').removeClass('d-none');
+        $('.container').removeClass('d-none');
+    }
+</script>
 {{-- <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script> --}}
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}

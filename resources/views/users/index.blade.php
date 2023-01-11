@@ -305,12 +305,12 @@
                 $.ajax({
                     url: $(this).attr('href'),
                     method: 'GET',
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
-                        // $('#userPermissionsInfo').html(response.success);
-                        // removeLoading();
+                      
+                        removeLoading();
                         $('#addperm').html('');
                         $('#userDeleteID').val(response.userID);
                         $('#userID').val(response.userID);
@@ -334,14 +334,15 @@
                     url: $(this).attr('href'),
                     method: 'POST',
                     data: $('#permissionForm').serialize(),
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
-                        $('#userPermissionsModal').hide();
-                        $('[data-dismiss="modal"]').click();
-                        hideModal();
-                        // removeLoading();
+                       
+                        $('#userPermissionsModal').modal('hide');
+                        // $('[data-dismiss="modal"]').click();
+                        
+                        removeLoading();
                     },
                     error: function(response, error) {
                         displayErrorMessages(response);
@@ -358,12 +359,12 @@
                     url: $(this).attr('href'),
                     method: 'DELETE',
                     data:$('#DeletePermission').serialize(),
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
                         $(mainThis).closest('a').remove();
-                        // removeLoading();
+                        removeLoading();
                     },
                     error: function(response) {
                         removeLoading();
@@ -379,12 +380,12 @@
                 $.ajax({
                     url: $(this).attr('href'),
                     method: 'GET',
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
                         // $('#userPermissionsInfo').html(response.success);
-                        // removeLoading();
+                        removeLoading();
                         $('#addrole').html('');
                         $('#roleuserID').val(response.userID);
                         $('#roleuserDeleteID').val(response.userID);
@@ -396,7 +397,7 @@
                      
                     },
                     error: function(response, error) {
-                        // removeLoading();
+                        removeLoading();
                     }
                 });
             });
@@ -409,14 +410,13 @@
                     url: $(this).attr('href'),
                     method: 'POST',
                     data: $('#roleForm').serialize(),
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
-                        $('#userRolesModal').hide();
-                        $('[data-dismiss="modal"]').click();
-                        hideModal();
-                        // removeLoading();
+                        $('#userRolesModal').modal('hide');
+                        // $('[data-dismiss="modal"]').click();
+                        removeLoading();
                     },
                     error: function(response, error) {
                         displayErrorMessages(response);
@@ -433,15 +433,15 @@
                     url: $(this).attr('href'),
                     method: 'DELETE',
                     data:$('#DeleteRoles').serialize(),
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
                         $(mainThis).closest('a').remove();
-                        // removeLoading();
+                        removeLoading();
                     },
                     error: function(response) {
-                        // removeLoading();
+                        removeLoading();
                     }
                 });
             });
@@ -461,15 +461,17 @@
                     url: url,
                     method: 'Put',
                     
-                    // beforeSend: function() {
-                    //     displayLoading();
-                    // },
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
+                        $('#modal-sm').modal('hide');
+                       
                         window.location.replace(response.success);
-                        // removeLoading();
+                        removeLoading();
                     },
                     error: function(response) {
-                        //removeLoading();
+                        removeLoading();
                     }
                 });
                        

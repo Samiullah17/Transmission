@@ -444,10 +444,17 @@
                     data: saveRegRightFormData,
                     contentType: false,
                     processData: false,
+                    beforeSend: function() {
+                        displayLoading();
+                    },
                     success: function(response) {
                         window.location.replace(response.success);
+                        $('#modal-x2').modal('hide');
+                        // $('[data-dismiss="modal"]').click();
+                        removeLoading();
                     },
                     error: function(response, error) {
+                        removeLoading();
                         displayRegRightError(response.responseJSON.errors);
                     }
                 });
