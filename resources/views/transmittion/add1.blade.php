@@ -435,15 +435,6 @@
 
 
             })
-
-
-
-
-
-
-
-
-
         });
     </script>
 @endsection

@@ -16,98 +16,106 @@
         </div>
       </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                د موسساتو او شرکتونو ثبت
-                 {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            د موسساتو او شرکتونو ثبت
+                            {{-- <i class="right fas fa-angle-left"></i> --}}
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
 
 
-              <li class="nav-item">
-                <a href="{{ route('list.company') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>د موسسو/ شرکتونو لیست</p>
-                </a>
-              </li>
+                        <li class="nav-item">
+                            <a href="{{ route('list.company') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>د موسسو/ شرکتونو لیست</p>
+                            </a>
+                        </li>
 
 
-              <li class="nav-item">
-                <a href="{{ route('list.transmission') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>د غوښتنو/آرډرونو لیست</p>
-                </a>
-              </li>
+                        <li class="nav-item">
+                            <a href="{{ route('list.transmission') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>د غوښتنو/آرډرونو لیست</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            راپورونه
+                            {{-- <i class="right fas fa-angle-left"></i> --}}
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+
+                        <li class="nav-item">
+                            <a href="{{ route('list.company') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>د پروګرام شوو مخابرو راپور</p>
+                            </a>
+                        </li>
             </ul>
           </li>
         </ul>
 
+        @can('Display User')
+
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                  راپورونه
-                 {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            د یوزرونو مدیریت
+                            {{-- <i class="right fas fa-angle-left"></i> --}}
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
 
 
-              <li class="nav-item">
-                <a href="{{ route('list.company') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>د پروګرام شوو مخابرو راپور</p>
-                </a>
-              </li>
+                        <li class="nav-item">
+                            <a href="{{ route('list.user') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>د یوزرونو لیست </p>
+                            </a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a href="{{ route('list.user') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>د یوزرونو مالی حساب </p>
+                            </a>
+                        </li>
 
 
 
             </ul>
+            @endcan
           </li>
         </ul>
-
-        @can('Display User')  
-       
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                  د یوزرونو مدیریت
-                 {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-
-              <li class="nav-item">
-                <a href="{{ route('list.user') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>د  یوزرونو لیست  </p>
-                </a>
-              </li>
-
-
-
-            </ul>
-          </li>
-        </ul>
-        @endcan
       </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-  </aside>
+</aside>

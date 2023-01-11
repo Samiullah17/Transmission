@@ -14,7 +14,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
+                                <a href="{{ URL::previous() }}" class="btn btn-info btn-sm"> <i class="fas fa-arrow-right"></i></a>
 
 
                             </div>
@@ -138,18 +138,25 @@
                                                         <label for="">د کمپنی/بنسټ نوم</label>
                                                         <input type="text" name="companyName" id="companyName"
                                                             class="form-control" placeholder="د نماینده نوم ولیکی">
+                                                        <span class="text-danger" name="companyName" role="alert"></span>
                                                     </div>
 
                                                     <div class="form-group col-md-4">
                                                         <label for="">د کمپنی/بنسټ نوعه</label>
                                                         <select name="company_type_id" id="company_type_id"
                                                             class="form-control"></select>
+                                                        <span class="text-danger" name="company_type_id"
+                                                            role="alert"></span>
+
                                                     </div>
 
                                                     <div class="form-group col-md-4">
                                                         <label for="">د کمپنی/بنسټ د فعالیت ډول</label>
                                                         <select name="company_active_type_id" id="company_active_type_id"
                                                             class="form-control"></select>
+                                                        <span class="text-danger" name="company_active_type_id"
+                                                            role="alert"></span>
+
                                                     </div>
 
                                                 </div>
@@ -161,6 +168,9 @@
                                                         <label for="">د کمپنی آدرس</label>
                                                         <input type="text" name="companyAddress" id="companyAddress"
                                                             class="form-control" placeholder="د کمپنی آدرس">
+                                                        <span class="text-danger" name="companyAddress"
+                                                            role="alert"></span>
+
                                                     </div>
 
 
@@ -185,12 +195,18 @@
                                                         <label for="">د کمپنی/بنسټ د ریس نوم</label>
                                                         <input type="text" name="companyManagerName"
                                                             id="companyManagerName" class="form-control">
+                                                        <span class="text-danger" name="companyManagerName"
+                                                            role="alert"></span>
+
                                                     </div>
 
                                                     <div class="form-group col-md-4">
                                                         <label for="">تابعیت</label>
                                                         <select name="citizenship_id" id="citizenship_id"
                                                             class="form-control"></select>
+                                                        <span class="text-danger" name="citizenship_id"
+                                                            role="alert"></span>
+
                                                     </div>
 
                                                     <div class="form-group col-md-4 country">
@@ -344,26 +360,17 @@
                         <div class="card-header">
                             د {{ $company->companyName }} بنسټ/کمپنی د فریکونسیانو لیست
                         </div>
-
-                        <div class="card-title">
-                            @if ($company->status == 1)
-                                <button type="button" style="float: left"
-                                    class="btn btn-primary addLicense btn-sm mt-2 ml-2" data-toggle="modal"
-                                    data-target="#modal-lg-add-license">د فریکونسی اضافه کول</button>
-                            @endif
-                        </div>
-
                         <div class="card-body">
-                            <table class="table table-striped table-bordered table-hover table-sm">
+                            <table class="table table-striped table-bordered table-hover table-sm companyFreq">
 
                                 <thead>
                                     <th style="text-align: start">د فریکونسی نمبر</th>
                                     <th style="text-align: start">ولایت</th>
-                                    <th style="text-align: start">د اترا لیسانس نمبر</th>
-                                    {{-- <th style="text-align: start">فایل</th> --}}
+                                    <th style="text-align: start">د اترا لیسانس</th>
+                                    <th style="text-align: start">فایل</th>
 
                                 </thead>
-                                <tbody id="licenseTbody">
+                                <tbody style="text-align: start">
 
 
                                 </tbody>
@@ -461,6 +468,11 @@
 
 
         {{-- End of Second Dev --}}
+        {{-- Start of Adding Frequencey --}}
+
+
+
+        {{-- End of Adding Frequencey --}}
         {{-- Start of License Edit --}}
 
 
@@ -587,22 +599,30 @@
                                             <option value="{{ $item->id }}">{{ $item->licenseTypeName }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-danger" name="license_type_id" role="alert"></span>
+
                                 </div>
 
                                 <div class="form-group col-md-3">
                                     <label>د جواز نمبر</label>
                                     <input type="text" name="licenseNumber" placeholder="د جواز نمبر داخل کړی"
                                         class="form-control">
+                                    <span class="text-danger" name="licenseNumber" role="alert"></span>
+
                                 </div>
 
                                 <div class="form-group col-md-3">
                                     <label>د جواز د صدور نیټه</label>
                                     <input type="date" name="issueDate" class="form-control">
+                                    <span class="text-danger" name="issueDate" role="alert"></span>
+
                                 </div>
 
                                 <div class="form-group col-md-3">
                                     <label>د جواز سکن شوی فایل</label>
                                     <input type="file" name="files" class="form-control">
+                                    <span class="text-danger" name="files" role="alert"></span>
+
                                 </div>
                             </div>
 
@@ -637,11 +657,6 @@
                         </button>
                     </div>
                     <div class="modal-body mr-5">
-                        {{-- نوی نماینده:<input type="radio" class="input-sm"> --}}
-                        {{-- پخوانی نماینده:<input type="radio" class="input-sm"> --}}
-
-
-
                         <form action="{{ route('save.agent') }}" id="agentSave" method="POST"
                             enctype="multipart/form-data">
                             @csrf
@@ -652,18 +667,24 @@
                                     <label for="">د نماینده نوم<span class="text-danger">*</span></label>
                                     <input type="text" name="agentName" class="form-control"
                                         placeholder="د نماینده نوم ولیکی">
+                                        <span class="text-danger" name="agentName" role="alert"></span>
+
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="">د پلار نوم<span class="text-danger">*</span></label>
                                     <input type="text" name="fName" class="form-control"
                                         placeholder="د نماینده د پلار نوم ">
+                                        <span class="text-danger" name="fName" role="alert"></span>
+
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="">د نیکه نوم<span class="text-danger">*</span></label>
                                     <input type="text" name="gFName" class="form-control"
                                         placeholder="د نماینده د نکیه نوم">
+                                        <span class="text-danger" name="gFName" role="alert"></span>
+
                                 </div>
                             </div>
 
@@ -674,6 +695,8 @@
                                     <label for="">د تذکره شمیره<span class="text-danger">*</span></label>
                                     <input type="text" name="NIC" class="form-control"
                                         placeholder="د تذکری شمیره">
+                                        <span class="text-danger" name="NIC" role="alert"></span>
+
                                 </div>
 
 
@@ -681,6 +704,8 @@
                                     <label for="">د تلفون شمیره<span class="text-danger">*</span></label>
                                     <input type="text" name="phone" class="form-control"
                                         placeholder="د نماینده داړیکی شمیره">
+                                        <span class="text-danger" name="phone" role="alert"></span>
+
 
                                 </div>
 
@@ -688,6 +713,8 @@
                                     <label for="">ایمیل آدرس</label>
                                     <input type="text" name="email" class="form-control"
                                         placeholder="د نماینده ایمیل آدرس">
+                                        <span class="text-danger" name="email" role="alert"></span>
+
                                 </div>
 
 
@@ -703,6 +730,8 @@
                                             <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-danger" name="provence" role="alert"></span>
+
 
                                 </div>
 
@@ -714,12 +743,16 @@
                                             <option value="{{ $item->id }}">{{ $item->districtName }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-danger" name="odistrict_id" role="alert"></span>
+
                                 </div>
 
                                 <div class="from-group col-md-4">
                                     <label for="">کلی<span class="text-danger">*</span></label>
                                     <input type="text" name="ovillage" class="form-control"
                                         placeholder="د اصلی کلی نوم ولیکی">
+                                        <span class="text-danger" name="ovillage" role="alert"></span>
+
                                 </div>
 
                             </div>
@@ -734,7 +767,7 @@
                                             <option value="{{ $item->id }}">{{ $item->provenceName }}</option>
                                         @endforeach
                                     </select>
-
+                                    <span class="text-danger" name="cprovence" role="alert"></span>
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -745,16 +778,21 @@
                                             <option value="{{ $item->id }}">{{ $item->districtName }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-danger" name="cdistrict_id" role="alert"></span>
+
                                 </div>
 
                                 <div class="from-group col-md-4">
                                     <label for="">کلی<span class="text-danger">*</span></label>
                                     <input type="text" name="cvillage" class="form-control"
                                         placeholder="د فعلی کلی نوم ولیکی">
+                                        <span class="text-danger" name="cvillage" role="alert"></span>
+
                                 </div>
 
                                 <input type="hidden" class="form-control" name="company_id" id="company_id"
                                     value="{{ $company->id }}">
+
 
                             </div>
 
@@ -762,6 +800,7 @@
                                 <div class="form-group col-md-4">
                                     <label>د نماینده عکس<span class="text-danger">*</span></label>
                                     <input type="file" id="file" name="photo" class="form-control">
+
                                 </div>
                             </div>
 
@@ -886,7 +925,6 @@
                     },
                 });
 
-                // $('.agentsTable').removeClass('agentsTable').addClass('showCOrder');
             });
         })
 
@@ -1013,10 +1051,65 @@
 
         $(document).on('click', '.showFreq', function(e) {
             e.preventDefault();
-             $('.licenseCard').addClass('d-none');
+            $(this).removeClass('showFreq').addClass('showFreq1');
+            $('.licenseCard').addClass('d-none');
             $('.agentCard').addClass('d-none');
             $('.orderCard').addClass('d-none');
             $('.showFreqCard').removeClass('d-none');
+        })
+
+        $(document).on('click', '.showFreq1', function(e) {
+            e.preventDefault();
+            $('.licenseCard').addClass('d-none');
+            $('.agentCard').addClass('d-none');
+            $('.orderCard').addClass('d-none');
+            $('.showFreqCard').removeClass('d-none');
+        })
+
+        $(document).on('click', '.showFreq', function(e) {
+            e.preventDefault();
+            $(function() {
+                var id = $('#thisid').val();
+                let url = "{{ route('company.frequencey', ':id') }}";
+                url = url.replace(':id', id);
+
+                var table = $('.companyFreq').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: url,
+                    columns: [{
+                            data: 'frequenceyNo'
+                        },
+                        {
+                            data: 'pname'
+                        },
+                        {
+                            data: 'autraLicenceNo'
+                        },
+                        {
+                            data: 'status'
+                        },
+
+                        // {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+                    language: {
+                        "emptyTable": "غوښتنه/آرډر نلری",
+                        "lengthMenu": "  نمایش معلومات _MENU_ ",
+                        "info": "معلومات شماره _START_ الی _END_ مجموعه معلومات _TOTAL_",
+                        "infoEmpty": "معلومات شماره 0 الی 0 از 0 تعداد مجموعه",
+                        "search": "پلټل/جستجو:",
+                        "sProcessing": "د معلوماتو غوښتنو د معلوماتو د اضافه کول...",
+                        "paginate": {
+                            "first": "لومړی",
+                            "last": "آخر",
+                            "next": "وروسته",
+                            "previous": "مخکی",
+                        },
+                    },
+                });
+
+                // $('.agentsTable').removeClass('agentsTable').addClass('showCOrder');
+            });
         })
 
 
@@ -1045,6 +1138,11 @@
                         $('[data-dismiss="modal"]').click();
                         $('#agentSave')[0].reset();
                         swal('', response.message, 'success');
+                    },
+                    error:function(response){
+                        $.each(response.responseJSON.errors, function(key, error) {
+                            $('[name="' + key + '"]').html(error[0]);
+                        });
                     }
                 });
 
@@ -1067,101 +1165,115 @@
                     url: url,
                     dataType: "json",
                     success: function(response) {
+                        if (response.status == true) {
 
 
-                        console.log(response);
-                        $('#companyName').val(response.company.companyName);
-                        $('#companyAddress').val(response.company.companyAddress);
-                        $('#latitude').val(response.company.latitude);
-                        $('#longtitude').val(response.company.longtitude);
-                        $('#companyManagerName').val(response.company.companyManagerName);
-                        $('#citizenship_id').html('');
-                        $('#company_type_id').html('');
-                        $('#company_active_type_id').html('');
-                        $('#country').html('');
-                        $('.country').html('');
+                            $('#companyName').val(response.company.companyName);
+                            $('#companyAddress').val(response.company.companyAddress);
+                            $('#latitude').val(response.company.latitude);
+                            $('#longtitude').val(response.company.longtitude);
+                            $('#companyManagerName').val(response.company.companyManagerName);
+                            $('#citizenship_id').html('');
+                            $('#company_type_id').html('');
+                            $('#company_active_type_id').html('');
+                            $('#country').html('');
+                            $('.country').html('');
 
-                        $.each(response.companyType, function(index, value) {
+                            $.each(response.companyType, function(index, value) {
 
-                            if (value.id == response.company.company_type_id) {
-                                $('#company_type_id').append(
-                                    '<option selected value="' + value.id + '">' +
-                                    value.companyTypeName + '</option>')
-                            } else {
-                                $('#company_type_id').append('<option value="' + value
-                                    .id + '">' + value.companyTypeName + '</option>'
-                                )
-                            }
-
-                        });
-
-                        $.each(response.companyActiveType, function(index, value) {
-                            if (value.id == response.company.company_active_type_id) {
-                                $('#company_active_type_id').append(
-                                    '<option selected value="' + value.id + '">' +
-                                    value.companyName + '</option>')
-                            } else {
-                                $('#company_active_type_id').append('<option value="' +
-                                    value.id + '">' + value.companyName +
-                                    '</option>')
-                            }
-
-                        });
-
-                        $.each(response.citizenships, function(index, value) {
-
-                            if (response.country == 3) {
-                                citizenship = 3;
-                                if (value.id == 1) {
-                                    $('#citizenship_id').append(
+                                if (value.id == response.company.company_type_id) {
+                                    $('#company_type_id').append(
                                         '<option selected value="' + value.id +
-                                        '">' + value.citizenshipName + '</option>')
+                                        '">' +
+                                        value.companyTypeName + '</option>')
                                 } else {
-
-                                    $('#citizenship_id').append('<option value="' +
-                                        value.id + '">' + value.citizenshipName +
-                                        '</option>')
-
-                                }
-                            } else {
-                                $('.country').html('');
-                                $('.country').append('<lable>هیواد</lable>')
-                                $('.country').append(
-                                    '<select name="country_id" id="country_id" class="form-control"></select>'
-                                );
-
-                                if (value.id == 2) {
-
-                                    $('#citizenship_id').append(
-                                        '<option selected value="' + value.id +
-                                        '">' + value.citizenshipName + '</option>')
-                                } else {
-
-                                    $('#citizenship_id').append('<option value="' +
-                                        value.id + '">' + value.citizenshipName +
-                                        '</option>')
-
+                                    $('#company_type_id').append('<option value="' +
+                                        value
+                                        .id + '">' + value.companyTypeName +
+                                        '</option>'
+                                    )
                                 }
 
-                                $.each(response.countries, function(index, value) {
-                                    if (value.id== response.cid) {
+                            });
 
-                                        $('#country_id').append(
-                                            '<option selected value="' +
-                                            value.id + '">' + value
-                                            .contryName + '</option>')
+                            $.each(response.companyActiveType, function(index, value) {
+                                if (value.id == response.company
+                                    .company_active_type_id) {
+                                    $('#company_active_type_id').append(
+                                        '<option selected value="' + value.id +
+                                        '">' +
+                                        value.companyName + '</option>')
+                                } else {
+                                    $('#company_active_type_id').append(
+                                        '<option value="' +
+                                        value.id + '">' + value.companyName +
+                                        '</option>')
+                                }
 
+                            });
+
+                            $.each(response.citizenships, function(index, value) {
+
+                                if (response.country == 3) {
+                                    citizenship = 3;
+                                    if (value.id == 1) {
+                                        $('#citizenship_id').append(
+                                            '<option selected value="' + value.id +
+                                            '">' + value.citizenshipName +
+                                            '</option>')
                                     } else {
-                                        $('#country_id').append(
-                                            '<option value="' +
+
+                                        $('#citizenship_id').append('<option value="' +
                                             value.id + '">' + value
-                                            .contryName + '</option>')
+                                            .citizenshipName +
+                                            '</option>')
+
                                     }
-                                });
+                                } else {
+                                    $('.country').html('');
+                                    $('.country').append('<lable>هیواد</lable>')
+                                    $('.country').append(
+                                        '<select name="country_id" id="country_id" class="form-control"></select>'
+                                    );
 
-                            }
+                                    if (value.id == 2) {
 
-                        });
+                                        $('#citizenship_id').append(
+                                            '<option selected value="' + value.id +
+                                            '">' + value.citizenshipName +
+                                            '</option>')
+                                    } else {
+
+                                        $('#citizenship_id').append('<option value="' +
+                                            value.id + '">' + value
+                                            .citizenshipName +
+                                            '</option>')
+
+                                    }
+
+                                    $.each(response.countries, function(index, value) {
+                                        if (value.id == response.cid) {
+
+                                            $('#country_id').append(
+                                                '<option selected value="' +
+                                                value.id + '">' + value
+                                                .contryName + '</option>')
+
+                                        } else {
+                                            $('#country_id').append(
+                                                '<option value="' +
+                                                value.id + '">' + value
+                                                .contryName + '</option>')
+                                        }
+                                    });
+
+                                }
+
+                            });
+
+                        } else {
+                            swal('', response.message, 'error');
+                        }
 
                     }
                 });
@@ -1201,14 +1313,14 @@
 
             $(document).on('submit', '#updateCompany', function(e) {
                 e.preventDefault();
+
+                $('span[name]').html('');
                 $.ajax({
                     type: "POST",
                     url: "{{ route('update.company') }}",
                     data: $(this).serialize(),
                     dataType: "json",
                     success: function(response) {
-                        console.log(response);
-
                         $('#modal-xl').css('display', 'none');
                         $('[data-dismiss="modal"]').click();
                         $('#updateCompany')[0].reset();
@@ -1238,9 +1350,14 @@
 
                         $('#cbody').append(company);
 
+                    },
+                    error: function(response) {
+                        $.each(response.responseJSON.errors, function(key, error) {
+                            $('[name="' + key + '"]').html(error[0]);
+                        });
                     }
                 })
-            })
+            });
 
 
             $(document).on('click', '#licenseEdit', function(e) {
@@ -1256,11 +1373,12 @@
                         $('#LicenseEditDev').html('');
 
                         let lNumber = `<div class="form-group col-md-3"><lable>د جواز نمبر</lable><input type="text" name="licenseNumber" class="form-control"
-                            value="` + response.companyLicense.licenseNumber + `"></div>`;
+                            value="` + response.companyLicense.licenseNumber + `">
+                            <span class="text-danger" name="licenseNumber" role="alert"></span></div>`;
 
                         $('#LicenseEditDev').append(lNumber);
                         $('#LicenseEditDev').append(
-                            '<div class="form-group col-md-3"><lable>د جواز مرجع</lable><select id="license_type_id" name="license_type_id" class="form-control"></select></div>'
+                            '<div class="form-group col-md-3"><lable>د جواز مرجع</lable><select id="license_type_id" name="license_type_id" class="form-control"></select><span class="text-danger" name="license_type_id" role="alert"></span></div>'
                         );
 
                         $.each(response.licenseType, function(index, value) {
@@ -1274,15 +1392,16 @@
                                     .id + '">' + value.licenseTypeName + '</option>'
                                 );
                             }
+
                         })
 
                         let lData = `<div class="form-group col-md-3"><lable>د جواز د صدور نیټه</lable><input type="date" name="issueDate" class="form-control"
-                            value="` + response.companyLicense.issueDate + `"></div>`;
+                            value="` + response.companyLicense.issueDate + `"><span class="text-danger" name="issueDate" role="alert"></span></div>`;
 
                         $('#LicenseEditDev').append(lData);
 
                         let file = `<div class="form-group col-md-3"><lable>سکن شوی فایل</lable><input type="file" name="files" class="form-control"
-                            value="` + response.companyLicense.files + `"></div>`;
+                            value="` + response.companyLicense.files + `"><span class="text-danger" name="file" role="alert"></span></div>`;
 
                         let companyLicenseId = `<div class="form-group col-md-3"><input type="hidden" id="company_license_id" name="company_license_id" class="form-control"
                         value="` + response.companyLicense.id + `"></div>`;
@@ -1309,8 +1428,7 @@
                     data: $(this).serialize(),
                     dataType: "json",
                     success: function(response) {
-                        // alert('Samiullah Jahani Stanikzai');
-                        console.log(response);
+                         console.log(response);
                         $('#lNumber' + lId).html(response.companyLices.licenseNumber);
                         $('#lTname' + lId).html(response.companyLices.ltname);
                         $('#issueDate' + lId).html(response.companyLices.issueDate);
@@ -1319,6 +1437,11 @@
                         $('#licenseEditForm')[0].reset();
                         swal('', response.message, 'success');
 
+                    },
+                    error: function(response) {
+                        $.each(response.responseJSON.errors, function(key, error) {
+                            $('[name="' + key + '"]').html(error[0]);
+                        });
                     }
                 })
 
@@ -1421,11 +1544,14 @@
                                 '" id="licenseEdit" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-edit"></i></button><button type="button" id="licenseDelete" value="' +
                                 response.license.id +
                                 '"class="btn btn-danger" data-toggle="modal"data-target="#modal-danger-license"><i class="fas fa-trash-alt"></i></button></td></tr>'
-                            )
+                            );
 
                         }
-
-
+                    },
+                    error: function(response) {
+                        $.each(response.responseJSON.errors, function(key, error) {
+                            $('[name="' + key + '"]').html(error[0]);
+                        });
                     }
                 });
             });

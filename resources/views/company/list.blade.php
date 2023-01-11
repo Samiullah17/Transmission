@@ -16,8 +16,8 @@
 
 
                         <div class="card-title">
-                            <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
-                            
+                            <a href="{{ URL::previous() }}" class="btn btn-info btn-sm"> <i class="fas fa-arrow-right"></i></a>
+
                             <button type="button" style="float: left" class="btn btn-primary" data-mdb-ripple-color="dark"
                             data-toggle="modal" data-target="#modal-xl">د نوی کمپنی اضافه کول</button>
 
@@ -105,10 +105,10 @@
                                         {{-- <th></th> --}}
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody id="tbody1">
                                       <x-company-search-component :companys="$companys"></x-company-search-component>
-                                      
+
                                 </tbody>
                             </table>
                         </div>
@@ -533,12 +533,7 @@
                                 @endforeach
                                 </select>
                         </div>`;
-
-
-
                         $('.country').append(country);
-
-
                 }
 
                 else{
@@ -560,9 +555,30 @@
                     <button type="button" class="btn btn-sm" onclick="deleteLicense(`+id+`)"><i class="fas fa-window-close" style="color:red"></i></button>
                     <label>د `+name+` جواز نمبر</label>
                     <input type="hidden" name="licenseTypeId[]" id="economical" value="`+id+`" class="form-control">
+                    <span class="text text-danger" role="alert">
+                                            @error('licenseTypeId[]')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                     <input type="date" name="issueDate[]" id="issueDate" class="form-control">
+                    <span class="text text-danger" role="alert">
+                                            @error('issueDate[]')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+
                     <input type="text"  placeholder="د اقتصاد وزارت جواز نمبر ولیکی"  name="licenseNumber[]" class="form-control">
+                    <span class="text text-danger" role="alert">
+                                            @error('licenseNumber[]')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                     <input type="file" name="licenseFile[]" id="economicalId" class="form-control">
+                    <span class="text text-danger" role="alert">
+                                            @error('licenseFile[]')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                      </div>
                     `;
 

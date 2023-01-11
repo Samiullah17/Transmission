@@ -18,16 +18,6 @@ use Symfony\Component\Finder\Finder;
 use App\Http\Controllers\transmissionController;
 use App\Http\Controllers\UserController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('test');
@@ -45,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role_or_permission:Admin')->group(function () {
         route::get('register', [RegisteredUserController::class, 'create'])->name('register');
         route::post('register', [RegisteredUserController::class, 'store'])->name('register');
-       
+
         Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::put('user/deactivate/{id}', [UserController::class, 'destroy'])->name('user.deactivate');
         Route::get('user/{id}/permission', [PermissionController::class, 'userPermissions'])->name('user.permissions');
@@ -55,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user/{id}/role', [PermissionController::class, 'userRoles'])->name('user.roles');
         Route::post('user/role/grant', [permissionController::class, 'grantRoles'])->name('user.role.grant');
         Route::delete('revoke/role/{id}', [permissionController::class, 'revokeRole'])->name('revoke.role');
-        
+
     });
 
     Route::middleware('role_or_permission:Admin|Display User')->group(function () {
@@ -160,4 +150,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('user/profile/{id}', [profileController::class, 'show'])->name('user.profile');
     Route::get('program/again/{id}', [orderController::class, 'programAgain'])->name('order.programAgain');
     Route::get('transmission/printBill/{id}', [orderController::class, 'printBill'])->name('transmission.printBill');
+    Route::get('company/frequencey/{id}',[companyController::class,'getFreq'])->name('company.frequencey');
+    Route::get('user/acount/{id}',[UserController::class,'acount'])->name('user.acount');
 });

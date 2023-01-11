@@ -23,19 +23,20 @@
 </style>
 @section('content')
     <div class="content-wrapper">
-     
+
       <section class="content">
           <div class="container-fluid">
-             
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                <h3 class="card-title"><b>لیست یوزر ها</b></h3>
-                            </div>
+                                <a href="{{ URL::previous() }}" class="btn btn-info btn-sm"> <i class="fas fa-arrow-right"></i></a>
+
+                             </div>
                             <div class="card-title">
-                                <a class="btn btn-primary" href="{{ route('register') }}">جدید</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('register') }}">جدید</a>
                             </div>
                         </div>
                         <div id="tbody">
@@ -56,7 +57,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                            
+
                                             @foreach ($users as $user)
                                                 <tr>
                                                     <td>{{ $loop->index + 1 }}</td>
@@ -74,7 +75,7 @@
                                                   @endif
                                                   <td style="text-align: center">
                                                   @can('Admin')
-                                                        <a href="{{ route('user.edit', $user->id) }}" 
+                                                        <a href="{{ route('user.edit', $user->id) }}"
                                                             title="تغیر معلومات یوزر">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
@@ -89,22 +90,21 @@
                                                         </a>
                                                         <a href="{{ route('user.roles', $user->id) }}" data-toggle="modal"
                                                             data-target="#userRolesModal" title="رول یوزر">
-                                                            <i class="fab fa-critical-role"></i>
-                                                        </a>
+                                                         </a>
                                                         @endcan
-                                                        <a href="{{ route('user.permissions', $user->id) }}"
-                                                             title="د یوزر معلومات">
+                                                        <a href="{{ route('user.acount', $user->id) }}"
+                                                             title="د یوزر مالی حساب">
                                                              <i class="fas fa-info-circle"></i>
                                                         </a>
-                                                    </td> 
-                                                   
+                                                    </td>
+
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 @endif
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -117,13 +117,13 @@
                 <div class="modal-content">
                     <div class="modal-header " >
                         <h5 class="modal-title">صلاحیت های یوزر</h5>
-                        
+
                     </div>
                     <div id="userPermissionsInfo">
                         <form id="DeletePermission" method="post" >
                             @csrf
                             @method('Delete')
-                            
+
                             <input type="hidden" name='userID' id='userDeleteID'>
                             <div class="addperm form-group" style="display: inline" id='addperm'></div></form>
                             <form  method="Post" id="permissionForm">
@@ -140,7 +140,7 @@
                                 </select>
                                 <span class="text-danger" id="permission"></span>
                             </div>
-                       
+
                     </div>
                 </form>
                     <div class="modal-footer justify-content-between pb-1">
@@ -149,7 +149,7 @@
                         <a class="btn btn-success" type="submit"  href="{{route('user.permission.grant')}}"
                             name="grantPermissionToUser">ثپت
                             <i class="fas fa-save"></i></a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -161,13 +161,13 @@
         <div class="modal-content">
             <div class="modal-header " >
                 <h5 class="modal-title">دیوزر رول</h5>
-                
+
             </div>
             <div id="userRolesInfo">
                 <form id="DeleteRoles" method="post" >
                     @csrf
                     @method('Delete')
-                    
+
                     <input type="hidden" name='userID' id='roleuserDeleteID'>
                     <div class="addrole form-group" style="display: inline" id='addrole'></div></form>
             <form  method="Post" id="roleForm">
@@ -184,7 +184,7 @@
                         </select>
                         <span class="text-danger" id="permission"></span>
                     </div>
-               
+
             </div>
         </form>
             <div class="modal-footer justify-content-between pb-1">
@@ -193,7 +193,7 @@
                 <a class="btn btn-success" type="submit"  href="{{route('user.role.grant')}}"
                     name="grantRoleToUser">ثپت
                     <i class="fas fa-save"></i></a>
-                
+
             </div>
         </div>
     </div>
@@ -217,9 +217,9 @@
     <a  class="btn btn-primary" id='yes'  href="">هو </a>
     </div>
     </div>
-    
+
     </div>
-    
+
     </div>
     </div>
 </section>
@@ -315,10 +315,10 @@
                         $('#userDeleteID').val(response.userID);
                         $('#userID').val(response.userID);
                         $.each(response.success, function(key, item) {
-                       
+
                             $('#addperm').append('<div class="forbtn"><a class="btn btn-danger m-2" href="'+'{!!URL::to('revoke/premission')!!}'+'/'+item.id+'"> '+item.name + '</a><input type="hidden" name="'+item.id+'btn" value='+item.id+'></div>');
                         });
-                     
+
                     },
                     error: function(response, error) {
                         // removeLoading();
@@ -389,12 +389,12 @@
                         $('#addrole').html('');
                         $('#roleuserID').val(response.userID);
                         $('#roleuserDeleteID').val(response.userID);
-                        
+
                         $.each(response.success, function(key, item) {
-                        
+
                             $('#addrole').append('<div class="forbtn"><a class="btn btn-danger m-2 deleteonerole" href="'+'{!!URL::to('revoke/role')!!}'+'/'+item+'"> '+item+ '</a><input type="hidden" name="'+item+'btn" value='+item+'></div>');
                         });
-                     
+
                     },
                     error: function(response, error) {
                         removeLoading();
@@ -450,8 +450,8 @@
                 $(document).on('click','#deacivate', function (e) {
                     e.preventDefault();
                    var userID= $(this).closest('button').val();
-                      
-                  
+
+
 
                     $(document).on('click','#yes',function (e) {
                         e.preventDefault();
@@ -474,13 +474,13 @@
                         removeLoading();
                     }
                 });
-                       
-                            
-                    
-                    
+
+
+
+
                 });
             });
-            
+
             function displayErrorMessages(response) {
                 if (response.status === 403 || response.status === 404) $().html(response.message);
                 else {
