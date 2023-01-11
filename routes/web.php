@@ -150,4 +150,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('user/profile/{id}', [profileController::class, 'show'])->name('user.profile');
     Route::get('program/again/{id}', [orderController::class, 'programAgain'])->name('order.programAgain');
     Route::get('transmission/printBill/{id}', [orderController::class, 'printBill'])->name('transmission.printBill');
+    Route::get('company/frequencey/{id}',[companyController::class,'getFreq'])->name('company.frequencey');
+    Route::get('user/acount/{id}',[UserController::class,'acount'])->name('user.acount');
 });

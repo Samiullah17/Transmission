@@ -10,10 +10,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-
-                        <div class="card-title" style="float: right">
-                            د {{ $company->companyName }} کمپنی/بنسټ د نوی آرډر/غوښتنی جوړولو برخه
+                        <div class="card-header">
+                            <div class="card-title" style="float: right">
+                                <a href="{{ URL::previous() }}" class="btn btn-info btn-sm"> <i class="fas fa-arrow-right"></i></a>
+                            </div>
                         </div>
+
+
 
                         <div class="card-body table-responsive">
 

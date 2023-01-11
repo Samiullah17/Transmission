@@ -16,7 +16,7 @@
 
 
                         <div class="card-title">
-                            <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
+                            <a href="{{ URL::previous() }}" class="btn btn-info btn-sm"> <i class="fas fa-arrow-right"></i></a>
 
                             <button type="button" style="float: left" class="btn btn-primary" data-mdb-ripple-color="dark"
                             data-toggle="modal" data-target="#modal-xl">د نوی کمپنی اضافه کول</button>

@@ -20,7 +20,8 @@ class CreateUserAcountsTable extends Migration
             $table->foreignIdFor(order::class)->constrained();
             $table->foreignIdFor(user::class)->constrained();
             $table->integer('money');
-             $table->timestamps();
+            $table->string('created_at')->nullable();
+            $table->string('updated_at')->nullable();
         });
     }
 

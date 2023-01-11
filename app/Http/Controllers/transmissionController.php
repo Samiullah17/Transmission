@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Company;
 use App\Models\companyAgent;
 use App\Models\discount;
@@ -16,8 +15,6 @@ use App\Models\transmissionType;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
-
-
 class transmissionController extends Controller
 {
     public function index()

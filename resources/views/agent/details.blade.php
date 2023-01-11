@@ -9,15 +9,13 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                <a href="{{ URL::previous() }}" class="btn btn-info"> <i class="fas fa-arrow-right"></i></a>
+                                <a href="{{ URL::previous() }}" class="btn btn-info btn-sm"> <i class="fas fa-arrow-right"></i></a>
 
                                  <input type="hidden" value="{{ $aname->id }}" id="agentId">
                               </div>
                             <div class="card-title">
                                      {{-- <a href="{{ Storage::url($curentAgent->photo) }}">kdfjdkjf</a> --}}
-
-
-{{--
+ {{--
                                 <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark"
                                     data-toggle="modal"data-target="#modal-xl">د مخابرو اضافه کول</button> --}}
                                     {{-- <a href="{{ route('add.transmittion0',['id'=>$agent->id,'cid'=>$company->id]) }}" data-mdb-ripple-color="dark" class="btn btn-primary">د نوو مخابرو اضافه کول</a> --}}
