@@ -85,17 +85,19 @@
                                                            <i class="fas fa-lock" style="-webkit-text-fill-color: red"></i>
                                                         </button>
                                                         <a href="{{ route('user.permissions', $user->id) }}" data-toggle="modal"
-                                                            data-target="#userPermissionsModal" title="صلاحیت یوزر">
+                                                       data-target="#userPermissionsModal" title="صلاحیت یوزر">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                         <a href="{{ route('user.roles', $user->id) }}" data-toggle="modal"
                                                             data-target="#userRolesModal" title="رول یوزر">
+                                                            <i class="fab fa-critical-role"></i>
                                                          </a>
+                                                         <a href="{{ route('user.acount', $user->id) }}"
+                                                            title="د یوزر مالی حساب">
+                                                            <i class="fas fa-info-circle"></i>
+                                                       </a>
                                                         @endcan
-                                                        <a href="{{ route('user.acount', $user->id) }}"
-                                                             title="د یوزر مالی حساب">
-                                                             <i class="fas fa-info-circle"></i>
-                                                        </a>
+                                                       
                                                     </td>
 
                                                 </tr>

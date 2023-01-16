@@ -49,14 +49,21 @@ class UserController extends Controller
          $uname=User::where('id',$id)->first()->name;
         // $userA=userAcount::where('user_id',1)->get();
         $userA=userAcount::join('orders','user_acounts.order_id','orders.id')
-        ->select('orders.*','user_acounts.money as rate')->where('user_acounts.user_id',$id)->get();
+        ->select('orders.*','user_acounts.money as rate','user_acounts.id as accountID','user_acounts.user_id as uid')->where('user_acounts.user_id',$id)->get();
 
         $total=userAcount::where('user_id',$id)->selectRaw('sum(money) as totalRate')->get();
         $t=$total[0]->totalRate;
         // $transmission=transmission::where('order_id',1)->selectRaw('sum(rate) as total_order_amount')->get();
-         return view('user.Acount',compact('userA','t','uname'));
+        return view('user.Acount',compact('userA','t','uname','id'));
 
 
 
+    }
+    public function destroyacount($accountID,$uid){
+         $userAccount = userAcount::find($accountID);
+         $userAccount->delete();
+         $total=userAcount::where('user_id',$uid)->selectRaw('sum(money) as totalRate')->get();
+        $t=$total[0]->totalRate;
+         return response()->json(['success'=>$t,'message'=>'successfully deleted']);
     }
 }

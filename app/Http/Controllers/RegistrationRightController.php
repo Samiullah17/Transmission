@@ -150,6 +150,11 @@ class RegistrationRightController extends Controller
 
         return response()->json(['success' => route('saveRight.company', $id)]);
     }
+    public function print($id)
+    {
+       $registrationRights=RegistrationRight::find($id);
+       return view(''); 
+    }
 
     /**
      * Remove the specified resource from storage.

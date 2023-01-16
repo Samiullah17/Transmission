@@ -31,6 +31,7 @@
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
                             </div>
+                            
                             @endif
 
                         </div>
@@ -42,7 +43,7 @@
                                         <th>کمپنی</th>
                                         <th>کال</th>
                                         <th>انقضاه نیټه</th>
-                                        <th>د مالی ریاست د مکتوب ګڼه</th>
+                                        <th>د مالی ریاست د مکتو ب ګڼه</th>
                                         <th>د مالی ریاست د مکتوب نیټه</th>
                                         <th>د آویز نمبر</th>
                                         <th>د تعرفه نمبر</th>
@@ -83,6 +84,14 @@
                                                 <td>
                                                     <span class="badge badge-success" style="height: 30px">فعال</span>
                                                 </td>
+                                                <td class="d-flex justify-content-between">
+                                                
+                                                    <a class="btn btn-app" id="deleteRight"
+                                                            href="{{route('Regright.print',$item->id)}}">
+                                                            <i class="fas fa-print" title="چاپ حق الثبت"></i>
+                                                        </a>
+                                                </td>
+                                                
                                             @endif
                                             @if ($item->status == 1)
                                                 <td>
@@ -100,6 +109,7 @@
                                                             <i class="fas fa-trash text-danger"></i>
                                                         </a> --}}
                                                 </td>
+                                              
                                             @endif
 
 

@@ -18,10 +18,10 @@
                             {{-- مدیریت  مخابره عمومی سیستم شروع --}}
                             <li class="nav-item has-treeview {{ strpos(Route::currentRouteName(), 'list') !== false && strpos(Route::currentRouteName(), 'lists') === false ? 'menu-open ' :''}} " > 
                                 <a href="" class="nav-link {{ strpos(Route::currentRouteName(), 'list') !== false && strpos(Route::currentRouteName(), 'lists') === false ? 'active':''}}">
-                                    <i class="nav-icon fas fa-tools"></i>
+                                  <i class="fas fa-broadcast-tower"></i>
                                     <p>
                                     د مخابره عمومی سیستم
-                                        <i class="right fas fa-angle-left"></i>
+                                    <i class="far fa-broadcast-tower"></i>
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
@@ -29,7 +29,7 @@
                                         {{--  --}}
                                         <a href=" {{ route('list.company') }}"
                                             class="nav-link {{ Route::currentRouteName() == 'list.company' ? 'active' : '' }}">
-                                            <i class="fas fa-clipboard-list fas fa-hummer nav-icon"></i>
+                                            <i class="fas fa-building"></i>
                                             <p>د موسسو/ شرکتونو لیست</p>
                                         </a>
                                     </li>
@@ -37,7 +37,7 @@
                                         {{--  --}}
                                         <a href="{{ route('list.transmission') }}"
                                             class="nav-link {{ Route::currentRouteName() == 'list.transmission' ? 'active' : '' }}">
-                                            <i class="fas fa-clipboard-list fas fa-hummer nav-icon"></i>
+                                            <i class="fab fa-first-order-alt"></i>
                                             <p> د غوښتنو/آرډرونو لیست </p>
                                         </a>
                                     </li>
@@ -52,7 +52,7 @@
                             <li
                                 class="nav-item has-treeview {{ strpos(Route::currentRouteName(), 'goodsDistribution') !== false || strpos(Route::currentRouteName(), 'order') !== false ? 'menu-open ' : '' }}">
                                 <a href="#" class="nav-link  {{ strpos(Route::currentRouteName(), 'goodsDistribution') !== false ? 'active' : (strpos(Route::currentRouteName(), 'order') !== false ? 'active' : '') }}">
-                                    <i class="nav-icon fad fa-gopuram "></i>
+                                  <i class="fas fa-newspaper"></i>
                                     <p>
                                         د راپورونو مدیریت
                                         <i class="right fas fa-angle-left"></i>
@@ -62,10 +62,9 @@
                                     <li class="nav-item">
                                         {{-- {{ route('workshop.create') }} --}}
                                         <a href="#"
-                                            class="nav-link {{ Route::currentRouteName() == '
-                                              #' ? 'active' : '' }}">
-                                            <i class="fas fa-cart-plus"></i>
-                                            <p>ٔراپور جووول</p>
+                                            class="nav-link {{ Route::currentRouteName() == '#' ? 'active' : '' }}">
+                                            <i class="fas fa-newspaper"></i>
+                                            <p>راپور جووړول</p>
                                         </a>
                                     </li>
 
@@ -77,9 +76,9 @@
 
                             {{-- شروع مدیریت راپور ها --}}
                             <li
-                                class="nav-item has-treeview {{ strpos(Route::currentRouteName(), 'list.user') !== false  ? 'menu-open ' : '' }}">
-                                <a href="#" class="nav-link  {{ strpos(Route::currentRouteName(), 'list.user') !== false ? 'active' :'' }}">
-                                    <i class="nav-icon fad fa-gopuram "></i>
+                                class="nav-item has-treeview {{ strpos(Route::currentRouteName(), 'list') !== false  ? 'menu-open ': '' }}">
+                                <a href="#" class="nav-link  {{ strpos(Route::currentRouteName(), 'list') !== false ? 'active':'' }}">
+                                  <i class="fas fa-users"></i>
                                     <p>
                                         د یوزرونو مدیریت
                                         <i class="right fas fa-angle-left"></i>
@@ -89,9 +88,8 @@
                                     <li class="nav-item">
                                         {{-- {{ route('workshop.create') }} --}}
                                         <a href="{{route('list.user')}}"
-                                            class="nav-link {{ Route::currentRouteName() == '
-                                              list.user' ? 'active' : '' }}">
-                                            <i class="fas fa-cart-plus"></i>
+                                            class="nav-link {{ Route::currentRouteName() == 'list.user' ? 'active' : '' }}">
+                                            <i class="far fa-user"></i>
                                             <p>د یوزرونو لیست </p>
                                         </a>
                                     </li>

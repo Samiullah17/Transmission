@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('saveRight/company/{id}', [RegistrationRightController::class, 'show'])->name('saveRight.company');
     Route::get('oldRegRight.company/{id}', [RegistrationRightController::class, 'OldRight'])->name('oldRegRight.company');
     Route::post('createsaveRight/company/{id}', [RegistrationRightController::class, 'store'])->name('createsaveRight.company');
+    route::get('Regright/print/{id}',[RegistrationRightController::class,'print'])->name('Regright.print');
     route::get('EditRegRight/company/{id}', [RegistrationRightController::class, 'edit'])->name('EditRegRight.company');
     Route::put('updatesaveRight/company/{id}', [RegistrationRightController::class, 'update'])->name('updatesaveRight.company');
     Route::post('createFine/company/{id}', [CompanyFineController::class, 'store'])->name('createFine.company');
@@ -152,4 +153,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('transmission/printBill/{id}', [orderController::class, 'printBill'])->name('transmission.printBill');
     Route::get('company/frequencey/{id}',[companyController::class,'getFreq'])->name('company.frequencey');
     Route::get('user/acount/{id}',[UserController::class,'acount'])->name('user.acount');
+    Route::Delete('delete/user/acount/{accountID}/{uid}',[UserController::class,'destroyacount'])->name('delete.user.acount');
 });
