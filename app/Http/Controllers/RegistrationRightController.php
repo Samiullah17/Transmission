@@ -18,14 +18,13 @@ class RegistrationRightController extends Controller
      */
     public function index()
     {
-
     }
     public function OldRight($id)
     {
-          $regRights=RegistrationRight::join('companies','registration_rights.company_id','companies.id')
-          ->select('registration_rights.*','companies.companyName as cname','companies.id as cid')
-          ->where('registration_rights.company_id',$id)->where('registration_rights.status',3)->get();
-          return view('Registration.oldright',compact(['regRights','id']));
+        $regRights = RegistrationRight::join('companies', 'registration_rights.company_id', 'companies.id')
+            ->select('registration_rights.*', 'companies.companyName as cname', 'companies.id as cid')
+            ->where('registration_rights.company_id', $id)->where('registration_rights.status', 3)->get();
+        return view('Registration.oldright', compact(['regRights', 'id']));
     }
 
 
@@ -152,8 +151,27 @@ class RegistrationRightController extends Controller
     }
     public function print($id)
     {
-       $registrationRights=RegistrationRight::find($id);
-       return view(''); 
+
+        //    $invoiceItems=invoice_item::with('purchase','good.good_Cetegory','good.good_unit','good.goodType','good.stock')->where('purchase_id',$id)->get();
+        $registrationRights = RegistrationRight::Join('companies', 'registration_rights.company_id', 'companies.id')
+            ->select('registration_rights.*', 'companies.companyName as cname','companies.company_unique_id as CUID', 'companies.id as cid')
+            ->where('registration_rights.id', $id)->whereIn('registration_rights.status', [0])->first();
+           $billDate=Jalalian::now()->format('Y-m-d');
+        $fileName = 'orderReports.pdf';
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'UTF-8','format' => [100, 236], 'autoScriptToLang' => true, 'autoLangToFont' => true]);
+       
+        $mpdf->allow_charset_conversion = true;
+        $mpdf->SetDirectionality('rtl');
+
+
+        //return view('test',compact("employee",'employees'));
+
+        //    $html = view('invoice.print', compact('invoiceItems'))->render();
+        $html = view('Registration.Rightprint',compact('registrationRights','billDate'))->render();
+        $mpdf->WriteHTML("");
+        $mpdf->WriteHTML($html);
+        $mpdf->SetFont('freeserif', '', 10);
+        $mpdf->Output($fileName, 'I');
     }
 
     /**

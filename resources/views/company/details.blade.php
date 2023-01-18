@@ -276,9 +276,11 @@
                         </div>
 
                         <div class="card-title">
-                            @if ($company->status == 1)
+                            @if ($company->status == 1 && $registrationRights  )
+                               @if( $registrationRights->status==0)
                                 <a href="{{ route('add.order', $company->id) }}" style="float: left"
                                     class="btn btn-primary abutton btn-sm mt-2 ml-2">د نوی آرډر/غوښتنی جوړول</a>
+                            @endif
                             @endif
 
                         </div>

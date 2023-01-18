@@ -86,7 +86,7 @@
                                                 </td>
                                                 <td class="d-flex justify-content-between">
                                                 
-                                                    <a class="btn btn-app" id="deleteRight"
+                                                    <a class="btn btn-app" 
                                                             href="{{route('Regright.print',$item->id)}}">
                                                             <i class="fas fa-print" title="چاپ حق الثبت"></i>
                                                         </a>
@@ -473,10 +473,10 @@
                 e.preventDefault();
                 let mainThis = this;
                 $.ajax({
-                    method: "Delete",
+                    method: "GET",
                     url: $(this).attr('href'),
                     success: function(response) {
-                        mainThis.closest('tr').remove();
+                        alert("DSAfasfsa");
                     },
                 });
             });

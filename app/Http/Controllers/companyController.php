@@ -21,6 +21,7 @@ use App\Models\licenseType;
 use App\Models\order;
 use App\Models\orderDetails;
 use App\Models\provence;
+use App\Models\RegistrationRight;
 use App\Models\transmission;
 use App\Models\transmissionModel;
 use App\Models\transmissionType;
@@ -154,11 +155,12 @@ class companyController extends Controller
 
                     //  $companyFreq=frequencey::join('provences','frequenceys.provence_id','provences.id')
                     // ->select('provences.provenceName as pname','frequenceys.*')->where('frequenceys.order_id',$order)->get();
+                     $registrationRights=RegistrationRight::where('company_id',$id)->where('status',[0])->first();
+                     
 
-
-
+                    
                     if ($company != null) {
-                    return view('company.details', compact('company', 'provence', 'district', 'companylicense', 'licenseType',));
+                    return view('company.details', compact('company','registrationRights','provence', 'district', 'companylicense', 'licenseType',));
                 } else {
                     return redirect()->back();
                 }
