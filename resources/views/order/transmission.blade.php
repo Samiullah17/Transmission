@@ -16,24 +16,29 @@
                             <div class="card-title" id="ctitle">
 
                                 @if ($company->status == 1)
+                                @can('BackOrderToPrgram')
                                     <a href="{{ route('order.programAgain', $order) }}"
                                         class="btn btn-primary btn-sm programOrdertow d-none">بیا ځلی پروګرام کول</a>
-
+                                        @endcan
+                                    @can('Program Order')
                                     <a href="{{ route('order.program', $order) }}"
                                         class="btn btn-primary btn-sm programOrder d-none">پروګرام کول</a>
-
+                                        @endcan
+                                       @can('AddTrassmition')
 
                                     <button type="button" id="addNewTransmission" data-toggle="modal"
                                         data-target="#addTransmission" class="btn btn-primary btn-sm d-none">د نوی مخابری
                                         اضافه
                                         کول</button>
+                                        @endcan
 
 
 
                                     {{-- <button type="button" id="printBill" value="{{ $order }}"
                                         class="btn btn-primary btn-sm d-none">بیل چاپ کول</button> --}}
-
+                                     @can('PrintBill')
                                     <a href="{{ route('transmission.printBill',$order) }}" id="printBill" class="btn btn-primary btn-sm d-none">بیل چاپ کول</a>
+                                    @endcan
                                 @endif
 
 

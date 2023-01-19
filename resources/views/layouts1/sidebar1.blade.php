@@ -25,6 +25,7 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
+                                  @can('display Company')
                                     <li class="nav-item">
                                         {{--  --}}
                                         <a href=" {{ route('list.company') }}"
@@ -33,6 +34,8 @@
                                             <p>د موسسو/ شرکتونو لیست</p>
                                         </a>
                                     </li>
+                                    @endcan
+                                    @can('Display Order')
                                     <li class="nav-item">
                                         {{--  --}}
                                         <a href="{{ route('list.transmission') }}"
@@ -41,7 +44,7 @@
                                             <p> د غوښتنو/آرډرونو لیست </p>
                                         </a>
                                     </li>
-                                    
+                                    @endcan
 
                                 </ul>
                             </li>
@@ -49,6 +52,7 @@
 
 
                             {{-- شروع مدیریت ورکشاب ها --}}
+                            @can('Display Report')
                             <li
                                 class="nav-item has-treeview {{ strpos(Route::currentRouteName(), 'goodsDistribution') !== false || strpos(Route::currentRouteName(), 'order') !== false ? 'menu-open ' : '' }}">
                                 <a href="#" class="nav-link  {{ strpos(Route::currentRouteName(), 'goodsDistribution') !== false ? 'active' : (strpos(Route::currentRouteName(), 'order') !== false ? 'active' : '') }}">
@@ -70,6 +74,7 @@
 
                                 </ul>
                             </li>
+                            @endcan
                             {{-- ختم مدیریت ورکشاپ ها --}}
 
                             @can('Display User')  

@@ -42,25 +42,26 @@
                                     value="{{ $company->id }}">جوازونه</button>
 
 
-
+                                   @can('Deactive Compnay')
                                 @if ($company->status == 1)
                                     <button type="button" id="companyDelete" value="{{ $company->id }}"
                                         class="btn btn-danger companyDelete btn-sm" data-toggle="modal"
                                         data-target="#modal-danger">د بنسټ غیر فعالول</button>
 
 
-
+                                       
                                     <button type="button" id="companyEdit" value="{{ $company->id }}"
                                         class="btn btn-primary companyEdit btn-sm" data-mdb-ripple-color="dark"
                                         data-toggle="modal"data-target="#modal-xl"><i class="fas fa-edit"></i></button>
+                                        
                                 @endif
-
+                                  
                                 @if ($company->status == 0)
                                     <button type="button" id="companyDelete" value="{{ $company->id }}"
                                         class="btn btn-success companyDelete btn-sm" data-toggle="modal"
                                         data-target="#modal-success">د بنسټ فعالول</button>
                                 @endif
-
+                                 @endcan
                                 {{-- <button type="button" class="btn btn-link" data-mdb-ripple-color="dark">Link 2</button> --}}
 
                             </div>
@@ -116,16 +117,18 @@
                                 </tbody>
                             </table>
 
-
+                             
                             <div class="modal fade" id="modal-xl">
                                 <div class="modal-dialog modal-xl">
                                     <div class="modal-content">
+                                       
                                         <div class="modal-header">
                                             <h4 class="modal-title">د کمپنی/بنسټ د معلوماتو تغیرول</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                     
                                         <div class="modal-body mr-5">
                                             <form action="#" id="updateCompany" enctype="multipart/form-data">
                                                 @csrf
@@ -240,10 +243,12 @@
                         <div class="card-title">
 
                             @if ($company->status == 1)
+                             @can('Create Agent')
                                 <button type="button" style="float: left"
                                     class="btn btn-primary abutton btn-sm mt-2 ml-2" data-toggle="modal"
                                     data-target="#modal-xl1">د
                                     نوی نماینده ثبت کول</button>
+                                    @endcan
                             @endif
                         </div>
                         <div class="card-body">
@@ -278,9 +283,11 @@
                         <div class="card-title">
                             @if ($company->status == 1 && $registrationRights  )
                                @if( $registrationRights->status==0)
+                               @can('Create Order')
                                 <a href="{{ route('add.order', $company->id) }}" style="float: left"
                                     class="btn btn-primary abutton btn-sm mt-2 ml-2">د نوی آرډر/غوښتنی جوړول</a>
-                            @endif
+                                    @endcan            
+                                    @endif
                             @endif
 
                         </div>
@@ -313,10 +320,12 @@
 
                         <div class="card-title">
                             @if ($company->status == 1)
+                            @can('Create license')
                                 <button type="button" style="float: left"
                                     class="btn btn-primary addLicense btn-sm mt-2 ml-2" data-toggle="modal"
                                     data-target="#modal-lg-add-license">د جواز اضافه کول</button>
-                            @endif
+                            @endcan
+                                    @endif
                         </div>
 
                         <div class="card-body">
@@ -329,6 +338,7 @@
                                     {{-- <th style="text-align: start">فایل</th> --}}
 
                                 </thead>
+                               
                                 <tbody id="licenseTbody">
 
 
@@ -338,6 +348,7 @@
                                             <td id="lTname{{ $item->id }}">{{ $item->ltname }}</td>
                                             <td id="issueDate{{ $item->id }}">{{ $item->issueDate }}</td>
                                             @if ($company->status == 1)
+                                            @can('Deactive Company')
                                                 <td><button type="button" value="{{ $item->id }}" id="licenseEdit"
                                                         class="btn btn-primary" data-toggle="modal"
                                                         data-target="#modal-lg"><i class="fas fa-edit"></i></button>
@@ -346,6 +357,7 @@
                                                         data-toggle="modal" data-target="#modal-danger-license"><i
                                                             class="fas fa-trash-alt"></i></button>
                                                 </td>
+                                                @endcan
                                             @endif
 
                                         </tr>

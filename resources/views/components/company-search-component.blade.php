@@ -21,11 +21,14 @@
             <td>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
+                        
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             عملیات
                         </button>
+                     
                         <ul class="dropdown-menu">
                             <li class="dropdown-item"><a href="{{ route('details.company',$company->id) }}">معلومات</a></li>
+                           
                             <li class="dropdown-item"><a href="{{ route('saveRight.company',$company->id) }}"> د کمپنی حق الثبت</a></li>
 
                             <li class="dropdown-item"><a href="{{ route('licence.company',$company->id) }}">د فریکونسیو جواز</a></li>
